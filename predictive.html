@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive - Predictive Analytics and Hypothesis Testing</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PyScript Assets -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+
+    <style>
+        :root {
+            --sidebar-bg: #0f172a;
+            --sidebar-hover: #1e293b;
+            --primary: #f59e0b; /* Amber for Predictive */
+            --primary-dark: #d97706;
+            --bg: #f8fafc;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        aside {
+            background-color: var(--sidebar-bg);
+            color: #ffffff;
+            padding: 2rem 1.5rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.875rem 1rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--sidebar-hover);
+            color: #ffffff;
+        }
+
+        .nav-item a.active {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Main Content Styling */
+        main {
+            padding: 3rem 4rem;
+            overflow-y: auto;
+        }
+
+        .header-section {
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 1rem;
+        }
+
+        .content-area {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid #e2e8f0;
+            max-width: 1000px;
+        }
+
+        /* Results Display */
+        #output {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #1e293b;
+            color: #f1f5f9;
+            border-radius: 0.75rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            min-height: 150px;
+            white-space: pre-wrap;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .output-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        footer {
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+    </style>
+    
+    <py-config>
+        packages = ["numpy"]
+    </py-config>
+</head>
+<body>
+
+    <aside>
+        <a href="intro.html" class="logo">
+            <span>PyAnalytics</span>
+        </a>
+        <nav>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="intro.html">Intro</a></li>
+                <li class="nav-item"><a href="platforms.html" id="link-platforms">Platforms</a></li>
+                <li class="nav-item"><a href="aggregation.html">Aggregation</a></li>
+                <li class="nav-item"><a href="visualization.html">Visualization</a></li>
+                <li class="nav-item"><a href="predictive.html" class="active">Predictive</a></li>
+                <li class="nav-item"><a href="industry_project.html">Industry Project</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <div class="header-section">
+            <h1>Predictive Analytics and Hypothesis Testing</h1>
+        </div>
+
+        <section class="content-area">
+            <p>Moving beyond historical data, we use <strong>Numpy</strong> to calculate a linear trend line. This allows us to forecast future performance based on current momentum.</p>
+            
+            <div style="margin-top: 2rem;">
+                <span class="output-label">Forecast Output</span>
+                <div id="output"></div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; 2026 Python for Commerce Professional Series | Classroom Edition
+        </footer>
+    </main>
+
+    <script type="py" target="#output">
+import numpy as np
+
+# Historical time periods (Months 1-12)
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+# Historical revenue ($k) with an upward trend
+y = np.array([10.2, 11.5, 12.1, 13.8, 14.2, 15.9, 16.5, 18.2, 19.1, 21.3, 22.8, 24.5])
+
+# Calculate Linear Regression (y = mx + b)
+n = len(x)
+m, b = np.polyfit(x, y, 1)
+
+# Predictions for next quarter (Months 13, 14, 15)
+next_quarter = np.array([13, 14, 15])
+predictions = m * next_quarter + b
+
+print(f"Linear Equation: y = {m:.3f}x + {b:.3f}")
+print("-" * 35)
+print("Forecast for next quarter:")
+for month, val in zip(next_quarter, predictions):
+    print(f"Month {month}: Estimated Revenue ${val:.2f}k")
+
+# Growth rate calculation
+growth_rate = ((predictions[2] - y[-1]) / y[-1]) * 100
+print("-" * 35)
+print(f"Projected Growth (v/s current): {growth_rate:.1f}%")
+    </script>
+
+</body>
+</html>
