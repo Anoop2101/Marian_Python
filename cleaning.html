@@ -3,39 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Understanding & Cleaning - Python for Business Analytics</title>
+    <title>Financial Data Audit - AAPL Stock</title>
     
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- PyScript Assets -->
-    <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
-    <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
-
-    <!-- Bootstrap Icons CDN -->
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         :root {
+            --primary: #0066cc;
+            --primary-light: #e0f2fe;
+            --bg: #f8fafc;
             --sidebar-bg: #0f172a;
             --sidebar-hover: #1e293b;
-            --primary: #0066cc; /* Strategist Blue Combo */
-            --primary-dark: #004d99;
-            --bg: #f8fafc;
             --text: #0f172a;
             --text-muted: #64748b;
+            --border: #e2e8f0;
             --card-bg: #ffffff;
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
@@ -45,7 +37,7 @@
             min-height: 100vh;
         }
 
-        /* Sidebar Styling */
+        /* Sidebar Styling (Matching Intro Page) */
         aside {
             background-color: var(--sidebar-bg);
             color: #ffffff;
@@ -57,274 +49,77 @@
             flex-direction: column;
             box-shadow: 4px 0 10px rgba(0,0,0,0.05);
         }
+        .logo { margin-bottom: 3rem; }
+        .logo img { width: 100%; height: auto; display: block; border-radius: 0.5rem; }
 
-        .logo {
-            margin-bottom: 3rem;
-            text-decoration: none;
-            display: block;
-            padding: 0;
-            background: transparent;
-        }
-
-        .logo img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 0.5rem;
-        }
-
-        .nav-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
+        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
         .nav-item a {
-            display: block;
-            padding: 0.875rem 1rem;
-            color: #94a3b8;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.05rem;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease;
+            display: block; padding: 0.875rem 1rem; color: #94a3b8; text-decoration: none;
+            font-weight: 500; font-size: 1.05rem; border-radius: 0.5rem; transition: all 0.2s ease;
         }
+        .nav-item a:hover { background-color: var(--sidebar-hover); color: #ffffff; }
+        .nav-item a.active { background-color: var(--primary); color: #ffffff; }
 
-        .nav-item a:hover {
-            background-color: var(--sidebar-hover);
-            color: #ffffff;
-        }
-
-        .nav-item a.active {
-            background-color: var(--primary);
-            color: #ffffff;
-        }
-
-        /* Main Content Styling */
-        main {
-            padding: 3rem 4rem;
-            overflow-y: auto;
-        }
-
-        .header-section {
-            margin-bottom: 2rem;
-        }
-
-        h1 {
-            font-size: 2.25rem;
-            font-weight: 800;
-            letter-spacing: -0.025em;
-            margin-bottom: 1rem;
-        }
-
+        /* Main Content (Scrolling like Intro Page) */
+        main { padding: 3rem 4rem; overflow-y: auto; }
+        
+        .header-section { margin-bottom: 3rem; }
+        h1 { font-size: 2.25rem; font-weight: 800; color: var(--sidebar-bg); margin-bottom: 1rem; }
+        
+        /* Content Areas (Matching Intro Page cards) */
         .content-area {
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: var(--shadow);
-            border: 1px solid #e2e8f0;
-            max-width: 1000px;
+            background: var(--card-bg); padding: 2.5rem; border-radius: 1rem;
+            box-shadow: var(--shadow); border: 1px solid #e2e8f0;
+            max-width: 1000px; margin-bottom: 3rem;
         }
 
-        .content-area img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 0.5rem;
+        h2 {
+            font-size: 1.75rem; font-weight: 700; margin-top: 2.5rem;
+            margin-bottom: 1.25rem; color: var(--sidebar-bg);
+            border-left: 5px solid var(--primary); padding-left: 1rem;
         }
+        h2:first-of-type { margin-top: 0; }
+        
+        h3 { font-size: 1.4rem; color: #334155; margin: 2rem 0 1rem 0; font-weight: 700; }
+        p { font-size: 1.1rem; color: #334155; margin-bottom: 1.5rem; line-height: 1.8; }
+        b { color: var(--primary); }
 
-        .content-area ul {
-            list-style: none;
-            margin-bottom: 1.75rem;
-            padding-left: 0;
-        }
-
-        .content-area li {
-            position: relative;
-            padding-left: 1.75rem;
-            margin-bottom: 0.875rem;
-            color: #334155;
-            font-size: 1.05rem;
-            line-height: 1.7;
-        }
-
-        .content-area li::before {
-            content: "✦";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        /* --- STORYTELLING FLOW STYLES --- */
-        .journey-container {
-            position: relative;
-            padding-left: 3rem;
-            margin-top: 2rem;
-        }
-
-        .journey-line {
-            position: absolute;
-            left: 1rem;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--primary), #e2e8f0);
-            border-radius: 2px;
-        }
-
-        .journey-step {
-            position: relative;
-            margin-bottom: 5rem;
-            animation: fadeUp 0.8s ease forwards;
-        }
-
-        .journey-dot {
-            position: absolute;
-            left: -2.3rem; top: 0.5rem;
-            width: 1.2rem; height: 1.2rem;
-            background: #ffffff; border: 3px solid var(--primary);
-            border-radius: 50%; z-index: 2;
-        }
-
-        .topic-card {
-            background: #ffffff; border-radius: 1.25rem; padding: 2.5rem;
-            border: 1px solid #e2e8f0; box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-
-        .topic-card:hover { transform: translateX(10px); border-color: var(--primary); }
-
-        .step-info {
-            display: flex; align-items: center; gap: 0.75rem;
-            color: var(--primary); font-weight: 700; font-size: 0.85rem;
-            text-transform: uppercase; margin-bottom: 1rem;
-        }
-
+        /* Jupyter Style Code Cells (Matching Intro Page logic) */
         .jupyter-cell {
             background: #f8fafc; border: 1px solid #e2e8f0; border-left: 5px solid #3b82f6;
-            margin: 2rem 0; border-radius: 0.75rem; font-family: 'Fira Code', monospace;
-            overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin: 1.5rem 0; border-radius: 0.5rem; font-family: 'Fira Code', monospace;
+            overflow: hidden;
+        }
+        .cell-input { padding: 1rem; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; gap: 1rem; }
+        .cell-label { color: #3b82f6; font-size: 0.85rem; font-weight: 700; min-width: 50px; }
+        .cell-code { font-size: 1.1rem; color: #1e293b; font-weight: 500; font-family: 'JetBrains Mono', monospace; }
+        .cell-output { padding: 1rem 1rem 1rem 4rem; font-size: 0.95rem; color: #64748b; background: #ffffff; }
+
+        /* Tables & Terminal */
+        .table-container { margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+        .data-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 0.95rem; }
+        .data-table th { background: #f8fafc; padding: 12px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-weight: 700; }
+        .data-table td { padding: 12px; border-bottom: 1px solid var(--border); color: #475569; }
+
+        .terminal-output {
+            background: #f1f5f9; border: 1px solid var(--border); padding: 1.25rem;
+            border-radius: 10px; font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem; color: #334155; white-space: pre-wrap; margin: 1.5rem 0;
         }
 
-        .cell-input { padding: 1.25rem; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; gap: 1.25rem; }
-        .cell-label { color: #3b82f6; font-size: 0.9rem; font-weight: 700; min-width: 50px; }
-        .cell-code { font-size: 1.25rem; color: #1e293b; line-height: 1.6; font-weight: 500; }
-        .cell-output { padding: 1rem 1.25rem 1rem 5rem; font-size: 1.1rem; color: #475569; background: #fefeff; }
-
-        .output-explanation {
-            background: #f0f7ff; padding: 1.5rem; border-radius: 0.75rem;
-            font-size: 0.95rem; line-height: 1.6; border-left: 4px solid var(--primary); color: #1e3a8a;
+        .explanation-box {
+            background: #f0fdf4; border-left: 4px solid #22c55e; padding: 1.25rem;
+            border-radius: 0 8px 8px 0; margin: 1.5rem 0; color: #166534; font-size: 1.05rem;
         }
 
-        .business-insight {
-            background: #fffbeb; padding: 1rem; border-radius: 0.5rem;
-            font-size: 0.9rem; color: #92400e; display: flex; gap: 0.75rem;
-            align-items: center; margin-top: 1rem;
-        }
-
-        .chart-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 1rem; margin-top: 1rem; text-align: center; }
-
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Results Display */
-        #output {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: #1e293b;
-            color: #f1f5f9;
-            border-radius: 0.75rem;
-            font-family: 'Fira Code', 'Courier New', monospace;
-            min-height: 150px;
-            white-space: pre-wrap;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .cell-code { font-size: 0.9rem; color: #1e293b; }
-        .cell-output { padding: 0.75rem 1rem 0.75rem 4rem; font-size: 0.85rem; color: #64748b; background: #ffffff; }
-
-        /* Data Tables */
-        .data-preview {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-            margin: 1rem 0;
-        }
-
-        .data-preview th { background: #f1f5f9; padding: 0.75rem; text-align: left; border: 1px solid #e2e8f0; }
-        .data-preview td { padding: 0.75rem; border: 1px solid #e2e8f0; }
-
-        .status-badge {
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-
-        .status-error { background: #fee2e2; color: #dc2626; }
-        .status-success { background: #dcfce7; color: #16a34a; }
-
-        .flow-arrow {
-            display: flex;
-            justify-content: center;
-            margin: 1rem 0;
-            color: #94a3b8;
-            font-size: 1.5rem;
-        }
-
-        /* Results Display override */
-        #output {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: #1e293b;
-            color: #f1f5f9;
-            border-radius: 0.75rem;
-            font-family: 'Fira Code', 'Courier New', monospace;
-            min-height: 100px;
-            white-space: pre-wrap;
-        }
-
-        /* Results Display */
-        #output {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: #1e293b;
-            color: #f1f5f9;
-            border-radius: 0.75rem;
-            font-family: 'Fira Code', 'Courier New', monospace;
-            min-height: 150px;
-            white-space: pre-wrap;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .output-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        footer {
-            margin-top: 4rem;
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
+        /* Responsive */
+        @media (max-width: 1024px) { body { grid-template-columns: 220px 1fr; } }
     </style>
-    
-    <py-config>
-        packages = ["pandas"]
-    </py-config>
 </head>
 <body>
 
     <aside>
-        <a href="intro.html" class="logo">
-            <img src="strategist_logo.png" alt="Strategist Logo">
-        </a>
+        <div class="logo"><img src="strategist_logo.png" alt="Strategist Logo"></div>
         <nav>
             <ul class="nav-list">
                 <li class="nav-item"><a href="intro.html" id="link-intro">Intro</a></li>
@@ -339,275 +134,429 @@
 
     <main>
         <div class="header-section">
-            <h1 style="color: var(--primary); font-size: 2.75rem;">Data Understanding & Cleaning</h1>
-            <p class="text-muted" style="font-size: 1.2rem;">Join us as we transform a raw, messy HR dataset into a polished executive report, step-by-step.</p>
+            <h1>Financial Data Audit (AAPL Stock)</h1>
         </div>
 
-        <section class="content-area journey-container">
-            <div class="journey-line"></div>
+        <!-- Combined Content Area (Scrolling like Intro Page) -->
+        <div class="content-area">
+            <p><b>Scenario:</b> You have been provided with a raw CSV file containing Apple Inc. (AAPL) stock data. Before performing any financial modeling, your job is to perform an <b>Initial Data Audit</b>. You need to verify if the file loaded correctly, check the most recent records, and identify any missing values or structural errors.</p>
 
-            <!-- THE RAW REALITY -->
-            <div class="journey-step">
-                <div class="journey-dot"></div>
-                <div class="topic-card">
-                    <div class="step-info"><i class="bi bi-info-circle"></i> The Context</div>
-                    <h2>The Reality of Business Data</h2>
-                    <p>In a real-world boardroom, decisions are only as good as the data behind them. Most raw data is "Dirty" — it has missing values, duplicates, and errors. An MBA analyst's first job is to fix these traps.</p>
-                    <div class="business-insight">
-                        <i class="bi bi-lightbulb-fill"></i>
-                        <span>Analysts spend 80% of their time cleaning data, and only 20% analyzing it!</span>
+            <h2>1. What is Data?</h2>
+            <p>In this case study, <b>Data</b> represents the historical movement of Apple's market value. Each <b>"Observation"</b> (row) represents a specific day, and each <b>"Variable"</b> (column) represents a specific metric like the price at opening or the total shares traded.</p>
+
+            <h2>2. The Tool: Pandas Library</h2>
+            <p>We use <b>Pandas</b> because it is designed specifically for tabular data. It allows us to load data into a <b>DataFrame</b>, which is a high-performance, two-dimensional data structure that makes "cleaning" much easier than using standard Python lists.</p>
+
+            <h2>3. Loading and Reading Data</h2>
+            <p>First, we import the library and read the file into our system memory.</p>
+            
+            <div class="jupyter-cell">
+                <div class="cell-input">
+                    <span class="cell-label">In [1]:</span>
+                    <div class="cell-code">import pandas as pd<br><br># Reading the dataset<br>df = pd.read_csv('AAPL_stock_market.csv')<br><br># Simply calling 'df' shows a preview of the entire table<br>print(df)</div>
+                </div>
+            </div>
+
+            <div class="explanation-box">
+                <b>Explanation:</b> The <code>read_csv()</code> function acts as a bridge, converting a flat text file into a functional table that Python can manipulate.
+            </div>
+
+            <h2>4. Step-by-Step Data Exploration</h2>
+            
+            <h3>A. df.head() — The Top Peek</h3>
+            <div class="jupyter-cell">
+                <div class="cell-input">
+                    <span class="cell-label">In [2]:</span>
+                    <div class="cell-code">df.head()</div>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2024-01-02</td><td>185.20</td><td>187.10</td><td>184.50</td><td>186.30</td><td>52,100,000</td></tr>
+                        <tr><td>2024-01-03</td><td>186.30</td><td>188.50</td><td>186.00</td><td>187.90</td><td>48,500,000</td></tr>
+                        <tr><td>2024-01-04</td><td>187.90</td><td>189.00</td><td>187.20</td><td>188.40</td><td>55,200,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p><b>Explanation:</b> This shows the first 5 rows. It allows the analyst to verify that the column headers (Open, High, Low) match the data underneath them and that the dates are in the correct order.</p>
+
+            <h3>B. df.tail() — The Recency Check</h3>
+            <div class="jupyter-cell">
+                <div class="cell-input">
+                    <span class="cell-label">In [3]:</span>
+                    <div class="cell-code">df.tail()</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>250</td><td>2024-12-30</td><td>192.10</td><td>194.00</td><td>191.50</td><td>193.20</td><td>45,000,000</td></tr>
+                        <tr><td>251</td><td>2024-12-31</td><td>193.20</td><td>195.10</td><td>192.80</td><td>194.50</td><td>47,800,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><b>Explanation:</b> This shows the last 5 rows. In finance, we use this to ensure we have the most up-to-date data (e.g., confirming the file includes data up to December 31st).</p>
+
+            <h3>C. df.info() — The Technical Audit</h3>
+            <div class="jupyter-cell">
+                <div class="cell-input">
+                    <span class="cell-label">In [4]:</span>
+                    <div class="cell-code">df.info()</div>
+                </div>
+            </div>
+
+            <div class="terminal-output">
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 252 entries, 0 to 251
+Data columns (total 6 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   Date    252 non-null    object 
+ 1   Open    252 non-null    float64
+ 2   Close   250 non-null    float64
+ 3   Volume  251 non-null    float64</div>
+
+            <p><b>Explanation:</b> This is the most important cleaning command. It reveals:</p>
+            <ul>
+                <li style="margin-bottom: 1rem;"><b>Missing Data:</b> The "Non-Null Count" tells us that while there are 252 rows total, the Close column only has 250 values. This means 2 days are missing data and need cleaning.</li>
+                <li><b>Dtype (Data Type):</b> It tells us Open is a float64 (decimal number), which is good for math. However, Date is an object (text), meaning we should eventually convert it to a "datetime" type to plot it on a timeline.</li>
+            </ul>
+
+            <hr style="margin: 5rem 0; border: none; border-top: 4px solid var(--border);">
+
+
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h1 style="color: var(--primary); font-size: 2.2rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                    NSE India: NIFTY 50 Stock Market Case Study
+                </h1>
+                <p style="font-size: 1.1rem; color: var(--text-muted);">Initial Data Exploration & Understanding Project</p>
+            </div>
+
+            <!-- Organization Overview -->
+            <div class="content-area" style="background: #f8fafc; border-left: 6px solid var(--primary); border-radius: 0.5rem;">
+                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;"><i class="bi bi-building"></i> Organization Overview</h2>
+                <p><b>NSE India (National Stock Exchange)</b> is one of the largest stock exchanges in the world, handling millions of financial transactions every trading day. The exchange includes major companies listed under the NIFTY 50 index across sectors such as Banking, IT, Energy, Automobile, FMCG, and Healthcare.</p>
+                <p>Investment firms and financial analysts use stock market datasets to study company performance, trading behavior, and market trends.</p>
+            </div>
+
+            <!-- Business Context -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 3rem 0;">
+                <div class="lesson-card" style="margin:0;">
+                    <h2 style="font-size: 1.3rem;"><i class="bi bi-folder2-open"></i> Business Context</h2>
+                    <p>The analytics team has received a stock market dataset containing critical financial variables:</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem; color: #334155;">
+                        <div>• Company Name</div><div>• Stock Symbol</div>
+                        <div>• Sector</div><div>• Opening Price</div>
+                        <div>• Closing Price</div><div>• High / Low</div>
+                        <div>• Trading Volume</div><div>• Market Cap</div>
+                        <div>• Trading Date</div>
+                    </div>
+                </div>
+                <div class="lesson-card" style="margin:0; background: #fff7ed; border-color: #ffedd5;">
+                    <h2 style="font-size: 1.3rem; color: #9a3412;"><i class="bi bi-journal-text"></i> The Story</h2>
+                    <p style="font-size: 0.95rem; color: #9a3412;">Imagine receiving thousands of records daily. Before building investment dashboards, you must detect: 
+                        <br><b>- Incorrect records </b>
+                        <br><b>- Missing information </b>
+                        <br><b>- Incomplete data entries </b>
+                        <br><b>- Wrong financial values</b>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Challenges Grid -->
+            <h2 style="text-align: center; margin-bottom: 2rem;"><i class="bi bi-exclamation-triangle"></i> Key Business Challenges</h2>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 4rem;">
+                <div class="why-python-card" style="background: white;">
+                    <i class="bi bi-layers"></i>
+                    <div><h4>Volume & Complexity</h4><p>Thousands of records make manual inspection impossible.</p></div>
+                </div>
+                <div class="why-python-card" style="background: white;">
+                    <i class="bi bi-search"></i>
+                    <div><h4>Understanding Gaps</h4><p>Analysts must decode variables before identifying trends.</p></div>
+                </div>
+                <div class="why-python-card" style="background: white;">
+                    <i class="bi bi-shield-x"></i>
+                    <div><h4>Inaccurate Insights</h4><p>Missing data can generate misleading investment tips.</p></div>
+                </div>
+                <div class="why-python-card" style="background: white;">
+                    <i class="bi bi-clock-history"></i>
+                    <div><h4>Speed of Markets</h4><p>Rapid changes require instant dataset validation.</p></div>
+                </div>
+            </div>
+
+            <!-- Project Requirements -->
+            <div class="lesson-card" style="background: var(--sidebar-bg); color: white; border: none; padding: 3rem;">
+                <h2 style="color: white; border-color: var(--primary);"><i class="bi bi-tools"></i> 🛠️ Project Requirements</h2>
+                <p style="color: #94a3b8;">Using Python Pandas, perform the following tasks without revealing code in your final report:</p>
+                <div style="display: grid; gap: 1.5rem; margin-top: 2rem;">
+                    <div style="display: flex; gap: 1rem; align-items: start;">
+                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">1</span>
+                        <p style="color: white; margin:0;"><b>Initial Records:</b> Display the first few records to understand organizational structure.</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: start;">
+                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">2</span>
+                        <p style="color: white; margin:0;"><b>Recency Verification:</b> Display the last few records to verify available entries.</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: start;">
+                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">3</span>
+                        <p style="color: white; margin:0;"><b>Technical Audit:</b> Inspect structure: names, types, missing values, and record totals.</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: start;">
+                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">4</span>
+                        <p style="color: white; margin:0;"><b>Variable Identification:</b> List all available business and financial variables.</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: start;">
+                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">5</span>
+                        <p style="color: white; margin:0;"><b>Size Determination:</b> Calculate the total dimensions (rows and columns) of the dataset.</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: start;">
+                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">6</span>
+                        <p style="color: white; margin:0;"><b>Business Analysis:</b> Write an observation for each step explaining its importance in analytics.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 1: LIBRARIES -->
-            <div class="journey-step">
-                <div class="journey-dot"></div>
-                <div class="topic-card">
-                    <div class="step-info"><i class="bi bi-1-circle-fill"></i> Step 1: The Toolkit</div>
-                    <h3>Arming Ourselves with Libraries</h3>
-                    <p>We start by loading <b>Pandas</b> (our data table expert) and <b>NumPy</b> (our math genius). These tools give Python the "superpowers" to handle massive spreadsheets.</p>
+            <!-- Strategic Outcomes -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 5rem;">
+                <div>
+                    <h2><i class="bi bi-person-badge"></i> Analyst Perspective</h2>
+                    <p style="font-size: 0.95rem;">Before modeling, ensure:
+                    <ul class="why-list" style="grid-template-columns: 1fr;">
+                        <li class="why-item"><i class="bi bi-check-circle-fill"></i> Dataset is properly loaded</li>
+                        <li class="why-item"><i class="bi bi-check-circle-fill"></i> Financial values are understandable</li>
+                        <li class="why-item"><i class="bi bi-check-circle-fill"></i> Stock records are complete</li>
+                    </ul>
+                    </p>
+                </div>
+                <div class="explanation-box" style="margin:0;">
+                    <h2><i class="bi bi-rocket-takeoff"></i> Strategic Impact</h2>
+                    <ul style="list-style: none; padding:0; font-size: 0.9rem;">
+                        <li>🚀 Improved data quality validation</li>
+                        <li>📉 Reduced analytical mistakes</li>
+                        <li>📈 Stronger financial analysis foundation</li>
+                        <li>📊 Dashboard development readiness</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Tools -->
+            <div style="margin-top: 4rem; padding: 2rem; background: #f1f5f9; border-radius: 12px; display: flex; justify-content: space-around; text-align: center;">
+                <div><h5 style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Programming</h5><p><b>Python</b></p></div>
+                <div><h5 style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Library</h5><p><b>Pandas</b></p></div>
+                <div><h5 style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Domain</h5><p><b>Stock Analytics</b></p></div>
+                <div><h5 style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Dataset</h5><p><b>NIFTY 50</b></p></div>
+            </div>
+
+            <p style="text-align: center; margin-top: 4rem; color: var(--text-muted); font-size: 0.875rem;">
+                &copy; 2026 NSE India Training Module | Financial Data Analytics Series
+            </p>
+
+            <hr style="margin: 5rem 0; border: none; border-top: 4px solid #059669;">
+
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h1 style="color: #059669; font-size: 2.75rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                    <i class="bi bi-broom"></i> Data Cleaning Mastery
+                </h1>
+                <p style="font-size: 1.1rem; color: var(--text-muted);">Amazon Sales Data Quality Audit & Business Preparation</p>
+            </div>
+
+            <!-- Definition & Why -->
+            <div class="content-area">
+                <h2><i class="bi bi-question-circle"></i> What is Data Cleaning?</h2>
+                <p>Data cleaning is the process of identifying and fixing problems in a dataset before analysis. It is about converting <b>raw messy data</b> into <b>clean and reliable information</b>.</p>
+                
+                <h3>🤔 Why is Data Cleaning Needed?</h3>
+                <p>Real-world business data is rarely perfect. Errors occur in websites, billing systems, and forms. If businesses use "dirty" data, reports become inaccurate and decisions become risky.</p>
+                <div class="insight-box" style="background: #f0fdf4; border-color: #10b981; color: #065f46; border-left-width: 5px;">
+                    <i class="bi bi-star-fill" style="color: #fbbf24;"></i>
+                    <b>The Gold Rule:</b> Almost <b>80%</b> of the analysis work happens during data cleaning. Machine learning and dashboards require accurate, clean input.
+                </div>
+            </div>
+
+            <!-- Organization & Context -->
+            <div class="content-area" style="background: #f8fafc; border-left-color: #059669;">
+                <h2 style="font-size: 1.5rem;"><i class="bi bi-shop"></i> Organization Overview: Amazon</h2>
+                <p><b>Amazon</b> handles millions of orders daily. The analytics team stores data points for customers, products, payments, and ratings to drive strategic behavioral forecasting.</p>
+                
+                <h3 style="font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem;"><i class="bi bi-folder-fill"></i> Business Context</h3>
+                <p>The dataset contains critical variables: <b>Order ID, Customer Name, Product, Sales, Profit, Rating, Payment Mode, and State.</b></p>
+            </div>
+
+            <!-- Business Challenges & Objective -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 3rem 0;">
+                <div class="lesson-card" style="margin:0; border-left: 5px solid #ef4444;">
+                    <h3><i class="bi bi-exclamation-triangle-fill"></i> Key Challenges</h3>
+                    <p style="font-size: 0.95rem;">• <b>Duplicate Records:</b> Same order appearing multiple times.<br>• <b>Missing Values:</b> Incomplete sales or profit fields.<br>• <b>Incorrect Data:</b> Abnormal values due to system errors.</p>
+                </div>
+                <div class="lesson-card" style="margin:0; background: #ecfdf5; border-color: #10b981;">
+                    <h3><i class="bi bi-bullseye"></i> Project Objective</h3>
+                    <p style="font-size: 0.95rem;">Clean and prepare the dataset to make it <b>Structured</b>, <b>Reliable</b>, and <b>Analysis-Ready</b> by removing noise and detecting abnormal outliers.</p>
+                </div>
+            </div>
+
+            <h2 style="text-align: center; margin-bottom:3rem;"><i class="bi bi-table"></i> Raw Dataset (Before Cleaning)</h2>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead><tr><th>Order_ID</th><th>Cust_ID</th><th>Customer_Name</th><th>Product</th><th>sales $</th><th>Profit</th></tr></thead>
+                    <tbody>
+                        <tr><td>A101</td><td>C901</td><td>Rahul</td><td>Laptop</td><td>55000</td><td>12000</td></tr>
+                        <tr style="background: #fff1f2;"><td>A102</td><td>C902</td><td><b style="color:red;">Null</b></td><td>Mobile</td><td><b style="color:red;">Null</b></td><td>8000</td></tr>
+                        <tr><td>A103</td><td>C903</td><td>Arjun</td><td>Headphones</td><td>2500</td><td><b style="color:red;">Null</b></td></tr>
+                        <tr style="background: #fff1f2;"><td>A103</td><td>C903</td><td>Arjun</td><td>Headphones</td><td>2500</td><td>Null</td></tr>
+                        <tr style="background: #fdf2f8;"><td>A105</td><td>C904</td><td><b style="color:red;">Null</b></td><td>Keyboard</td><td><b style="color:red;">999,999</b></td><td>50000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- STEP 1 -->
+            <div class="content-area">
+                <h2>1. Checking Duplicate Records</h2>
+                <p>The same order (A103) appears twice. We must identify redundant entries using <code>duplicated()</code>.</p>
+                <div class="table-container" style="max-width: 400px; margin: 1rem 0;">
+                    <table class="data-table">
+                        <thead><tr><th>Order_ID</th><th>Cust_ID</th><th>Status</th></tr></thead>
+                        <tbody>
+                            <tr><td>A103</td><td>C903</td><td>Original</td></tr>
+                            <tr style="background: #fff1f2;"><td>A103</td><td>C903</td><td><b style="color:red;">Duplicate</b></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="jupyter-cell">
+                    <div class="cell-input"><span class="cell-label">In [10]:</span><div class="cell-code"># Step 1: Check Duplicates<br>df.duplicated()</div></div>
+                    <div class="cell-output"><p style="color: #64748b;">3 &nbsp; True (Duplicate found)</p></div>
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="content-area">
+                <h2>2. Removing Duplicate Records</h2>
+                <p>After detection, we purge the redundant rows to ensure revenue accuracy.</p>
+                <div class="jupyter-cell">
+                    <div class="cell-input"><span class="cell-label">In [11]:</span><div class="cell-code"># Step 2: Remove Duplicates<br>df = df.drop_duplicates()</div></div>
+                </div>
+                <div class="explanation-box">
+                    <b>Business Impact:</b> Removing duplicates ensures quarterly totals are not inflated by repeated system entries.
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="content-area">
+                <h2>3. Checking Null Values</h2>
+                <p>We check for "missing gaps" across the dataset before proceeding to imputation.</p>
+                <div class="jupyter-cell">
+                    <div class="cell-input"><span class="cell-label">In [12]:</span><div class="cell-code">df.isnull().sum()</div></div>
+                    <div class="cell-output" style="padding-left: 4rem;">sales $: 1 | Profit: 1 | Customer_Name: 2</div>
+                </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="content-area">
+                <h2>4. Sales Imputation (Mean)</h2>
+                <div style="margin-top: 1rem;">
+                    <p>Fills the gap in Order A102 with the average ($19,400).</p>
                     <div class="jupyter-cell">
-                        <div class="cell-input">
-                            <span class="cell-label">In [1]:</span>
-                            <div class="cell-code">
-                                import pandas as pd <br>
-                                import numpy as np
-                            </div>
-                        </div>
+                        <div class="cell-input"><span class="cell-label">In [13]:</span><div class="cell-code">df["sales $"] = df["sales $"].fillna(df["sales $"].mean())</div></div>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 2: IMPORT -->
-            <div class="journey-step">
-                <div class="journey-dot"></div>
-                <div class="topic-card">
-                    <div class="step-info"><i class="bi bi-2-circle-fill"></i> Step 2: The Handshake</div>
-                    <h3>Importing your First Dataset</h3>
-                    <p>We connect our Python script to the <b>HR_Data.csv</b> file. This creates a <b>DataFrame</b> — an interactive, smart table in computer memory.</p>
+            <!-- STEP 5 -->
+            <div class="content-area">
+                <h2>5. Profit Imputation (Median)</h2>
+                <div style="margin-top: 1rem;">
+                    <p>Fills Arjun's missing profit with the median ($10,000).</p>
                     <div class="jupyter-cell">
-                        <div class="cell-input">
-                            <span class="cell-label">In [2]:</span>
-                            <div class="cell-code">df = pd.read_csv("HR_Data.csv")</div>
-                        </div>
-                    </div>
-                    <div class="output-explanation">
-                        <b>Analyst Tip:</b> A "DataFrame" is simply Python's version of an Excel table. It can hold millions of rows without slowing down.
+                        <div class="cell-input"><span class="cell-label">In [14]:</span><div class="cell-code">df["Profit"] = df["Profit"].fillna(df["Profit"].median())</div></div>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 3: UNDERSTAND -->
-            <div class="journey-step">
-                <div class="journey-dot"></div>
-                <div class="topic-card">
-                    <div class="step-info"><i class="bi bi-3-circle-fill"></i> Step 3: The Deep Audit</div>
-                    <h3>Understanding the Data Skeleton</h3>
-                    <p>Before touching anything, we inspect the data structure. How many employees? What are their salary formats? Where are the gaps?</p>
-                    <div class="jupyter-cell">
-                        <div class="cell-input">
-                            <span class="cell-label">In [3]:</span>
-                            <div class="cell-code">df.info()</div>
-                        </div>
-                        <div class="cell-output" style="color: #1e3a8a;">
-                            Total Rows: 1000 | Data Columns: 5 <br>
-                            Salary: float64 (Numbers) <br>
-                            JoiningDate: object (Needs Cleaning)
-                        </div>
-                    </div>
+            <!-- STEP 6 -->
+            <div class="content-area">
+                <h2>6. Standardizing Headers</h2>
+                <p>Messy headers like <b>"sales $"</b> are converted to a professional format.</p>
+                <div class="jupyter-cell">
+                    <div class="cell-input"><span class="cell-label">In [15]:</span><div class="cell-code">df.rename(columns={"sales $":"Sales_Amount"}, inplace=True)</div></div>
                 </div>
             </div>
 
-            <!-- STEP 4: VIEW -->
-            <div class="journey-step">
-                <div class="journey-dot"></div>
-                <div class="topic-card">
-                    <div class="step-info"><i class="bi bi-4-circle-fill"></i> Step 4: The Visual Scan</div>
-                    <h3>A Quick Peek at the Rows</h3>
-                    <p>Good analysts never trust a summary alone. We peek at random rows to see if anything looks "off" using <code>sample()</code>.</p>
-                    <div class="jupyter-cell">
-                        <div class="cell-input">
-                            <span class="cell-label">In [4]:</span>
-                            <div class="cell-code">df.sample(2)</div>
-                        </div>
-                        <div class="cell-output" style="padding:0;">
-                             <table class="data-preview" style="width:100%; border-collapse:collapse; font-size:0.85rem;">
-                                <tr style="background:#f1f5f9; border-bottom:1px solid #e2e8f0;"><th>ID</th><th>Name</th><th>Salary</th><th>Dept</th></tr>
-                                <tr><td>452</td><td>Charlie</td><td>62000</td><td>Sales</td></tr>
-                                <tr><td>812</td><td>Sarah</td><td style="color:#ef4444; font-weight:700;">NaN</td><td>IT</td></tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="business-insight" style="background:#fee2e2; color:#b91c1c;">
-                        <i class="bi bi-exclamation-octagon-fill"></i>
-                        <span>Warning! Sarah's salary is <b>NaN</b> (Not a Number). This will break our total calculations later!</span>
-                    </div>
+            <!-- STEP 7 -->
+            <div class="content-area">
+                <h2>7. Removing Outliers (Thresholding)</h2>
+                <p>The <b>$999,999</b> value for Keyboard is an obvious error. We remove it by keeping only orders under <b>$60,000</b>.</p>
+                <div class="jupyter-cell" style="border-left-color: #ef4444;">
+                    <div class="cell-input"><span class="cell-label">In [16]:</span><div class="cell-code"># Keeping only realistic sales values<br>df = df[df["Sales_Amount"] < 60000]</div></div>
+                </div>
+                <div class="explanation-box" style="background: #fef2f2; border-left-color: #ef4444; color: #991b1b;">
+                    <b>Simplified Thinking:</b> Outlier detection protects your KPIs (like Average Ticket Size) from being skewed by single errors.
                 </div>
             </div>
 
-            <!-- STEP 5 & 6: MISSING -->
-            <div class="journey-step">
-                <div class="journey-dot"></div>
-                <div class="topic-card">
-                    <div class="step-info"><i class="bi bi-5-circle-fill"></i> Step 5 & 6: Mending the Gaps</div>
-                    <h3>Handling Missing Values</h3>
-                    <p>We decide to fill the empty salary gaps with the <b>Average (Mean)</b> salary of the rest of the company so Sarah is still included in our report.</p>
-                    <div class="jupyter-cell">
-                        <div class="cell-input">
-                            <span class="cell-label">In [6]:</span>
-                            <div class="cell-code">df["Salary"] = df["Salary"].fillna(df["Salary"].mean())</div>
-                        </div>
+            <!-- STEP 8 -->
+            <div class="content-area">
+                <h2>8. Merging: Identity Recovery</h2>
+                <p>Our sales table is missing names for <b>C902</b> and <b>C904</b>. We use a <b>Master Customer Table</b> to refill them.</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="table-container">
+                        <p style="font-size: 0.8rem; margin: 0.5rem; color: var(--primary);">Master_Customer_Table</p>
+                        <table class="data-table" style="font-size: 0.85rem;">
+                            <thead><tr><th>Cust_ID</th><th>Customer_Name</th></tr></thead>
+                            <tbody>
+                                <tr><td>C902</td><td>Priya</td></tr>
+                                <tr><td>C904</td><td>John</td></tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="output-explanation">
-                        <b>Why Mean?</b> In typical numeric data, the average is the safest guess. If the data had extreme outliers (like a CEO's $10M salary), we would use the <b>Median</b> instead to avoid skewing our results.
+                    <div class="jupyter-cell" style="margin: 0;">
+                        <div class="cell-input"><span class="cell-label">In [17]:</span><div class="cell-code"># Merging to refill names<br>df = pd.merge(df, master_cust, on="Cust_ID", how="left")</div></div>
                     </div>
+                </div>
+                <div class="explanation-box" style="background: #eff6ff; border-left-color: #3b82f6; color: #1e40af; margin-top: 2rem;">
+                    <b>Business Strategy:</b> Merging allows us to reconstruct complete customer journeys across different organizational systems.
                 </div>
             </div>
 
-            <!-- STEP 7: UNIVARIATE -->
-            <div class="journey-step">
-                <div class="journey-dot"></div>
-                <div class="topic-card">
-                    <div class="step-info"><i class="bi bi-7-circle-fill"></i> Step 7: Departmental Census</div>
-                    <h3>Univariate Analysis</h3>
-                    <p>We check the concentration of staff. Which department rules the office? We use <code>value_counts()</code> for this census.</p>
-                    <div class="jupyter-cell">
-                        <div class="cell-input">
-                            <span class="cell-label">In [7]:</span>
-                            <div class="cell-code">df["Dept"].value_counts()</div>
-                        </div>
-                        <div class="cell-output">
-                            Sales: 450 | IT: 350 | HR: 200
-                        </div>
-                    </div>
-                    <div class="chart-box">
-                        <div style="height:10px; width:100%; background:#e2e8f0; border-radius:5px; display:flex; overflow:hidden;">
-                            <div style="width:45%; background:var(--primary);"></div>
-                            <div style="width:35%; background:#10b981;"></div>
-                            <div style="width:20%; background:#f59e0b;"></div>
-                        </div>
-                        <p style="font-size:0.75rem; color:#64748b; margin-top:0.5rem;">Visual Insight: Sales dominates with 45% of total headcount.</p>
-                    </div>
+            <!-- Final Result -->
+            <div class="content-area" style="background: #fdfcfb; border-color: #059669;">
+                <h2 style="text-align: center; border: none; padding: 0;"><i class="bi bi-shield-check"></i> Final Cleaned Amazon Sales Dataset</h2>
+                <div class="table-container">
+                    <table class="data-table" style="background: white;">
+                        <thead><tr><th>Order_ID</th><th>Cust_ID</th><th>Customer_Name</th><th>Product</th><th>Sales</th><th>Profit</th></tr></thead>
+                        <tbody>
+                            <tr><td>A101</td><td>C901</td><td>Rahul</td><td>Laptop</td><td>55000</td><td>12000</td></tr>
+                            <tr style="background: #f0fdf4;"><td>A102</td><td>C902</td><td><b style="color:#059669;">Priya</b></td><td>Mobile</td><td><b style="color:#059669;">19400</b></td><td>8000</td></tr>
+                            <tr style="background: #f0fdf4;"><td>A103</td><td>C903</td><td>Arjun</td><td>Headphones</td><td>2500</td><td><b style="color:#059669;">10000</b></td></tr>
+                            <tr style="background: #f0fdf4;"><td>A104</td><td>C904</td><td><b style="color:#059669;">John</b></td><td>Whiteboard</td><td>700</td><td>200</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-
-            <!-- STEP 8 & 9: DUPLICATES -->
-            <div class="journey-step">
-                <div class="journey-dot"></div>
-                <div class="topic-card">
-                    <div class="step-info"><i class="bi bi-8-circle-fill"></i> Step 8 & 9: The Ghost Purge</div>
-                    <h3>Removing Duplicate Records</h3>
-                    <p>Duplicates are repeated entries that skew your profit/loss numbers. We scan and delete them instantly.</p>
-                    <div class="jupyter-cell">
-                        <div class="cell-input">
-                            <span class="cell-label">In [8]:</span>
-                            <div class="cell-code">
-                                print(df.duplicated().sum()) <br>
-                                df = df.drop_duplicates()
-                            </div>
-                        </div>
-                        <div class="cell-output">Duplicates Found: 12 | Status: Purged.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STEP 10, 11, 12: POLISHING -->
-            <div class="journey-step">
-                <div class="journey-dot"></div>
-                <div class="topic-card">
-                    <div class="step-info"><i class="bi bi-10-circle-fill"></i> Step 10-12: The Professional Polish</div>
-                    <h3>Renaming and Type Tuning</h3>
-                    <p>We rename "Dept" to "Department" for professional readability and convert raw dates into Python-friendly <b>DateTime</b> objects.</p>
-                    <div class="jupyter-cell">
-                        <div class="cell-input">
-                            <span class="cell-label">In [11]:</span>
-                            <div class="cell-code">
-                                df.rename(columns={"Dept":"Department"}, inplace=True) <br>
-                                df["JoiningDate"] = pd.to_datetime(df["JoiningDate"])
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STEP 13 & 14: TRANSFORM -->
-            <div class="journey-step">
-                <div class="journey-dot"></div>
-                <div class="topic-card">
-                    <div class="step-info"><i class="bi bi-13-circle-fill"></i> Step 13 & 14: Creating Value</div>
-                    <h3>Data Transformation (KPIs)</h3>
-                    <p>Cleaning is over; now we create insights! We calculate a <b>10% Corporate Bonus</b> for every employee to prepare for the annual budget review.</p>
-                    <div class="jupyter-cell">
-                        <div class="cell-input">
-                            <span class="cell-label">In [14]:</span>
-                            <div class="cell-code">df["Bonus"] = df["Salary"] * 0.10</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- REPORTING READINESS -->
-            <div class="journey-step">
-                <div class="journey-dot" style="background: var(--primary);"></div>
-                <div class="topic-card" style="background:#0f172a; color:#ffffff; border:none;">
-                    <h2 style="color:#ffffff;">Final Analytics Readiness</h2>
-                    <p style="color:#94a3b8;">Congratulations! You have converted raw, broken data into a <b>Trustworthy Business Dataset</b> ready for any boardroom presentation.</p>
-                    
-                    <div class="jupyter-cell" style="background:#1e293b; border-color:#334155; margin-top:2rem;">
-                         <div class="cell-output" style="background:transparent; color:#f1f5f9; padding:2rem;">
-                            <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
-                                <tr style="border-bottom:1px solid #334155; color:var(--primary);"><th>Name</th><th>Salary</th><th>Department</th><th>Bonus</th></tr>
-                                <tr><td>Alice</td><td>55000</td><td>Sales</td><td>5500</td></tr>
-                                <tr><td>Sarah</td><td>52400</td><td>IT</td><td>5240</td></tr>
-                                <tr><td>Charlie</td><td>62000</td><td>Sales</td><td>6200</td></tr>
-                            </table>
-                            <div style="margin-top:2rem; display:flex; justify-content:center; gap:2rem;">
-                                <div style="text-align:center;"><i class="bi bi-check-circle-fill" style="color:#10b981; font-size:1.5rem;"></i><p style="font-size:0.6rem; color:#94a3b8; margin-top:0.5rem;">Reporting Ready</p></div>
-                                <div style="text-align:center;"><i class="bi bi-check-circle-fill" style="color:#10b981; font-size:1.5rem;"></i><p style="font-size:0.6rem; color:#94a3b8; margin-top:0.5rem;">Dashboard Ready</p></div>
-                                <div style="text-align:center;"><i class="bi bi-check-circle-fill" style="color:#10b981; font-size:1.5rem;"></i><p style="font-size:0.6rem; color:#94a3b8; margin-top:0.5rem;">Decision Ready</p></div>
-                            </div>
-                         </div>
-                    </div>
-                </div>
+                <p style="font-size: 0.8rem; color: #64748b; margin-top: 1rem; text-align: center;">* All identities merged, duplicates purged, and financial gaps imputed correctly.</p>
             </div>
 
             <div style="margin-top: 5rem;">
-                <span class="output-label">Interactive Classroom Lab</span>
-                <div id="output"></div>
+                <div class="content-area" style="margin:0; border: 2px dashed #059669;">
+                    <h2 style="border: none; padding: 0;"><i class="bi bi-cpu"></i> Analyst's Summary</h2>
+                    <p style="font-size: 0.95rem;">Data cleaning transforms <b>unreliable raw data</b> into <b>trustworthy intelligence</b>. By standardizing column names and handling anomalies, we ensure every decision is backed by verified truth.</p>
+                    <p style="font-size: 0.95rem; font-weight: 700; color: #059669;">"Clean Data Leads to Better Business Decisions."</p>
+                </div>
             </div>
-        </section>
 
-        <footer style="margin-top: 4rem; color: var(--text-muted); font-size: 0.875rem;">
-            &copy; 2026 Strategist Python Series | Practical Business Learning Edition
-        </footer>
+            <p style="text-align: center; margin-top: 5rem; color: var(--text-muted); font-size: 0.875rem;">
+                &copy; 2026 Amazon Marketplace Series | Data Cleaning Mastery Module
+            </p>
+        </div>
     </main>
-
-    <script type="py" target="#output">
-import pandas as pd
-
-# Creating a sample dataset
-data = {
-    'Region': ['North', 'South', 'East', 'West', 'North', 'South', 'East', 'West'],
-    'Sales': [12000, 15000, 9000, 21000, 13000, 14500, 11000, 19000],
-    'Orders': [150, 180, 110, 240, 160, 175, 130, 220]
-}
-
-df = pd.DataFrame(data)
-
-# Aggregation logic
-summary = df.groupby('Region').agg({
-    'Sales': ['sum', 'mean'],
-    'Orders': 'sum'
-})
-
-print("Dataset Summary by Region:")
-print("-" * 30)
-print(summary)
-print("\nOverall Statistics:")
-print(f"Total Sales: ${df['Sales'].sum():,.2f}")
-print(f"Average Order Value: ${df['Sales'].sum() / df['Orders'].sum():,.2f}")
-    </script>
-
 </body>
 </html>
