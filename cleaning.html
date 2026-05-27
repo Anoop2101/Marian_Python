@@ -3,31 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Data Audit - AAPL Stock</title>
+    <title>Academic Module | Data Understanding & Cleaning</title>
     
-    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <!-- Professional Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Bootstrap Icons -->
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+    
     <style>
         :root {
-            --primary: #0066cc;
-            --primary-light: #e0f2fe;
-            --bg: #f8fafc;
             --sidebar-bg: #0f172a;
             --sidebar-hover: #1e293b;
+            --primary: #0066cc;
+            --primary-dark: #004d99;
+            --bg: #f8fafc;
             --text: #0f172a;
             --text-muted: #64748b;
-            --border: #e2e8f0;
             --card-bg: #ffffff;
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --border: #e2e8f0;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
@@ -35,9 +36,10 @@
             display: grid;
             grid-template-columns: 280px 1fr;
             min-height: 100vh;
+            line-height: 1.7;
         }
 
-        /* Sidebar Styling (Matching Intro Page) */
+        /* Sidebar Styling */
         aside {
             background-color: var(--sidebar-bg);
             color: #ffffff;
@@ -49,77 +51,176 @@
             flex-direction: column;
             box-shadow: 4px 0 10px rgba(0,0,0,0.05);
         }
-        .logo { margin-bottom: 3rem; }
-        .logo img { width: 100%; height: auto; display: block; border-radius: 0.5rem; }
 
-        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+        .logo {
+            margin-bottom: 3rem;
+            text-decoration: none;
+            display: block;
+            padding: 0;
+            background: transparent;
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.5rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
         .nav-item a {
-            display: block; padding: 0.875rem 1rem; color: #94a3b8; text-decoration: none;
-            font-weight: 500; font-size: 1.05rem; border-radius: 0.5rem; transition: all 0.2s ease;
+            display: block;
+            padding: 0.875rem 1rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
         }
-        .nav-item a:hover { background-color: var(--sidebar-hover); color: #ffffff; }
-        .nav-item a.active { background-color: var(--primary); color: #ffffff; }
 
-        /* Main Content (Scrolling like Intro Page) */
+        .nav-item a:hover {
+            background-color: var(--sidebar-hover);
+            color: #ffffff;
+        }
+
+        .nav-item a.active {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* ── Main Content Area ── */
         main { padding: 3rem 4rem; overflow-y: auto; }
+
+        .header-section { margin-bottom: 2rem; }
         
-        .header-section { margin-bottom: 3rem; }
-        h1 { font-size: 2.25rem; font-weight: 800; color: var(--sidebar-bg); margin-bottom: 1rem; }
-        
-        /* Content Areas (Matching Intro Page cards) */
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.5rem;
+            color: var(--sidebar-bg);
+            text-align: left;
+        }
+
+        /* Content Areas (Matching Intro) */
         .content-area {
-            background: var(--card-bg); padding: 2.5rem; border-radius: 1rem;
-            box-shadow: var(--shadow); border: 1px solid #e2e8f0;
-            max-width: 1000px; margin-bottom: 3rem;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            max-width: 1000px;
+            margin-bottom: 3rem;
         }
 
+        /* Typography Sync */
         h2 {
-            font-size: 1.75rem; font-weight: 700; margin-top: 2.5rem;
-            margin-bottom: 1.25rem; color: var(--sidebar-bg);
-            border-left: 5px solid var(--primary); padding-left: 1rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: var(--sidebar-bg);
+            border-left: 5px solid var(--primary);
+            padding-left: 1rem;
         }
-        h2:first-of-type { margin-top: 0; }
+
+        .header-section h2 {
+            border-left: none;
+            padding-left: 0;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--sidebar-bg);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+        h3 { 
+            font-size: 1.6rem; 
+            color: var(--sidebar-bg); 
+            font-weight: 800; 
+            margin: 3rem 0 1.5rem;
+            border-left: 5px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        p  { margin-bottom: 1.5rem; font-size: 1.1rem; color: #334155; line-height: 1.8; }
+        b  { color: var(--primary); }
+        section { margin-bottom: 5rem; }
+
+        /* Utility Boxes */
+        .example-box    { background: #f8fafc; border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; }
+        .scenario-tag   { background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem; display: inline-block; }
+        .strategy-note  { background: #eff6ff; border-left: 5px solid var(--primary); padding: 2rem; border-radius: 0 12px 12px 0; margin: 2rem 0; }
+        .interpretation-note { background: #fdfcfb; border-left: 5px solid #f97316; padding: 1.5rem; border-radius: 0 12px 12px 0; margin: 1.5rem 0; font-size: 0.95rem; }
+
+        /* Jupyter-style Code Cells */
+        .jupyter-cell { 
+            background: #ffffff; 
+            border: 1px solid #e2e8f0; 
+            border-left: 4px solid var(--primary);
+            border-radius: 8px; 
+            margin: 1.5rem 0; 
+            overflow: hidden; 
+            font-family: 'JetBrains Mono', monospace; 
+        }
+        .cell-input { 
+            padding: 1rem 1.5rem; 
+            display: flex; 
+            gap: 15px; 
+            align-items: center;
+        }
+        .cell-output { 
+            padding: 0 2rem 2rem; 
+            background: white; 
+            font-family: 'Inter', sans-serif; 
+        }
+        .cell-label { color: #2563eb; font-weight: 700; min-width: 50px; font-size: 0.85rem; }
+        .cell-code { font-size: 1.1rem; color: #1e293b; font-weight: 500; }
+
+        .sub-topic { font-size: 1.3rem; color: var(--sidebar-bg); font-weight: 700; margin: 2rem 0 1rem; }
+        .explanation-text { font-size: 1.05rem; color: #334155; margin-top: 1rem; }
+        .explanation-text b { color: var(--primary); font-weight: 700; }
+
+        /* Terminal Output */
+        .terminal-window { background: #1e293b; color: #f1f5f9; padding: 2rem; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin: 1.5rem 0; }
+
+        /* Data Tables */
+        .table-container  { margin: 2rem 0; overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 12px; }
+        .data-table       { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        .data-table th    { background: #f8fafc; padding: 14px 18px; text-align: left; font-weight: 800; color: #64748b; border-bottom: 2px solid #e2e8f0; }
+        .data-table td    { padding: 14px 18px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+
+        /* Before / After Comparison */
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 3rem 0; }
+        .comp-card { background: #ffffff; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 12px; position: relative; }
+        .comp-card.success { border-color: #22c55e; background: #f0fdf4; }
+        .comp-label { position: absolute; top: -10px; left: 15px; background: #64748b; color: white; padding: 2px 10px; border-radius: 4px; font-size: 0.65rem; font-weight: 900; }
+        .comp-label.green { background: #22c55e; }
+
+        /* Badges */
+        .edu-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; background: #dbeafe; color: #1e40af; text-transform: uppercase; margin-bottom: 2rem; }
         
-        h3 { font-size: 1.4rem; color: #334155; margin: 2rem 0 1rem 0; font-weight: 700; }
-        p { font-size: 1.1rem; color: #334155; margin-bottom: 1.5rem; line-height: 1.8; }
-        b { color: var(--primary); }
+        main ul { list-style: none; padding-left: 0; }
+        main li { margin-bottom: 0.5rem; }
 
-        /* Jupyter Style Code Cells (Matching Intro Page logic) */
-        .jupyter-cell {
-            background: #f8fafc; border: 1px solid #e2e8f0; border-left: 5px solid #3b82f6;
-            margin: 1.5rem 0; border-radius: 0.5rem; font-family: 'Fira Code', monospace;
-            overflow: hidden;
+        @media (max-width: 1024px) {
+            body { grid-template-columns: 1fr; }
+            aside { display: none; }
         }
-        .cell-input { padding: 1rem; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; gap: 1rem; }
-        .cell-label { color: #3b82f6; font-size: 0.85rem; font-weight: 700; min-width: 50px; }
-        .cell-code { font-size: 1.1rem; color: #1e293b; font-weight: 500; font-family: 'JetBrains Mono', monospace; }
-        .cell-output { padding: 1rem 1rem 1rem 4rem; font-size: 0.95rem; color: #64748b; background: #ffffff; }
-
-        /* Tables & Terminal */
-        .table-container { margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
-        .data-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 0.95rem; }
-        .data-table th { background: #f8fafc; padding: 12px; text-align: left; border-bottom: 2px solid var(--border); color: #64748b; font-weight: 700; }
-        .data-table td { padding: 12px; border-bottom: 1px solid var(--border); color: #475569; }
-
-        .terminal-output {
-            background: #f1f5f9; border: 1px solid var(--border); padding: 1.25rem;
-            border-radius: 10px; font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem; color: #334155; white-space: pre-wrap; margin: 1.5rem 0;
-        }
-
-        .explanation-box {
-            background: #f0fdf4; border-left: 4px solid #22c55e; padding: 1.25rem;
-            border-radius: 0 8px 8px 0; margin: 1.5rem 0; color: #166534; font-size: 1.05rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) { body { grid-template-columns: 220px 1fr; } }
     </style>
 </head>
 <body>
 
     <aside>
-        <div class="logo"><img src="strategist_logo.png" alt="Strategist Logo"></div>
+        <a href="intro.html" class="logo">
+            <img src="strategist_logo.png" alt="Strategist Logo">
+        </a>
         <nav>
             <ul class="nav-list">
                 <li class="nav-item"><a href="intro.html" id="link-intro">Intro</a></li>
@@ -127,436 +228,1138 @@
                 <li class="nav-item"><a href="aggregation.html" id="link-aggregation">Aggregation & Analysis</a></li>
                 <li class="nav-item"><a href="visualization.html" id="link-visualization">Visualization</a></li>
                 <li class="nav-item"><a href="predictive.html" id="link-predictive">Predictive</a></li>
-                <li class="nav-item"><a href="industry_project.html" id="link-project">Industry Project</a></li>
+                <li class="nav-item"><a href="#industry-project" id="link-project">Industry Project</a></li>
             </ul>
         </nav>
     </aside>
 
     <main>
         <div class="header-section">
-            <h1>Financial Data Audit (AAPL Stock)</h1>
+            <span class="edu-badge">Classroom-Ready Module</span>
+            <h1>Data Information</h1>
         </div>
 
-        <!-- Combined Content Area (Scrolling like Intro Page) -->
-        <div class="content-area">
-            <p><b>Scenario:</b> You have been provided with a raw CSV file containing Apple Inc. (AAPL) stock data. Before performing any financial modeling, your job is to perform an <b>Initial Data Audit</b>. You need to verify if the file loaded correctly, check the most recent records, and identify any missing values or structural errors.</p>
-
-            <h2>1. What is Data?</h2>
-            <p>In this case study, <b>Data</b> represents the historical movement of Apple's market value. Each <b>"Observation"</b> (row) represents a specific day, and each <b>"Variable"</b> (column) represents a specific metric like the price at opening or the total shares traded.</p>
-
-            <h2>2. The Tool: Pandas Library</h2>
-            <p>We use <b>Pandas</b> because it is designed specifically for tabular data. It allows us to load data into a <b>DataFrame</b>, which is a high-performance, two-dimensional data structure that makes "cleaning" much easier than using standard Python lists.</p>
-
-            <h2>3. Loading and Reading Data</h2>
-            <p>First, we import the library and read the file into our system memory.</p>
-            
-            <div class="jupyter-cell">
-                <div class="cell-input">
-                    <span class="cell-label">In [1]:</span>
-                    <div class="cell-code">import pandas as pd<br><br># Reading the dataset<br>df = pd.read_csv('AAPL_stock_market.csv')<br><br># Simply calling 'df' shows a preview of the entire table<br>print(df)</div>
-                </div>
-            </div>
-
-            <div class="explanation-box">
-                <b>Explanation:</b> The <code>read_csv()</code> function acts as a bridge, converting a flat text file into a functional table that Python can manipulate.
-            </div>
-
-            <h2>4. Step-by-Step Data Exploration</h2>
-            
-            <h3>A. df.head() — The Top Peek</h3>
-            <div class="jupyter-cell">
-                <div class="cell-input">
-                    <span class="cell-label">In [2]:</span>
-                    <div class="cell-code">df.head()</div>
-                </div>
-            </div>
-            
-            <div class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>2024-01-02</td><td>185.20</td><td>187.10</td><td>184.50</td><td>186.30</td><td>52,100,000</td></tr>
-                        <tr><td>2024-01-03</td><td>186.30</td><td>188.50</td><td>186.00</td><td>187.90</td><td>48,500,000</td></tr>
-                        <tr><td>2024-01-04</td><td>187.90</td><td>189.00</td><td>187.20</td><td>188.40</td><td>55,200,000</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <p><b>Explanation:</b> This shows the first 5 rows. It allows the analyst to verify that the column headers (Open, High, Low) match the data underneath them and that the dates are in the correct order.</p>
-
-            <h3>B. df.tail() — The Recency Check</h3>
-            <div class="jupyter-cell">
-                <div class="cell-input">
-                    <span class="cell-label">In [3]:</span>
-                    <div class="cell-code">df.tail()</div>
-                </div>
-            </div>
-
-            <div class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>250</td><td>2024-12-30</td><td>192.10</td><td>194.00</td><td>191.50</td><td>193.20</td><td>45,000,000</td></tr>
-                        <tr><td>251</td><td>2024-12-31</td><td>193.20</td><td>195.10</td><td>192.80</td><td>194.50</td><td>47,800,000</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <p><b>Explanation:</b> This shows the last 5 rows. In finance, we use this to ensure we have the most up-to-date data (e.g., confirming the file includes data up to December 31st).</p>
-
-            <h3>C. df.info() — The Technical Audit</h3>
-            <div class="jupyter-cell">
-                <div class="cell-input">
-                    <span class="cell-label">In [4]:</span>
-                    <div class="cell-code">df.info()</div>
-                </div>
-            </div>
-
-            <div class="terminal-output">
-&lt;class 'pandas.core.frame.DataFrame'&gt;
-RangeIndex: 252 entries, 0 to 251
-Data columns (total 6 columns):
- #   Column  Non-Null Count  Dtype  
----  ------  --------------  -----  
- 0   Date    252 non-null    object 
- 1   Open    252 non-null    float64
- 2   Close   250 non-null    float64
- 3   Volume  251 non-null    float64</div>
-
-            <p><b>Explanation:</b> This is the most important cleaning command. It reveals:</p>
-            <ul>
-                <li style="margin-bottom: 1rem;"><b>Missing Data:</b> The "Non-Null Count" tells us that while there are 252 rows total, the Close column only has 250 values. This means 2 days are missing data and need cleaning.</li>
-                <li><b>Dtype (Data Type):</b> It tells us Open is a float64 (decimal number), which is good for math. However, Date is an object (text), meaning we should eventually convert it to a "datetime" type to plot it on a timeline.</li>
-            </ul>
-
-            <hr style="margin: 5rem 0; border: none; border-top: 4px solid var(--border);">
-
-
-            <div style="text-align: center; margin-bottom: 4rem;">
-                <h1 style="color: var(--primary); font-size: 2.2rem; text-transform: uppercase; letter-spacing: 0.1em;">
-                    NSE India: NIFTY 50 Stock Market Case Study
-                </h1>
-                <p style="font-size: 1.1rem; color: var(--text-muted);">Initial Data Exploration & Understanding Project</p>
-            </div>
-
-            <!-- Organization Overview -->
-            <div class="content-area" style="background: #f8fafc; border-left: 6px solid var(--primary); border-radius: 0.5rem;">
-                <h2 style="font-size: 1.5rem; margin-bottom: 1rem;"><i class="bi bi-building"></i> Organization Overview</h2>
-                <p><b>NSE India (National Stock Exchange)</b> is one of the largest stock exchanges in the world, handling millions of financial transactions every trading day. The exchange includes major companies listed under the NIFTY 50 index across sectors such as Banking, IT, Energy, Automobile, FMCG, and Healthcare.</p>
-                <p>Investment firms and financial analysts use stock market datasets to study company performance, trading behavior, and market trends.</p>
-            </div>
-
-            <!-- Business Context -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 3rem 0;">
-                <div class="lesson-card" style="margin:0;">
-                    <h2 style="font-size: 1.3rem;"><i class="bi bi-folder2-open"></i> Business Context</h2>
-                    <p>The analytics team has received a stock market dataset containing critical financial variables:</p>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem; color: #334155;">
-                        <div>• Company Name</div><div>• Stock Symbol</div>
-                        <div>• Sector</div><div>• Opening Price</div>
-                        <div>• Closing Price</div><div>• High / Low</div>
-                        <div>• Trading Volume</div><div>• Market Cap</div>
-                        <div>• Trading Date</div>
-                    </div>
-                </div>
-                <div class="lesson-card" style="margin:0; background: #fff7ed; border-color: #ffedd5;">
-                    <h2 style="font-size: 1.3rem; color: #9a3412;"><i class="bi bi-journal-text"></i> The Story</h2>
-                    <p style="font-size: 0.95rem; color: #9a3412;">Imagine receiving thousands of records daily. Before building investment dashboards, you must detect: 
-                        <br><b>- Incorrect records </b>
-                        <br><b>- Missing information </b>
-                        <br><b>- Incomplete data entries </b>
-                        <br><b>- Wrong financial values</b>
-                    </p>
-                </div>
-            </div>
-
-            <!-- Challenges Grid -->
-            <h2 style="text-align: center; margin-bottom: 2rem;"><i class="bi bi-exclamation-triangle"></i> Key Business Challenges</h2>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 4rem;">
-                <div class="why-python-card" style="background: white;">
-                    <i class="bi bi-layers"></i>
-                    <div><h4>Volume & Complexity</h4><p>Thousands of records make manual inspection impossible.</p></div>
-                </div>
-                <div class="why-python-card" style="background: white;">
-                    <i class="bi bi-search"></i>
-                    <div><h4>Understanding Gaps</h4><p>Analysts must decode variables before identifying trends.</p></div>
-                </div>
-                <div class="why-python-card" style="background: white;">
-                    <i class="bi bi-shield-x"></i>
-                    <div><h4>Inaccurate Insights</h4><p>Missing data can generate misleading investment tips.</p></div>
-                </div>
-                <div class="why-python-card" style="background: white;">
-                    <i class="bi bi-clock-history"></i>
-                    <div><h4>Speed of Markets</h4><p>Rapid changes require instant dataset validation.</p></div>
-                </div>
-            </div>
-
-            <!-- Project Requirements -->
-            <div class="lesson-card" style="background: var(--sidebar-bg); color: white; border: none; padding: 3rem;">
-                <h2 style="color: white; border-color: var(--primary);"><i class="bi bi-tools"></i> 🛠️ Project Requirements</h2>
-                <p style="color: #94a3b8;">Using Python Pandas, perform the following tasks without revealing code in your final report:</p>
-                <div style="display: grid; gap: 1.5rem; margin-top: 2rem;">
-                    <div style="display: flex; gap: 1rem; align-items: start;">
-                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">1</span>
-                        <p style="color: white; margin:0;"><b>Initial Records:</b> Display the first few records to understand organizational structure.</p>
-                    </div>
-                    <div style="display: flex; gap: 1rem; align-items: start;">
-                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">2</span>
-                        <p style="color: white; margin:0;"><b>Recency Verification:</b> Display the last few records to verify available entries.</p>
-                    </div>
-                    <div style="display: flex; gap: 1rem; align-items: start;">
-                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">3</span>
-                        <p style="color: white; margin:0;"><b>Technical Audit:</b> Inspect structure: names, types, missing values, and record totals.</p>
-                    </div>
-                    <div style="display: flex; gap: 1rem; align-items: start;">
-                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">4</span>
-                        <p style="color: white; margin:0;"><b>Variable Identification:</b> List all available business and financial variables.</p>
-                    </div>
-                    <div style="display: flex; gap: 1rem; align-items: start;">
-                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">5</span>
-                        <p style="color: white; margin:0;"><b>Size Determination:</b> Calculate the total dimensions (rows and columns) of the dataset.</p>
-                    </div>
-                    <div style="display: flex; gap: 1rem; align-items: start;">
-                        <span style="background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 5px; font-weight: 800;">6</span>
-                        <p style="color: white; margin:0;"><b>Business Analysis:</b> Write an observation for each step explaining its importance in analytics.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Strategic Outcomes -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 5rem;">
-                <div>
-                    <h2><i class="bi bi-person-badge"></i> Analyst Perspective</h2>
-                    <p style="font-size: 0.95rem;">Before modeling, ensure:
-                    <ul class="why-list" style="grid-template-columns: 1fr;">
-                        <li class="why-item"><i class="bi bi-check-circle-fill"></i> Dataset is properly loaded</li>
-                        <li class="why-item"><i class="bi bi-check-circle-fill"></i> Financial values are understandable</li>
-                        <li class="why-item"><i class="bi bi-check-circle-fill"></i> Stock records are complete</li>
-                    </ul>
-                    </p>
-                </div>
-                <div class="explanation-box" style="margin:0;">
-                    <h2><i class="bi bi-rocket-takeoff"></i> Strategic Impact</h2>
-                    <ul style="list-style: none; padding:0; font-size: 0.9rem;">
-                        <li>🚀 Improved data quality validation</li>
-                        <li>📉 Reduced analytical mistakes</li>
-                        <li>📈 Stronger financial analysis foundation</li>
-                        <li>📊 Dashboard development readiness</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Footer Tools -->
-            <div style="margin-top: 4rem; padding: 2rem; background: #f1f5f9; border-radius: 12px; display: flex; justify-content: space-around; text-align: center;">
-                <div><h5 style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Programming</h5><p><b>Python</b></p></div>
-                <div><h5 style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Library</h5><p><b>Pandas</b></p></div>
-                <div><h5 style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Domain</h5><p><b>Stock Analytics</b></p></div>
-                <div><h5 style="font-size: 0.75rem; text-transform: uppercase; color: #64748b;">Dataset</h5><p><b>NIFTY 50</b></p></div>
-            </div>
-
-            <p style="text-align: center; margin-top: 4rem; color: var(--text-muted); font-size: 0.875rem;">
-                &copy; 2026 NSE India Training Module | Financial Data Analytics Series
-            </p>
-
-            <hr style="margin: 5rem 0; border: none; border-top: 4px solid #059669;">
-
-            <div style="text-align: center; margin-bottom: 4rem;">
-                <h1 style="color: #059669; font-size: 2.75rem; text-transform: uppercase; letter-spacing: 0.1em;">
-                    <i class="bi bi-broom"></i> Data Cleaning Mastery
-                </h1>
-                <p style="font-size: 1.1rem; color: var(--text-muted);">Amazon Sales Data Quality Audit & Business Preparation</p>
-            </div>
-
-            <!-- Definition & Why -->
+        <!-- SECTION 1 -->
+        <section id="section-1">
             <div class="content-area">
-                <h2><i class="bi bi-question-circle"></i> What is Data Cleaning?</h2>
-                <p>Data cleaning is the process of identifying and fixing problems in a dataset before analysis. It is about converting <b>raw messy data</b> into <b>clean and reliable information</b>.</p>
-                
-                <h3>🤔 Why is Data Cleaning Needed?</h3>
-                <p>Real-world business data is rarely perfect. Errors occur in websites, billing systems, and forms. If businesses use "dirty" data, reports become inaccurate and decisions become risky.</p>
-                <div class="insight-box" style="background: #f0fdf4; border-color: #10b981; color: #065f46; border-left-width: 5px;">
-                    <i class="bi bi-star-fill" style="color: #fbbf24;"></i>
-                    <b>The Gold Rule:</b> Almost <b>80%</b> of the analysis work happens during data cleaning. Machine learning and dashboards require accurate, clean input.
-                </div>
-            </div>
+                <h3>1. What is Data?</h3>
+                <p><b>Data</b> is the collection of facts, observations, and statistics that describe a business event or entity. It is the raw material used to build insights and make professional decisions.</p>
 
-            <!-- Organization & Context -->
-            <div class="content-area" style="background: #f8fafc; border-left-color: #059669;">
-                <h2 style="font-size: 1.5rem;"><i class="bi bi-shop"></i> Organization Overview: Amazon</h2>
-                <p><b>Amazon</b> handles millions of orders daily. The analytics team stores data points for customers, products, payments, and ratings to drive strategic behavioral forecasting.</p>
-                
-                <h3 style="font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem;"><i class="bi bi-folder-fill"></i> Business Context</h3>
-                <p>The dataset contains critical variables: <b>Order ID, Customer Name, Product, Sales, Profit, Rating, Payment Mode, and State.</b></p>
-            </div>
-
-            <!-- Business Challenges & Objective -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 3rem 0;">
-                <div class="lesson-card" style="margin:0; border-left: 5px solid #ef4444;">
-                    <h3><i class="bi bi-exclamation-triangle-fill"></i> Key Challenges</h3>
-                    <p style="font-size: 0.95rem;">• <b>Duplicate Records:</b> Same order appearing multiple times.<br>• <b>Missing Values:</b> Incomplete sales or profit fields.<br>• <b>Incorrect Data:</b> Abnormal values due to system errors.</p>
-                </div>
-                <div class="lesson-card" style="margin:0; background: #ecfdf5; border-color: #10b981;">
-                    <h3><i class="bi bi-bullseye"></i> Project Objective</h3>
-                    <p style="font-size: 0.95rem;">Clean and prepare the dataset to make it <b>Structured</b>, <b>Reliable</b>, and <b>Analysis-Ready</b> by removing noise and detecting abnormal outliers.</p>
-                </div>
-            </div>
-
-            <h2 style="text-align: center; margin-bottom:3rem;"><i class="bi bi-table"></i> Raw Dataset (Before Cleaning)</h2>
-            <div class="table-container">
-                <table class="data-table">
-                    <thead><tr><th>Order_ID</th><th>Cust_ID</th><th>Customer_Name</th><th>Product</th><th>sales $</th><th>Profit</th></tr></thead>
-                    <tbody>
-                        <tr><td>A101</td><td>C901</td><td>Rahul</td><td>Laptop</td><td>55000</td><td>12000</td></tr>
-                        <tr style="background: #fff1f2;"><td>A102</td><td>C902</td><td><b style="color:red;">Null</b></td><td>Mobile</td><td><b style="color:red;">Null</b></td><td>8000</td></tr>
-                        <tr><td>A103</td><td>C903</td><td>Arjun</td><td>Headphones</td><td>2500</td><td><b style="color:red;">Null</b></td></tr>
-                        <tr style="background: #fff1f2;"><td>A103</td><td>C903</td><td>Arjun</td><td>Headphones</td><td>2500</td><td>Null</td></tr>
-                        <tr style="background: #fdf2f8;"><td>A105</td><td>C904</td><td><b style="color:red;">Null</b></td><td>Keyboard</td><td><b style="color:red;">999,999</b></td><td>50000</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- STEP 1 -->
-            <div class="content-area">
-                <h2>1. Checking Duplicate Records</h2>
-                <p>The same order (A103) appears twice. We must identify redundant entries using <code>duplicated()</code>.</p>
-                <div class="table-container" style="max-width: 400px; margin: 1rem 0;">
+                <h3>2. Data Formats (Structure Table)</h3>
+                <div class="table-container">
                     <table class="data-table">
-                        <thead><tr><th>Order_ID</th><th>Cust_ID</th><th>Status</th></tr></thead>
+                        <thead><tr><th>Format</th><th>Definition</th><th>Business Example</th></tr></thead>
                         <tbody>
-                            <tr><td>A103</td><td>C903</td><td>Original</td></tr>
-                            <tr style="background: #fff1f2;"><td>A103</td><td>C903</td><td><b style="color:red;">Duplicate</b></td></tr>
+                            <tr><td><b>Structured</b></td><td>Highly organized in rows/columns.</td><td>Excel Sheets, Bank Ledgers, SQL Tables.</td></tr>
+                            <tr><td><b>Unstructured</b></td><td>No specific organization/format.</td><td>Social Media posts, CCTV Footage, PDFs.</td></tr>
+                            <tr><td><b>Semi-Structured</b></td><td>Follows patterns but no fixed rows.</td><td>JSON files, XML, Email headers.</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="jupyter-cell">
-                    <div class="cell-input"><span class="cell-label">In [10]:</span><div class="cell-code"># Step 1: Check Duplicates<br>df.duplicated()</div></div>
-                    <div class="cell-output"><p style="color: #64748b;">3 &nbsp; True (Duplicate found)</p></div>
+
+                <h3>3. The Tool: Pandas Library</h3>
+                <p><b>Pandas</b> is the global standard for data analysis in Python. It allows us to load data into a <b>DataFrame</b>, which is a high-performance, two-dimensional data structure that makes "cleaning" much easier than using standard Python lists.</p>
+
+                <h3>4. Why Data Understanding is the Priority</h3>
+                <p>An analyst must never assume they know what the data contains. <b>Data Understanding</b> is the diagnostic phase where you verify the quality and structure before any math begins.</p>
+
+                <div class="strategy-note">
+                    <h4>What happens if analysts misunderstand the dataset?</h4>
+                    <p><b>Business Context Failure:</b> A Marketing Analyst calculates the "Average Transaction Value" but doesn't realize the dataset includes <b>cancelled orders</b>.
+                    <br>❌ <b>The Error:</b> The average is calculated including $0 orders.
+                    <br>⚠️ <b>The Consequence:</b> The company launches a campaign for high-value customers who actually don't exist, wasting millions in marketing budget.</p>
                 </div>
             </div>
 
-            <!-- STEP 2 -->
-            <div class="content-area">
-                <h2>2. Removing Duplicate Records</h2>
-                <p>After detection, we purge the redundant rows to ensure revenue accuracy.</p>
-                <div class="jupyter-cell">
-                    <div class="cell-input"><span class="cell-label">In [11]:</span><div class="cell-code"># Step 2: Remove Duplicates<br>df = df.drop_duplicates()</div></div>
-                </div>
-                <div class="explanation-box">
-                    <b>Business Impact:</b> Removing duplicates ensures quarterly totals are not inflated by repeated system entries.
-                </div>
+            <div class="header-section" style="margin-top: 5rem;">
+                <h2>Morgan Stanley: Financial Modelling Project</h2>
             </div>
 
-            <!-- STEP 3 -->
             <div class="content-area">
-                <h2>3. Checking Null Values</h2>
-                <p>We check for "missing gaps" across the dataset before proceeding to imputation.</p>
-                <div class="jupyter-cell">
-                    <div class="cell-input"><span class="cell-label">In [12]:</span><div class="cell-code">df.isnull().sum()</div></div>
-                    <div class="cell-output" style="padding-left: 4rem;">sales $: 1 | Profit: 1 | Customer_Name: 2</div>
-                </div>
-            </div>
-
-            <!-- STEP 4 -->
-            <div class="content-area">
-                <h2>4. Sales Imputation (Mean)</h2>
-                <div style="margin-top: 1rem;">
-                    <p>Fills the gap in Order A102 with the average ($19,400).</p>
-                    <div class="jupyter-cell">
-                        <div class="cell-input"><span class="cell-label">In [13]:</span><div class="cell-code">df["sales $"] = df["sales $"].fillna(df["sales $"].mean())</div></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STEP 5 -->
-            <div class="content-area">
-                <h2>5. Profit Imputation (Median)</h2>
-                <div style="margin-top: 1rem;">
-                    <p>Fills Arjun's missing profit with the median ($10,000).</p>
-                    <div class="jupyter-cell">
-                        <div class="cell-input"><span class="cell-label">In [14]:</span><div class="cell-code">df["Profit"] = df["Profit"].fillna(df["Profit"].median())</div></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STEP 6 -->
-            <div class="content-area">
-                <h2>6. Standardizing Headers</h2>
-                <p>Messy headers like <b>"sales $"</b> are converted to a professional format.</p>
-                <div class="jupyter-cell">
-                    <div class="cell-input"><span class="cell-label">In [15]:</span><div class="cell-code">df.rename(columns={"sales $":"Sales_Amount"}, inplace=True)</div></div>
-                </div>
-            </div>
-
-            <!-- STEP 7 -->
-            <div class="content-area">
-                <h2>7. Removing Outliers (Thresholding)</h2>
-                <p>The <b>$999,999</b> value for Keyboard is an obvious error. We remove it by keeping only orders under <b>$60,000</b>.</p>
-                <div class="jupyter-cell" style="border-left-color: #ef4444;">
-                    <div class="cell-input"><span class="cell-label">In [16]:</span><div class="cell-code"># Keeping only realistic sales values<br>df = df[df["Sales_Amount"] < 60000]</div></div>
-                </div>
-                <div class="explanation-box" style="background: #fef2f2; border-left-color: #ef4444; color: #991b1b;">
-                    <b>Simplified Thinking:</b> Outlier detection protects your KPIs (like Average Ticket Size) from being skewed by single errors.
-                </div>
-            </div>
-
-            <!-- STEP 8 -->
-            <div class="content-area">
-                <h2>8. Merging: Identity Recovery</h2>
-                <p>Our sales table is missing names for <b>C902</b> and <b>C904</b>. We use a <b>Master Customer Table</b> to refill them.</p>
+                <span class="edu-badge" style="display: inline-block;">CASE STUDY 1 — STOCK MARKET ANALYSIS</span>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🏢 Organization Overview</h3>
+                <p><b>Morgan Stanley</b> is a global leader in financial services, providing investment banking, securities, and wealth management services. The **Financial Planning Division** manages massive amounts of market data used for quarterly forecasting and asset valuation.</p>
+                
+                <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📁 Business Context</h3>
+                <p>The **Financial Modeling Team** is responsible for ensuring the structural integrity of high-frequency stock data. Even a minor error in data loading or structural mismatch can invalidate complex financial projections, leading to multi-million dollar errors in risk assessment.</p>
+                
+                <div class="strategy-note" style="margin-top: 2rem;">
+                    <h4>📖 The Story Behind the Analysis</h4>
+                    <p>Imagine a team of senior analysts waiting for a "Market Recency Report" to decide on a major buy-order for Apple (AAPL). If the dataset hasn't been audited for completeness, the decision could be based on outdated or corrupted records. Your job is the "First Line of Defense" — finding issues before they reach the decision-makers.</p>
+                </div>
+
+                <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">⚠️ Key Business Challenges</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 1rem;"><b>🔍 Structural Drift:</b> Column headers and data types can drift over time as data provider systems update.</li>
+                    <li style="margin-bottom: 1rem;"><b>📉 Missing Windows:</b> Trading holidays and system downtimes can create invisible gaps in pricing records.</li>
+                </ul>
+
+                <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🎯 Project Objective</h3>
+                <p>The objective of this project is to perform an <b>Initial Data Audit</b> using Pandas to verify that the AAPL dataset is technically sound and ready for secondary financial modelling.</p>
+
+                <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🛠️ Project Requirements</h3>
+                <ul style="list-style: none; padding-left: 0; margin-bottom: 3rem;">
+                    <li><b>Initialization:</b> Import the Pandas engine and load the stock ledger.</li>
+                    <li><b>Dimensions Check:</b> Verify that all trading days are represented.</li>
+                    <li><b>Integrity Audit:</b> Check for null values and structural deep-dives using <code>info()</code>.</li>
+                </ul>
+
+                <!-- PREMIUM DATA SOURCE BAR -->
+                <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-left: 6px solid var(--primary); padding: 1.25rem 1.5rem; border-radius: 8px; margin: 3rem 0; display: flex; align-items: center; gap: 1rem;">
+                    <p style="color: #1e40af; font-weight: 700; margin: 0; font-size: 0.95rem;">Dataset Source: <span style="color: #475569; font-weight: 500;">You can download the dataset (<b>AAPL.csv</b>) from Google Classroom.</span></p>
+                </div>
+
+                <h3 style="border-left: 4px solid var(--primary); padding-left: 1rem;">1. Importing the Library</h3>
+                <p>Before we can work with data, we must import the <b>Pandas engine</b>. This gives us access to all the technical tools needed for the audit.</p>
+                <div class="jupyter-cell">
+                    <div class="cell-input"><span class="cell-label">In [1]:</span><div class="cell-code">import pandas as pd</div></div>
+                </div>
+
+                <h3 style="border-left: 4px solid var(--primary); padding-left: 1rem;">2. Loading the Stock Ledger</h3>
+                <p>We use the <code>read_csv()</code> command to pull the AAPL data into a virtual table called a <b>DataFrame (df)</b>.</p>
+                <div class="jupyter-cell">
+                    <div class="cell-input"><span class="cell-label">In [2]:</span><div class="cell-code">df = pd.read_csv('AAPL.csv')</div></div>
+                </div>
+
+                <h3 style="border-left: 4px solid var(--primary); padding-left: 1rem;">3. Step-by-Step Data Exploration</h3>
+                <p>The first step in any audit is to look at the data. We use commands like <code>head()</code> and <code>tail()</code> to inspect the start and end of our dataset.</p>
+
+                <!-- A. head -->
+                <div class="sub-topic">A. df.head() — The Top Peek</div>
+                <div class="jupyter-cell">
+                    <div class="cell-input"><span class="cell-label">In [3]:</span><div class="cell-code">df.head()</div></div>
+                    <div class="cell-output">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr></thead>
+                                <tbody>
+                                    <tr><td>2024-01-02</td><td>185.20</td><td>187.10</td><td>184.50</td><td>186.30</td><td>52,100,000</td></tr>
+                                    <tr><td>2024-01-03</td><td>186.30</td><td>188.50</td><td>186.00</td><td>187.90</td><td>48,500,000</td></tr>
+                                    <tr><td>2024-01-04</td><td>187.90</td><td>189.00</td><td>187.20</td><td>188.40</td><td>55,200,000</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <p class="explanation-text"><b>Explanation:</b> This shows the first 5 rows. It allows the analyst to verify that the column headers (Open, High, Low) match the data underneath them and that the dates are in the correct order.</p>
+
+                <!-- B. tail -->
+                <div class="sub-topic">B. df.tail() — The Recency Check</div>
+                <div class="jupyter-cell">
+                    <div class="cell-input"><span class="cell-label">In [4]:</span><div class="cell-code">df.tail()</div></div>
+                    <div class="cell-output">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr></thead>
+                                <tbody>
+                                    <tr><td>2024-12-28</td><td>192.10</td><td>194.50</td><td>191.00</td><td>193.45</td><td>42,300,000</td></tr>
+                                    <tr><td>2024-12-29</td><td>193.50</td><td>195.20</td><td>192.80</td><td>194.10</td><td>40,100,000</td></tr>
+                                    <tr><td>2024-12-30</td><td>194.20</td><td>196.00</td><td>193.50</td><td>195.80</td><td>45,600,000</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <p class="explanation-text"><b>Explanation:</b> Tail allows us to check if the data recording is complete up to the most recent trading session.</p>
+
+                <!-- C. shape -->
+                <div class="sub-topic">C. df.shape — The Scale Audit</div>
+                <div class="jupyter-cell">
+                    <div class="cell-input"><span class="cell-label">In [5]:</span><div class="cell-code">df.shape</div></div>
+                    <div class="cell-output" style="padding-top: 1rem;"><b>(252, 6)</b></div>
+                </div>
+                <p class="explanation-text"><b>Explanation:</b> This tells us there are 252 trading days (rows) and 6 characteristics (columns) being tracked.</p>
+
+                <!-- D. info -->
+                <div class="sub-topic">D. df.info() — The Structural Deep-Dive</div>
+                <div class="jupyter-cell">
+                    <div class="cell-input"><span class="cell-label">In [6]:</span><div class="cell-code">df.info()</div></div>
+                    <div class="cell-output">
+                        <div class="terminal-window">
+&lt;class 'pandas.core.frame.DataFrame'&gt;<br>
+Index: 252 entries, 0 to 251<br>
+Data columns (total 6 columns):<br>
+ #   Column   Non-Null Count  Dtype<br>
+---  ------   --------------  -----<br>
+ 0   Date     252 non-null    object<br>
+ 1   Open     252 non-null    float64<br>
+ 2   High     252 non-null    float64<br>
+ 3   Low      252 non-null    float64<br>
+ 4   Close    250 non-null    float64<br>
+ 5   Volume   252 non-null    int64<br>
+<b>Memory usage: 13.5+ KB</b>
+                        </div>
+                    </div>
+                </div>
+                <p class="explanation-text"><b>Explanation:</b> This reveals missing data. We see 'Close' only has 250 records, meaning 2 days of pricing data are missing.</p>
+            </div>
+
+            <!-- CASE STUDY 1 SUMMARY -->
+            <div id="case-study-summary">
+                <h3>CASE STUDY 1 SUMMARY</h3>
+                <p>The analyst successfully verified that the stock ledger contains <b>252 days</b> of data. However, the audit revealed <b>2 missing values</b> in the pricing column. This understanding ensures the analyst cleans these gaps before calculating yearly profits.</p>
+            </div>
+
+            <hr style="margin: 5rem 0; border: none; border-top: 3px double var(--border);">
+
+            <!-- ASSIGNMENT -->
+            <div id="case-study-2">
+                <h2>Goldman Sachs: Market Intelligence Audit</h2>
+                <div class="content-area">
+                    <span class="edu-badge" style="background:#5b21b6; color:white; display: inline-block;">CASE STUDY 2 — NIFTY 50 ANALYSIS</span>
+                    
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🏢 Organization Overview</h3>
+                    <p><b>Goldman Sachs</b> is a leading global investment banking, securities, and investment management firm. Its <b>Investment Research Team</b> provides fundamental research on companies and economies, helping institutional clients make high-stakes investment decisions.</p>
+                    
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📁 Business Context</h3>
+                    <p>The **Strategy Analytics Unit** is preparing a 'Decade of India' report. This involves analyzing the **Nifty 50** (the benchmark stock market index for the Indian equity market) over a 10-year period to identify long-term structural trends and market stability.</p>
+                    
+                    <div class="strategy-note" style="margin-top: 2rem;">
+                        <h4>📖 The Story Behind the Analysis</h4>
+                        <p>Managing an institutional portfolio worth billions requires data that is 100% reliable. Even a small gap in historical stock pricing can lead to incorrect risk models and massive financial losses. Analysts spend 70% of their time ensuring no data "glitches" exist before the senior portfolio managers see the final report.</p>
+                    </div>
+
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">⚠️ Key Business Challenges</h3>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 1rem;"><b>🔍 Data Integrity:</b> Scaling across 10 years means handling thousands of rows where structural shifts might have occurred.</li>
+                        <li style="margin-bottom: 1rem;"><b>📉 Inconsistent Records:</b> Missing trading days can warp the "Moving Average" calculations used for trend prediction.</li>
+                    </ul>
+
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🎯 Project Objective</h3>
+                    <p>Your objective is to perform a <b>Structural Market Audit</b>. You must use Pandas to verify the dimensions, column types, and record completeness of the <code>Nifty50_History.csv</code> dataset.</p>
+
+                    <!-- PREMIUM DATA SOURCE BAR -->
+                    <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-left: 6px solid var(--primary); padding: 1.25rem 1.5rem; border-radius: 8px; margin: 3rem 0; display: flex; align-items: center; gap: 1rem;">
+                        <p style="color: #1e40af; font-weight: 700; margin: 0; font-size: 0.95rem;">Dataset Source: <span style="color: #475569; font-weight: 500;">You can download (<b>Nifty50_History.csv</b>) from Google Classroom.</span></p>
+                    </div>
+
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🛠️ Understanding Requirements</h3>
+                    <div style="background:#f8fafc; padding:2rem; border-radius:12px; border:1px solid #e2e8f0; font-size:1.1rem;">
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 0.8rem;">📌 Dataset structure understanding</li>
+                            <li style="margin-bottom: 0.8rem;">📌 Identifying rows and columns</li>
+                            <li style="margin-bottom: 0.8rem;">📌 Data types verification</li>
+                            <li style="margin-bottom: 0.8rem;">📌 Column name inspection</li>
+                            <li style="margin-bottom: 0.8rem;">📌 Shape and dimensions check</li>
+                            <li style="margin-bottom: 0.8rem;">📌 First and last records review</li>
+                            <li style="margin-bottom: 0.8rem;">📌 Missing value identification</li>
+                            <li style="margin-bottom: 0.8rem;">📌 Structured data understanding</li>
+                            <li style="margin-bottom: 0.8rem;">📌 Dataset consistency verification</li>
+                            <li style="margin-bottom: 0.8rem;">📌 Understanding features and records</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DYNAMIC INTERACTIVE PRACTICE ENGINE -->
+        <section id="practice-understanding" style="margin-top: 5rem; border-top: 2px solid #e2e8f0; padding-top: 4rem;">
+            <div class="header-section">
+                <span class="edu-badge" style="background:#6366f1; color:#fff;">GAMIFIED AUDIT</span>
+                <h1>Interactive Practice: Data Understanding Engine</h1>
+                <p>Test your knowledge with 10 industry-aligned diagnostic questions.</p>
+            </div>
+
+            <!-- START GATEWAY -->
+            <div id="practice-gateway" style="background: #e2e8f0; padding: 6rem 2rem; border-radius: 32px; text-align: center; margin-bottom: 4rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);">
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <h2 style="border:none; padding:0; margin-bottom: 1rem;">Ready to Audit?</h2>
+                    <p style="margin-bottom: 2.5rem;">Solve 10 precision-weighted questions to verify your Data Understanding mastery. Achieve 80% to demonstrate proficiency.</p>
+                    <button onclick="startPracticeEngine()" style="background: linear-gradient(90deg, #0284c7, #6366f1); color: white; border: none; padding: 1.15rem 3.5rem; border-radius: 100px; font-size: 1.3rem; font-weight: 800; letter-spacing: 0.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4); transition: transform 0.2s ease;">
+                        START PRACTICE <i class="bi bi-lightning-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ENGINE INTERFACE -->
+            <div id="practice-engine" style="display: none;">
+                <!-- PROGRESS BAR -->
+                <div style="max-width: 800px; margin: 0 auto 3rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-weight: 700; color: #64748b; font-size: 0.9rem;">
+                        <span id="progress-text">Question 1 of 10</span>
+                        <span id="score-text">Score: 0%</span>
+                    </div>
+                    <div style="height: 10px; background: #e2e8f0; border-radius: 10px; overflow: hidden;">
+                        <div id="progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #6366f1); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+                    </div>
+                </div>
+
+                <!-- QUESTION CARD (GLASSMORPHISM) -->
+                <div id="question-card" style="max-width: 800px; margin: 0 auto; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 24px; padding: 3rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); min-height: 400px; position: relative;">
+                    <div id="question-content">
+                        <!-- Dynamic Content Inserted Here -->
+                    </div>
+
+                    <!-- FEEDBACK AREA -->
+                    <div id="feedback-area" style="display: none; margin-top: 2rem; padding: 1.5rem; border-radius: 12px; border: 1px solid transparent;">
+                        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <div id="feedback-icon" style="font-size: 1.5rem;"></div>
+                            <div>
+                                <h4 id="feedback-title" style="margin:0; border:none; padding:0; font-size: 1.1rem;"></h4>
+                                <p id="feedback-explanation" style="margin: 0.5rem 0 0; font-size: 0.95rem; line-height: 1.5; color: #475569;"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ACTION BUTTONS -->
+                    <div id="action-area" style="margin-top: 3rem; display: flex; justify-content: flex-end;">
+                        <button id="next-btn" onclick="nextQuestion()" style="display: none; background: #0f172a; color: white; border: none; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                            Next Question <i class="bi bi-arrow-right-short" style="vertical-align: middle;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCORE SCREEN -->
+            <div id="score-screen" style="display: none; max-width: 800px; margin: 0 auto; text-align: center; padding: 5rem 2rem;">
+                <div id="final-medal" style="font-size: 5rem; margin-bottom: 2rem;">🏆</div>
+                <h1 id="final-status">Analytics Audit Complete!</h1>
+                <p id="final-score-p" style="font-size: 1.5rem; margin-bottom: 3rem;"></p>
+                <button onclick="location.reload()" style="background: #0f172a; color: white; border: none; padding: 1rem 2.5rem; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                    Retry Audit <i class="bi bi-arrow-clockwise"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="sec-cleaning">
+            <div class="header-section">
+                <h2>Data Cleaning</h2>
+            </div>
+
+            <div class="content-area">
+                <h3>1. What is Data Cleaning?</h3>
+                <p><b>Meaning:</b> Fixing "Dirty Data" to make it usable for business. Raw data is messy because the real world is messy — servers fail, people make typing mistakes, and systems crash.</p>
+                <div class="interpretation-note">
+                    <b>Common Issues:</b><br>
+                    • <b>Missing Values:</b> Empty sales records.<br>
+                    • <b>Duplicates:</b> Same order recorded twice.<br>
+                    • <b>Wrong Names:</b> Column labeled <code>X1</code> instead of <code>Sales</code>.<br>
+                    • <b>Outliers:</b> Product price listed as <b>$999,999</b> (Error).
+                </div>
+
+                <h3>2. Why Data Cleaning is Important in Business</h3>
+                <p><b>Impact:</b> Poor data leads to wrong decisions. If an HR analyst cleans employee data poorly, salaries might be paid twice, or wrong tax reports could be generated.</p>
+                <p><b>Financial Losses:</b> Companies lose billions every year due to "Dirty Data" inflating costs or hiding profits.</p>
+            </div>
+
+            <!-- CASE STUDY 3 -->
+            <div id="case-study-3">
+                <div class="header-section" style="margin-top: 5rem;">
+                    <h2>Amazon: Strategic Behavioral Forecasting</h2>
+                </div>
+                
+                <div class="content-area">
+                    <span class="edu-badge badge-cleaning" style="display: inline-block;">CASE STUDY 3 — DATA CLEANING & RECONCILIATION</span>
+                    
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🏢 Organization Overview: Amazon</h3>
+                    <p><b>Amazon</b> handles millions of orders daily. The analytics team stores data points for customers, products, payments, and ratings to drive strategic behavioral forecasting.</p>
+                    
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📁 Business Context</h3>
+                    <p>The dataset contains critical variables: <b>Order ID, Customer Name, Product, Sales, Profit, Rating, Payment Mode, and State.</b></p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; margin-bottom: 3rem;">
+                        <div style="border-left: 4px solid #ef4444; background: #fef2f2; padding: 1.5rem; border-radius: 0 12px 12px 0;">
+                            <h4 style="color: #991b1b; margin-bottom: 0.5rem;"><i class="bi bi-exclamation-triangle-fill"></i> Key Challenges</h4>
+                            <ul style="font-size: 0.95rem; line-height: 1.6;">
+                                <li><b>Duplicate Records:</b> Same order appearing multiple times.</li>
+                                <li><b>Missing Values:</b> Incomplete sales or profit fields.</li>
+                                <li><b>Incorrect Data:</b> Abnormal values due to system errors.</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 1.5rem; border-radius: 0 12px 12px 0;">
+                            <h4 style="color: #166534; margin-bottom: 0.5rem;"><i class="bi bi-bullseye"></i> Project Objective</h4>
+                            <p style="font-size: 0.95rem;">Clean and prepare the dataset to make it <b>Structured, Reliable, and Analysis-Ready</b> by removing noise and detecting abnormal outliers.</p>
+                        </div>
+                    </div>
+
+                    <!-- PREMIUM DATA SOURCE BAR -->
+                    <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-left: 6px solid var(--primary); padding: 1.25rem 1.5rem; border-radius: 8px; margin: 3rem 0; display: flex; align-items: center; gap: 1rem;">
+                        <p style="color: #1e40af; font-weight: 700; margin: 0; font-size: 0.95rem;">Dataset File: <span style="color: #475569; font-weight: 500;">You can download (<b>Amazon_Sales.csv</b>) from Google Classroom.</span></p>
+                    </div>
+
+                    <h3 style="text-align: center; margin: 4rem 0 2rem;"><i class="bi bi-table"></i> Raw Dataset (Before Cleaning)</h3>
                     <div class="table-container">
-                        <p style="font-size: 0.8rem; margin: 0.5rem; color: var(--primary);">Master_Customer_Table</p>
-                        <table class="data-table" style="font-size: 0.85rem;">
-                            <thead><tr><th>Cust_ID</th><th>Customer_Name</th></tr></thead>
+                        <table class="data-table">
+                            <thead><tr><th>Order_ID</th><th>Cust_ID</th><th>Customer_Name</th><th>Product</th><th>sales $</th><th>Profit</th></tr></thead>
                             <tbody>
-                                <tr><td>C902</td><td>Priya</td></tr>
-                                <tr><td>C904</td><td>John</td></tr>
+                                <tr><td>A101</td><td>C901</td><td>Rahul</td><td>Laptop</td><td>55,000</td><td>12,000</td></tr>
+                                <tr style="background:#fff1f2;"><td>A102</td><td>C902</td><td><b>Null</b></td><td>Mobile</td><td><b>Null</b></td><td>8,000</td></tr>
+                                <tr><td>A103</td><td>C903</td><td>Arjun</td><td>Headphones</td><td>2,500</td><td><b>Null</b></td></tr>
+                                <tr style="background:#fff1f2;"><td>A103</td><td>C903</td><td>Arjun</td><td>Headphones</td><td>2,500</td><td><b>Null</b></td><td>(Duplicate)</td></tr>
+                                <tr style="background:#fff1f2;"><td>A105</td><td>C904</td><td><b>Null</b></td><td>Keyboard</td><td><b>999,999</b></td><td>50,000</td></tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="jupyter-cell" style="margin: 0;">
-                        <div class="cell-input"><span class="cell-label">In [17]:</span><div class="cell-code"># Merging to refill names<br>df = pd.merge(df, master_cust, on="Cust_ID", how="left")</div></div>
+
+                    <h3 style="margin-top: 5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem;">Analytical Cleaning Workflow</h3>
+
+                    <!-- 1. CHECK DUPLICATES -->
+                    <div class="sub-topic" style="margin-top: 3rem;">1. Checking Duplicate Records</div>
+                    <p>The same order (A103) appears twice. We must identify redundant entries using <code>duplicated()</code>.</p>
+                    <div class="table-container" style="max-width: 400px; margin-bottom: 2rem;">
+                        <table class="data-table">
+                            <thead><tr><th>Order_ID</th><th>Cust_ID</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td>A103</td><td>C903</td><td>Original</td></tr>
+                                <tr style="background:#fff1f2;"><td style="color:#ef4444; font-weight:bold;">A103</td><td style="color:#ef4444; font-weight:bold;">C903</td><td style="color:#ef4444; font-weight:bold;">Duplicate</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="jupyter-cell">
+                        <div class="cell-input"><span class="cell-label">In [10]:</span><div class="cell-code"># Step 1: Check Duplicates<br>df.duplicated()</div></div>
+                        <div class="cell-output" style="color: #64748b; font-family: 'JetBrains Mono', monospace; padding-left: 3rem; line-height: 1.4; font-size: 0.9rem;">
+                            0 &nbsp; False<br>
+                            1 &nbsp; False<br>
+                            2 &nbsp; False<br>
+                            3 &nbsp; <b style="color: #ef4444;">True</b><br>
+                            4 &nbsp; False<br>
+                            dtype: bool
+                        </div>
+                    </div>
+
+                    <!-- 2. REMOVE DUPLICATES -->
+                    <div class="sub-topic" style="margin-top: 4rem;">2. Removing Duplicate Records</div>
+                    <p>After detection, we purge the redundant rows to ensure revenue accuracy.</p>
+                    <div class="jupyter-cell">
+                        <div class="cell-input"><span class="cell-label">In [11]:</span><div class="cell-code">df = df.drop_duplicates()</div></div>
+                    </div>
+                    <div class="strategy-note" style="border-left-color: #22c55e; background: #f0fdf4;">
+                        <b style="color: #0369a1;">Business Impact:</b> Removing duplicates ensures quarterly totals are not inflated by repeated system entries.
+                    </div>
+
+                    <!-- 3. CHECK NULLS -->
+                    <div class="sub-topic" style="margin-top: 4rem;">3. Checking Null Values</div>
+                    <p>We check for "missing gaps" across the dataset before proceeding to imputation.</p>
+                    <div class="jupyter-cell">
+                        <div class="cell-input"><span class="cell-label">In [12]:</span><div class="cell-code">df.isnull().sum()</div></div>
+                        <div class="cell-output" style="color: #64748b; font-family: 'JetBrains Mono', monospace; padding-left: 3rem; line-height: 1.4; font-size: 0.9rem;">
+                            Order_ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0<br>
+                            Cust_ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0<br>
+                            Customer_Name &nbsp; <b style="color: #ef4444;">2</b><br>
+                            Product &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0<br>
+                            sales $ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b style="color: #ef4444;">1</b><br>
+                            Profit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b style="color: #ef4444;">1</b><br>
+                            dtype: int64
+                        </div>
+                    </div>
+
+                    <!-- 4. SALES IMPUTATION -->
+                    <div class="sub-topic" style="margin-top: 4rem;">4. Sales Imputation (Mean)</div>
+                    <p>Fills the gap in Order A102 with the average (<b>$19,400</b>).</p>
+                    <div class="jupyter-cell">
+                        <div class="cell-input"><span class="cell-label">In [13]:</span><div class="cell-code">df["sales $"] = df["sales $"].fillna(df["sales $"].mean())</div></div>
+                    </div>
+
+                    <!-- 5. PROFIT IMPUTATION -->
+                    <div class="sub-topic" style="margin-top: 4rem;">5. Profit Imputation (Median)</div>
+                    <p>Fills Arjun's missing profit with the median (<b>$10,000</b>).</p>
+                    <div class="jupyter-cell">
+                        <div class="cell-input"><span class="cell-label">In [14]:</span><div class="cell-code">df["Profit"] = df["Profit"].fillna(df["Profit"].median())</div></div>
+                    </div>
+
+                    <!-- 6. STANDARDIZING HEADERS -->
+                    <div class="sub-topic" style="margin-top: 4rem;">6. Standardizing Headers</div>
+                    <p>Messy headers like <code>"sales $"</code> are converted to a professional format.</p>
+                    <div class="jupyter-cell">
+                        <div class="cell-input"><span class="cell-label">In [15]:</span><div class="cell-code">df.rename(columns={"sales $": "Sales_Amount"}, inplace=True)</div></div>
+                    </div>
+
+                    <!-- 7. REMOVING OUTLIERS -->
+                    <div class="sub-topic" style="margin-top: 4rem;">7. Removing Outliers (Thresholding)</div>
+                    <p>The <b>$999,999</b> value for Keyboard is an obvious error. We remove it by keeping only orders under <b>$60,000</b>.</p>
+                    <div class="jupyter-cell">
+                        <div class="cell-input"><span class="cell-label">In [16]:</span><div class="cell-code"># Keeping only realistic sales values<br>df = df[df["Sales_Amount"] < 60000]</div></div>
+                    </div>
+                    <div class="strategy-note" style="border-left-color: #ef4444; background: #fef2f2;">
+                        <b style="color: #b91c1c;">Simplified Thinking:</b> Outlier detection protects your KPIs (like Average Ticket Size) from being skewed by single errors.
+                    </div>
+
+                    <!-- 8. MERGING -->
+                    <div class="sub-topic" style="margin-top: 4rem;">8. Merging: Identity Recovery</div>
+                    <p>Our sales table is missing names for <b>C902</b> and <b>C904</b>. We use a <b>Master Customer Table</b> to refill them.</p>
+                    <div style="display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 2rem;">
+                        <div class="table-container" style="flex: 1;">
+                            <p style="font-size: 0.8rem; color: #0369a1; margin-bottom: 0.5rem; font-weight: bold;">Master_Customer_Table</p>
+                            <table class="data-table" style="font-size: 0.85rem;">
+                                <thead><tr><th>Cust_ID</th><th>Customer_Name</th></tr></thead>
+                                <tbody>
+                                    <tr><td>C902</td><td>Priya</td></tr>
+                                    <tr><td>C904</td><td>John</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="jupyter-cell" style="flex: 2; margin-top: 2rem;">
+                            <div class="cell-input"><span class="cell-label">In [17]:</span><div class="cell-code"># Merging to refill names<br>df = pd.merge(df, master_cust, on="Cust_ID", how="left")</div></div>
+                        </div>
+                    </div>
+                    <div class="strategy-note" style="border-left-color: #3b82f6; background: #eff6ff;">
+                        <b style="color: #1d4ed8;">Business Strategy:</b> Merging allows us to reconstruct complete customer journeys across different organizational systems.
                     </div>
                 </div>
-                <div class="explanation-box" style="background: #eff6ff; border-left-color: #3b82f6; color: #1e40af; margin-top: 2rem;">
-                    <b>Business Strategy:</b> Merging allows us to reconstruct complete customer journeys across different organizational systems.
+            </div>
+
+            <!-- FINAL CLEANED DATASET -->
+            <div id="final-cleaned">
+                <div class="content-area" style="background: #f0fdf4; border: 2px solid #bbf7d0;">
+                    <h3 style="color: #166534;"><i class="bi bi-check-circle-fill"></i> COMPLETE CLEANED DATASET</h3>
+                    <p>After our 8-step audit and identity recovery process, the dataset is now structurally sound and ready for <b>Amazon Business Intelligence</b> reporting.</p>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead><tr><th>Order_ID</th><th>Cust_ID</th><th>Customer_Name</th><th>Product</th><th>Sales_Amount</th><th>Profit</th></tr></thead>
+                            <tbody>
+                                <tr><td>A101</td><td>C901</td><td>Rahul</td><td>Laptop</td><td>55,000</td><td>12,000</td></tr>
+                                <tr><td>A102</td><td>C902</td><td><b style="color: #166534;">Priya</b></td><td>Mobile</td><td><b style="color: #166534;">19,400</b></td><td>8,000</td></tr>
+                                <tr><td>A103</td><td>C903</td><td>Arjun</td><td>Headphones</td><td>2,500</td><td><b style="color: #166534;">10,000</b></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="strategy-note" style="border-left-color: #22c55e; background: #fff; margin-top: 2rem;">
+                        <b>Business Benefit:</b> The data is now 100% reliable for the <b>Amazon Finance & Behavioral Dashboard</b>. Analysts can now calculate accurate growth metrics without system errors warping the results.
+                    </div>
                 </div>
             </div>
 
-            <!-- Final Result -->
-            <div class="content-area" style="background: #fdfcfb; border-color: #059669;">
-                <h2 style="text-align: center; border: none; padding: 0;"><i class="bi bi-shield-check"></i> Final Cleaned Amazon Sales Dataset</h2>
-                <div class="table-container">
-                    <table class="data-table" style="background: white;">
-                        <thead><tr><th>Order_ID</th><th>Cust_ID</th><th>Customer_Name</th><th>Product</th><th>Sales</th><th>Profit</th></tr></thead>
-                        <tbody>
-                            <tr><td>A101</td><td>C901</td><td>Rahul</td><td>Laptop</td><td>55000</td><td>12000</td></tr>
-                            <tr style="background: #f0fdf4;"><td>A102</td><td>C902</td><td><b style="color:#059669;">Priya</b></td><td>Mobile</td><td><b style="color:#059669;">19400</b></td><td>8000</td></tr>
-                            <tr style="background: #f0fdf4;"><td>A103</td><td>C903</td><td>Arjun</td><td>Headphones</td><td>2500</td><td><b style="color:#059669;">10000</b></td></tr>
-                            <tr style="background: #f0fdf4;"><td>A104</td><td>C904</td><td><b style="color:#059669;">John</b></td><td>Whiteboard</td><td>700</td><td>200</td></tr>
-                        </tbody>
-                    </table>
+            <!-- CASE STUDY 4 -->
+            <div id="case-study-4">
+                <div class="header-section" style="margin-top: 6rem; border-top: 2px solid #e2e8f0; padding-top: 4rem;">
+                    <span class="edu-badge" style="background:#0369a1; color:white;">CASE STUDY 4 — BANKING MARKETING DATA CLEANING</span>
+                    <h2 style="margin-top: 1.5rem;">HDFC Bank: Strategic Data Preparation</h2>
                 </div>
-                <p style="font-size: 0.8rem; color: #64748b; margin-top: 1rem; text-align: center;">* All identities merged, duplicates purged, and financial gaps imputed correctly.</p>
+
+                <div class="content-area">
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🏢 Organization Overview</h3>
+                    <p><b>HDFC Bank</b> is one of India’s leading private sector banks, offering a wide range of financial services including savings accounts, loans, investments, credit cards, and fixed deposits. The bank manages millions of customer records generated from branches, online banking systems, and telemarketing campaigns across the country.</p>
+                    <p>To improve customer engagement and marketing effectiveness, the bank regularly conducts telemarketing campaigns promoting term deposit products to existing customers.</p>
+
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📁 Business Context</h3>
+                    <p>The banking marketing dataset contains customer demographic information, financial details, and campaign interaction history such as: <b>Customer Age, Job Type, Marital Status, Education Level, Account Balance, Housing/Personal Loan Status, and Campaign Interaction Count.</b></p>
+                    <p>The organization noticed that the raw customer dataset contained several data quality problems, making business reporting and campaign analysis unreliable.</p>
+
+                    <div class="strategy-note" style="margin-top: 2rem;">
+                        <h4>📖 The Story Behind the Analysis</h4>
+                        <p>Imagine a large banking marketing team collecting customer information from multiple systems over several years. Different branches entered customer details manually, telemarketing teams updated campaign responses differently, and some systems stored incomplete records.</p>
+                        <p>Over time, the dataset became inconsistent: <b>Duplicate records appeared, fields contained missing values, and certain balance amounts appeared unrealistic.</b> Job titles and education categories were written in multiple inconsistent formats (e.g., “admin”, “Admin”, “ADMIN.”).</p>
+                        <p>Before performing any predictive analytics, HDFC Bank decided to focus on cleaning and preparing the data properly.</p>
+                    </div>
+
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">⚠️ Key Business Challenges</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <h4 style="color: #ef4444; margin-bottom: 0.5rem;"><i class="bi bi-x-circle-fill"></i> Hidden Inaccuracies</h4>
+                            <ul style="font-size: 0.9rem; line-height: 1.6;">
+                                <li><b>Missing Info:</b> Job, Education, and Balance gaps.</li>
+                                <li><b>Duplicates:</b> Repeated entries inflate statistics.</li>
+                                <li><b>Financial Outliers:</b> Abnormally high balance errors.</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
+                            <h4 style="color: #f59e0b; margin-bottom: 0.5rem;"><i class="bi bi-fonts"></i> Format Chaos</h4>
+                            <ul style="font-size: 0.9rem; line-height: 1.6;">
+                                <li><b>Inconsistent Case:</b> "admin" vs "ADMIN."</li>
+                                <li><b>Manual Entry:</b> Spelling mistakes and extra spaces.</li>
+                                <li><b>Invalid Values:</b> Non-numeric data in financial fields.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem; margin-top: 4rem;">🎯 Project Objective</h3>
+                    <p>The objective of this project is to perform **data cleaning and preprocessing using Python** to improve the quality, consistency, and reliability of banking marketing data before analysis and predictive modeling.</p>
+
+                    <div style="background: #fff; border: 2px solid #e2e8f0; padding: 2.5rem; border-radius: 12px; margin-top: 4rem;">
+                        <h3 style="margin-top: 0; color: #0f172a;"><i class="bi bi-tools"></i> 🛠️ Project Requirements</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2rem;">
+                            <div>
+                                <h4 style="color: var(--primary); margin-bottom: 1rem; border-bottom: 2.5px solid #e2e8f0; padding-bottom: 0.5rem; font-size: 1.2rem;">1. Understanding</h4>
+                                <ul style="font-size: 0.95rem; line-height: 1.8; list-style: none;">
+                                    <li>📌 Understand the overall dataset structure</li>
+                                    <li>📌 Identify total rows and columns</li>
+                                    <li>📌 Check dataset dimensions using shape</li>
+                                    <li>📌 Display column names</li>
+                                    <li>📌 Identify data types of each column</li>
+                                    <li>📌 Review first records using head()</li>
+                                    <li>📌 Review last records using tail()</li>
+                                    <li>📌 Detect missing or null values</li>
+                                    <li>📌 Understand records and features</li>
+                                    <li>📌 Verify dataset consistency before cleaning</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 style="color: var(--primary); margin-bottom: 1rem; border-bottom: 2.5px solid #e2e8f0; padding-bottom: 0.5rem; font-size: 1.2rem;">2. Cleaning</h4>
+                                <ul style="font-size: 0.95rem; line-height: 1.8; list-style: none;">
+                                    <li>📌 Handle missing or null values</li>
+                                    <li>📌 Remove duplicate records</li>
+                                    <li>📌 Correct incorrect data types</li>
+                                    <li>📌 Standardize text formatting</li>
+                                    <li>📌 Remove extra spaces from data</li>
+                                    <li>📌 Remove unwanted symbols and characters</li>
+                                    <li>📌 Detect and handle outliers</li>
+                                    <li>📌 Fix inconsistent values</li>
+                                    <li>📌 Rename columns properly</li>
+                                    <li>📌 Ensure clean and accurate dataset for analysis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="strategy-note" style="border-left-color: #6366f1; background: #f5f3ff; margin-top: 4rem;">
+                        <h4>🧠 Case Study Perspective — Strategist</h4>
+                        <p>From a <b>Strategist analytics consulting perspective</b>, this project demonstrates that data cleaning is not simply a technical task but a business-critical process. Without clean data, reports become inaccurate, marketing decisions become risky, and business forecasting loses reliability.</p>
+                        <p>By improving data quality, the organization creates a strong analytical foundation for future business intelligence and predictive initiatives.</p>
+                    </div>
+
+                    <div style="background: #f0fdf4; border-left: 5px solid #22c55e; padding: 2rem; border-radius: 0 12px 12px 0; margin-top: 3rem;">
+                        <h4 style="color: #166534;"><i class="bi bi-lightbulb-fill"></i> 💡 Analytics-Driven Solution</h4>
+                        <p>Using Python-based data cleaning techniques, the raw banking dataset is transformed into a structured format. Data cleaning converts inconsistent operational data into <b>trusted business intelligence</b>, enabling accurate reporting and improved predictive modeling.</p>
+                    </div>
+
+                    <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem; margin-top: 4rem;">🚀 Strategic Outcomes & Decision Impact</h3>
+                    <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-left: 0; font-size: 0.95rem; list-style: none;">
+                        <li>✅ Improved data quality and consistency</li>
+                        <li>✅ Accurate customer and campaign reporting</li>
+                        <li>✅ Reduced reporting errors & operational efficiency</li>
+                        <li>✅ Reliable data for future analytics/predictive projects</li>
+                        <li>✅ Stronger customer targeting strategies</li>
+                        <li>✅ Faster, data-backed business decision-making</li>
+                        <li>✅ Enhanced trust in organizational data systems</li>
+                    </ul>
+
+                    <div class="interpretation-note" style="margin-top: 4rem; background: #0f172a; color: #cbd5e1; border-left-color: #3b82f6;">
+                        <h4 style="color: #60a5fa; margin-bottom: 1.5rem;"><i class="bi bi-cpu-fill"></i> Tools & Technologies</h4>
+                        <p style="margin-bottom: 0.5rem; color: #f1f5f9;"><b style="color: #60a5fa;">Programming:</b> Python (Pandas, NumPy)</p>
+                        <p style="margin-bottom: 0.5rem; color: #f1f5f9;"><b style="color: #60a5fa;">Focus Area:</b> Data Cleaning & Preparation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DYNAMIC INTERACTIVE PRACTICE ENGINE: DATA CLEANING -->
+        <section id="practice-cleaning" style="margin-top: 5rem; border-top: 2px solid #e2e8f0; padding-top: 4rem; margin-bottom: 5rem;">
+            <div class="header-section">
+                <span class="edu-badge" style="background:#059669; color:#fff;">STRATEGIC CLEANING</span>
+                <h1>Interactive Practice: Data Cleaning Engine</h1>
+                <p>Master the professional cleaning workflows used to ensure data integrity.</p>
             </div>
 
-            <div style="margin-top: 5rem;">
-                <div class="content-area" style="margin:0; border: 2px dashed #059669;">
-                    <h2 style="border: none; padding: 0;"><i class="bi bi-cpu"></i> Analyst's Summary</h2>
-                    <p style="font-size: 0.95rem;">Data cleaning transforms <b>unreliable raw data</b> into <b>trustworthy intelligence</b>. By standardizing column names and handling anomalies, we ensure every decision is backed by verified truth.</p>
-                    <p style="font-size: 0.95rem; font-weight: 700; color: #059669;">"Clean Data Leads to Better Business Decisions."</p>
+            <!-- START GATEWAY -->
+            <div id="cleaning-gateway" style="background: #ecfdf5; padding: 6rem 2rem; border-radius: 32px; text-align: center; margin-bottom: 4rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border: 1px solid #d1fae5;">
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <h2 style="border:none; padding:0; margin-bottom: 1rem; color: #065f46;">Ready to Clean?</h2>
+                    <p style="margin-bottom: 2.5rem; color: #065f46;">Solve 10 precision-weighted cleaning questions. Achieve 80% to demonstrate proficiency.</p>
+                    <button onclick="startCleaningEngine()" style="background: linear-gradient(90deg, #059669, #10b981); color: white; border: none; padding: 1.15rem 3.5rem; border-radius: 100px; font-size: 1.3rem; font-weight: 800; letter-spacing: 0.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); transition: transform 0.2s ease;">
+                        START CLEANING <i class="bi bi-stars"></i>
+                    </button>
                 </div>
             </div>
 
-            <p style="text-align: center; margin-top: 5rem; color: var(--text-muted); font-size: 0.875rem;">
-                &copy; 2026 Amazon Marketplace Series | Data Cleaning Mastery Module
-            </p>
-        </div>
-    </main>
+            <!-- ENGINE INTERFACE -->
+            <div id="cleaning-engine-ui" style="display: none;">
+                <!-- PROGRESS BAR -->
+                <div style="max-width: 800px; margin: 0 auto 3rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-weight: 700; color: #64748b; font-size: 0.9rem;">
+                        <span id="cleaning-progress-text">Question 1 of 10</span>
+                        <span id="cleaning-score-text">Score: 0%</span>
+                    </div>
+                    <div style="height: 10px; background: #e2e8f0; border-radius: 10px; overflow: hidden;">
+                        <div id="cleaning-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #059669, #10b981); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+                    </div>
+                </div>
+
+                <!-- QUESTION CARD (GLASSMORPHISM) -->
+                <div id="cleaning-question-card" style="max-width: 800px; margin: 0 auto; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 24px; padding: 3rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); min-height: 400px; position: relative;">
+                    <div id="cleaning-question-content">
+                        <!-- Dynamic Content -->
+                    </div>
+
+                    <div id="cleaning-feedback-area" style="display: none; margin-top: 2rem; padding: 1.5rem; border-radius: 12px; border: 1px solid transparent;">
+                        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <div id="cleaning-feedback-icon" style="font-size: 1.5rem;"></div>
+                            <div>
+                                <h4 id="cleaning-feedback-title" style="margin:0; border:none; padding:0; font-size: 1.1rem;"></h4>
+                                <p id="cleaning-feedback-explanation" style="margin: 0.5rem 0 0; font-size: 0.95rem; line-height: 1.5; color: #475569;"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cleaning-action-area" style="margin-top: 3rem; display: flex; justify-content: flex-end;">
+                        <button id="cleaning-next-btn" onclick="nextCleaningQuestion()" style="display: none; background: #065f46; color: white; border: none; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                            Next Question <i class="bi bi-arrow-right-short" style="vertical-align: middle;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCORE SCREEN -->
+            <div id="cleaning-score-screen" style="display: none; max-width: 800px; margin: 0 auto; text-align: center; padding: 5rem 2rem;">
+                <div id="cleaning-final-medal" style="font-size: 5rem; margin-bottom: 2rem;">🥇</div>
+                <h1 id="cleaning-final-status">Data Quality Specialist!</h1>
+                <p id="cleaning-final-score-p" style="font-size: 1.5rem; margin-bottom: 3rem;"></p>
+                <button onclick="location.reload()" style="background: #065f46; color: white; border: none; padding: 1rem 2.5rem; border-radius: 100px; font-weight: 700; cursor: pointer;">
+                    Retry Cleaning <i class="bi bi-arrow-clockwise"></i>
+                </button>
+            </div>
+
+
+              <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --success: #22c55e;
+            --error: #ef4444;
+        }
+
+        /* GLASSMORPHISM & DYNAMIC COMPONENTS */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        .option-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-size: 1.05rem;
+            font-weight: 500;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-btn.correct { background: #f0fdf4 !important; border-color: var(--success) !important; color: #166534 !important; }
+        .option-btn.wrong { background: #fef2f2 !important; border-color: var(--error) !important; color: #991b1b !important; }
+
+        .sortable-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: move;
+            font-family: inherit;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+
+        .sortable-item:hover { border-color: var(--primary); background: #f0f9ff; }
+        .sortable-item.dragging { opacity: 0.5; background: #e0f2fe; }
+
+        .code-input {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            width: 160px;
+            color: #1e293b;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .code-input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.1); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade { animation: fadeIn 0.4s ease forwards; }
+    </style>
+
+    <script>
+        const questionBank = [
+            // 5 MCQs
+            { type: 'mcq', q: "Which library is the global standard for data analysis in Python?", options: ["NumPy", "Pandas", "Matplotlib", "Scikit-Learn"], a: 1, exp: "Pandas provides the DataFrame structure which is the core of modern data analysis." },
+            { type: 'mcq', q: "What is the correct way to import Pandas with a professional alias?", options: ["import pandas", "import pandas as pd", "import pd as pandas", "from pandas import *"], a: 1, exp: 'The "as pd" alias is the industry standard followed by analysts worldwide.' },
+            { type: 'mcq', q: "Which command would you use to see the scale (rows/cols) of your data?", options: ["df.info()", "df.size()", "df.shape", "df.dimensions"], a: 2, exp: "df.shape is an attribute that returns a tuple representing (rows, columns)." },
+            { type: 'mcq', q: "If you need a structural deep-dive including data types and memory usage, which command do you use?", options: ["df.head()", "df.describe()", "df.info()", "df.type()"], a: 2, exp: "df.info() provides a full audit of column types and identifies missing (null) values." },
+            { type: 'mcq', q: "To see the first 5 rows of a dataset, which command is most appropriate?", options: ["df.peek()", "df.top()", "df.head()", "df.show(5)"], a: 2, exp: "df.head() allows you to verify that column headers match the data records." },
+
+            // 1 Dropdowns (Remaining)
+            { type: 'dropdown', q: "To display the last 10 records of a massive dataset, you run:", pre: "df.", select: ["tail(10)", "last(10)", "end(10)", "final(10)"], post: "", a: "tail(10)", exp: "The tail() function is used for recency audits to check the latest data entries." },
+
+            // 1 Drag & Drop (Sortable)
+            { type: 'sort', q: "Arrange the data audit steps in the correct sequence:", items: ["import pandas as pd", "df = pd.read_csv('data.csv')", "df.head()", "df.info()"], correctOrder: [0, 1, 2, 3], exp: "Always import libraries first, then load the data, and finally audit the structure." },
+
+            // 4 Complete the Code
+            { type: 'code', q: "Fill in the command to load a local data file named 'amazon.csv':", code: 'df = pd. <input type="text" class="code-input" id="code-ans" autocomplete="off"> ("amazon.csv")', a: "read_csv", exp: "read_csv() is the most frequent entry point for external data files." },
+            { type: 'code', q: "Extract just the column names from your DataFrame:", code: 'print(df. <input type="text" class="code-input" id="code-ans" autocomplete="off"> )', a: "columns", exp: "Accessing columns is critical for checking header standardization." },
+            { type: 'code', q: "Select only the first 3 rows of data:", code: 'df. <input type="text" class="code-input" id="code-ans" autocomplete="off"> (3)', a: "head", exp: "You can pass any integer N into head() to see that specific number of records." }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+        let answered = false;
+
+        function startPracticeEngine() {
+            document.getElementById('practice-gateway').style.display = 'none';
+            document.getElementById('practice-engine').style.display = 'block';
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            answered = false;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('feedback-area').style.display = 'none';
+            
+            const q = questionBank[currentQ];
+            const content = document.getElementById('question-content');
+            content.innerHTML = `<h3 style="border:none; padding:0; margin-bottom:2rem; color:#0f172a;">${q.q}</h3>`;
+
+            if (q.type === 'mcq') {
+                const optionsDiv = document.createElement('div');
+                optionsDiv.id = 'ans-controls';
+                q.options.forEach((opt, i) => {
+                    optionsDiv.innerHTML += `<button class="option-btn animate-fade" onclick="checkMCQ(${i})"><span style="width:24px; height:24px; border-radius:50%; border:2px solid #cbd5e1; display:inline-block; font-size:12px; text-align:center; line-height:22px;">${String.fromCharCode(65+i)}</span> ${opt}</button>`;
+                });
+                content.appendChild(optionsDiv);
+            } else if (q.type === 'dropdown') {
+                content.innerHTML += `<div id="ans-controls" class="jupyter-cell animate-fade"><div class="cell-input"><span class="cell-label">In [ ]:</span><div class="cell-code">${q.pre} <select id="drop-ans" class="code-input" onchange="checkDropdown()"> <option value="">Select...</option> ${q.select.map(s => `<option value="${s}">${s}</option>`).join('')} </select> ${q.post}</div></div></div>`;
+            } else if (q.type === 'code') {
+                content.innerHTML += `<div id="ans-controls"><div class="jupyter-cell animate-fade"><div class="cell-input"><span class="cell-label">In [ ]:</span><div class="cell-code">${q.code}</div></div></div><button onclick="checkCode()" style="margin-top:1.5rem; background:var(--primary); color:white; border:none; padding:0.8rem 2rem; border-radius:8px; cursor:pointer; font-weight:700;">Submit Answer</button></div>`;
+            } else if (q.type === 'sort') {
+                // Shuffle logic without losing original indices
+                let itemsWithMeta = q.items.map((text, index) => ({ text, index }));
+                itemsWithMeta.sort(() => Math.random() - 0.5);
+                
+                content.innerHTML += `
+                    <div id="ans-controls">
+                        <p style="font-size:0.85rem; color:#64748b; margin-bottom:1rem;"><i class="bi bi-info-circle"></i> Drag and drop the items to reorder them.</p>
+                        <div id="sort-container" class="animate-fade">
+                            ${itemsWithMeta.map(item => `
+                                <div class="sortable-item" draggable="true" 
+                                     data-orig-idx="${item.index}"
+                                     ondragstart="handleDragStart(event)" 
+                                     ondragover="handleDragOver(event)" 
+                                     ondrop="handleDrop(event)">
+                                    <i class="bi bi-grip-vertical"></i> ${item.text}
+                                </div>`).join('')}
+                        </div>
+                        <button onclick="checkSort()" style="margin-top:2rem; background:var(--primary); color:white; border:none; padding:0.8rem 2rem; border-radius:8px; cursor:pointer; font-weight:700;">Confirm Sequence</button>
+                    </div>`;
+            }
+
+            updateProgress();
+        }
+
+        // Drag & Drop Logic
+        let draggedNode = null;
+        function handleDragStart(e) { 
+            draggedNode = e.currentTarget; 
+            e.currentTarget.classList.add('dragging'); 
+        }
+        function handleDragOver(e) { e.preventDefault(); }
+        function handleDrop(e) {
+            e.preventDefault();
+            const container = document.getElementById('sort-container');
+            const targetNode = e.currentTarget;
+            
+            if (draggedNode && targetNode && draggedNode !== targetNode) {
+                const items = Array.from(container.children);
+                const draggedIdx = items.indexOf(draggedNode);
+                const targetIdx = items.indexOf(targetNode);
+                
+                if (draggedIdx < targetIdx) {
+                    container.insertBefore(draggedNode, targetNode.nextSibling);
+                } else {
+                    container.insertBefore(draggedNode, targetNode);
+                }
+            }
+            if (draggedNode) draggedNode.classList.remove('dragging');
+        }
+
+        function checkMCQ(i) {
+            if (answered) return;
+            answered = true;
+            const q = questionBank[currentQ];
+            const btns = document.querySelectorAll('.option-btn');
+            if (i === q.a) { score++; showFeedback(true, q.exp); btns[i].classList.add('correct'); }
+            else { showFeedback(false, q.exp); btns[i].classList.add('wrong'); btns[q.a].classList.add('correct'); }
+            finalizeQuestion();
+        }
+
+        function checkDropdown() {
+            if (answered) return;
+            const q = questionBank[currentQ];
+            const sel = document.getElementById('drop-ans').value;
+            if (sel === "") return;
+            answered = true;
+            if (sel === q.a) { score++; showFeedback(true, q.exp); }
+            else { showFeedback(false, `Correct: ${q.a}. ${q.exp}`); }
+            finalizeQuestion();
+        }
+
+        function checkCode() {
+            if (answered) return;
+            const q = questionBank[currentQ];
+            const ansField = document.getElementById('code-ans');
+            const ans = ansField.value.trim().toLowerCase();
+            if (ans === "") { alert("Please type your answer."); return; }
+            answered = true;
+            if (ans === q.a.toLowerCase()) { score++; showFeedback(true, q.exp); }
+            else { showFeedback(false, `Expected: ${q.a}. ${q.exp}`); }
+            finalizeQuestion();
+        }
+
+        function checkSort() {
+            if (answered) return;
+            answered = true;
+            const q = questionBank[currentQ];
+            const container = document.getElementById('sort-container');
+            const currentIndices = Array.from(container.children).map(node => parseInt(node.getAttribute('data-orig-idx')));
+            
+            let isCorrect = true;
+            q.correctOrder.forEach((idx, i) => {
+                if (currentIndices[i] !== idx) isCorrect = false;
+            });
+
+            if (isCorrect) { score++; showFeedback(true, q.exp); }
+            else { showFeedback(false, q.exp); }
+            
+            // Highlight result
+            Array.from(container.children).forEach((node, i) => {
+                node.style.borderColor = isCorrect ? 'var(--success)' : 'var(--error)';
+                node.setAttribute('draggable', 'false');
+            });
+
+            finalizeQuestion();
+        }
+
+        function finalizeQuestion() {
+            const controls = document.getElementById('ans-controls');
+            // We keep the container but hide specific interaction buttons if needed
+            const submitBtn = controls.querySelector('button');
+            if (submitBtn) submitBtn.style.display = 'none';
+            // Also disable selects
+            const select = controls.querySelector('select');
+            if (select) select.disabled = true;
+            
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function showFeedback(isCorrect, exp) {
+            const area = document.getElementById('feedback-area');
+            const title = document.getElementById('feedback-title');
+            const icon = document.getElementById('feedback-icon');
+            const explanation = document.getElementById('feedback-explanation');
+            
+            area.style.display = 'block';
+            area.style.background = isCorrect ? '#f0fdf4' : '#fef2f2';
+            area.style.borderColor = isCorrect ? '#22c55e' : '#ef4444';
+            title.innerText = isCorrect ? "Strategic Precision!" : "Audit Error Detected";
+            title.style.color = isCorrect ? "#166534" : "#991b1b";
+            icon.innerHTML = isCorrect ? '<i class="bi bi-check-circle-fill" style="color:#22c55e;"></i>' : '<i class="bi bi-x-circle-fill" style="color:#ef4444;"></i>';
+            explanation.innerText = exp;
+        }
+
+        function updateProgress() {
+            const progress = ((currentQ + 1) / questionBank.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('progress-text').innerText = `Question ${currentQ + 1} of ${questionBank.length}`;
+            document.getElementById('score-text').innerText = `Current Completion: ${Math.round((score / questionBank.length) * 100)}%`;
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ < questionBank.length) renderQuestion();
+            else showScoreScreen();
+        }
+
+        function showScoreScreen() {
+            document.getElementById('practice-engine').style.display = 'none';
+            document.getElementById('score-screen').style.display = 'block';
+            const finalScore = Math.round((score / questionBank.length) * 100);
+            document.getElementById('final-score-p').innerHTML = `You achieved a <b>${finalScore}%</b> Audit Accuracy. <br><span style="font-size:1.1rem; color:#64748b; margin-top:1rem; display:block;">${finalScore >= 80 ? "Strategic Mastery Confirmed." : "More training required in Data Audit."}</span>`;
+            document.getElementById('final-medal').innerText = finalScore >= 80 ? "🥇" : (finalScore >= 60 ? "🥈" : "🥉");
+        }
+
+
+        /* ── DATA CLEANING ENGINE LOGIC ── */
+        const cleaningBank = [
+            { type: 'mcq', q: "Which Pandas function is used to check missing values in a dataset?", options: ["dropna()", "isnull()", "fillna()", "info()"], a: 1, exp: "isnull() returns a Boolean mask showing True for every missing piece of data." },
+            { type: 'code', q: "Fill the missing function to remove rows with missing values:", code: 'import pandas as pd<br>df = pd.read_csv("employees.csv")<br>df = df. <input type="text" class="code-input" id="cleaning-ans" autocomplete="off" style="width:120px;"> ()', a: "dropna", exp: "dropna() purges any row that contains at least one null value, cleaning the dataset." },
+            { type: 'dropdown', q: "Which function is used to remove duplicate rows from a dataset?", pre: "df.", select: ["fillna()", "drop_duplicates()", "info()", "columns"], post: "", a: "drop_duplicates()", exp: "drop_duplicates() ensures every record in your analysis is unique." },
+            { type: 'sort', q: "Arrange the steps to clean missing values:", items: ["import pandas as pd", 'df = pd.read_csv("sales.csv")', "df.fillna(0)"], correctOrder: [0, 1, 2], exp: "Load the engine, load the data, then apply the cleaning strategy." },
+            { type: 'mcq', q: "Which function is used to replace missing values?", options: ["shape()", "fillna()", "tail()", "columns"], a: 1, exp: "fillna() bridges data gaps by replacing nulls with specific values or averages." },
+            { type: 'dropdown', q: "Which function helps identify dataset information including null values?", pre: "df.", select: ["head()", "info()", "shape()", "tail()"], post: "", a: "info()", exp: "info() provides a full audit of the dataset's structural health." },
+            { type: 'sort', q: "Arrange the data cleaning steps in correct order:", items: ['pd.read_csv("marketing.csv")', "df.info()", "df.drop_duplicates()"], correctOrder: [0, 1, 2], exp: "Always perform a structural audit (info) before applying deletions." },
+            { type: 'code', q: "Fill the missing function to replace null values with the mean:", code: 'df["Salary"] = df["Salary"]. <input type="text" class="code-input" id="cleaning-ans" autocomplete="off" style="width:100px;"> (df["Salary"].mean())', a: "fillna", exp: "Imputing with the mean maintains the statistical integrity of numeric columns." },
+            { type: 'mcq', q: "What does the axis=1 parameter signify in the drop() function?", options: ["Remove Rows", "Remove Columns", "Fill Nulls", "Sort Data"], a: 1, exp: "In Pandas, axis=1 specifies that the operation should target the vertical (columns) axis." },
+            { type: 'code', q: "Standardize column names using the rename function:", code: 'df = df. <input type="text" class="code-input" id="cleaning-ans" autocomplete="off" style="width:100px;"> (columns={"A": "Alpha"})', a: "rename", exp: "Renaming ensures columns are professionally labeled for reporting." }
+        ];
+
+        let currentCleaningQ = 0;
+        let cleaningScore = 0;
+        let cleaningAnswered = false;
+
+        function startCleaningEngine() {
+            document.getElementById('cleaning-gateway').style.display = 'none';
+            document.getElementById('cleaning-engine-ui').style.display = 'block';
+            renderCleaningQuestion();
+        }
+
+        function renderCleaningQuestion() {
+            cleaningAnswered = false;
+            document.getElementById('cleaning-next-btn').style.display = 'none';
+            document.getElementById('cleaning-feedback-area').style.display = 'none';
+            
+            const q = cleaningBank[currentCleaningQ];
+            const content = document.getElementById('cleaning-question-content');
+            content.innerHTML = `<h3 style="border:none; padding:0; margin-bottom:2rem; color:#0f172a;">${q.q}</h3>`;
+
+            if (q.type === 'mcq') {
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'ans-controls';
+                q.options.forEach((opt, i) => {
+                    optionsDiv.innerHTML += `<button class="option-btn animate-fade" onclick="checkCleaningMCQ(${i})"><span style="width:24px; height:24px; border-radius:50%; border:2px solid #cbd5e1; display:inline-block; font-size:12px; text-align:center; line-height:22px;">${String.fromCharCode(65+i)}</span> ${opt}</button>`;
+                });
+                content.appendChild(optionsDiv);
+            } else if (q.type === 'dropdown') {
+                content.innerHTML += `<div class="ans-controls jupyter-cell animate-fade"><div class="cell-input"><span class="cell-label">In [ ]:</span><div class="cell-code">${q.pre} <select id="cleaning-drop-ans" class="code-input" onchange="checkCleaningDropdown()" style="width:auto; min-width:150px;"> <option value="">Select...</option> ${q.select.map(s => `<option value="${s}">${s}</option>`).join('')} </select> ${q.post}</div></div></div>`;
+            } else if (q.type === 'code') {
+                content.innerHTML += `<div class="ans-controls"><div class="jupyter-cell animate-fade"><div class="cell-input"><span class="cell-label">In [ ]:</span><div class="cell-code">${q.code}</div></div></div><button onclick="checkCleaningCode()" style="margin-top:1.5rem; background:#059669; color:white; border:none; padding:0.8rem 2rem; border-radius:8px; cursor:pointer; font-weight:700;">Submit Answer</button></div>`;
+            } else if (q.type === 'sort') {
+                let itemsWithMeta = q.items.map((text, index) => ({ text, index }));
+                itemsWithMeta.sort(() => Math.random() - 0.5);
+                content.innerHTML += `
+                    <div class="ans-controls">
+                        <p style="font-size:0.85rem; color:#64748b; margin-bottom:1rem;"><i class="bi bi-info-circle"></i> Drag items to reorder them.</p>
+                        <div id="cleaning-sort-container" class="animate-fade">
+                            ${itemsWithMeta.map(item => `
+                                <div class="sortable-item" draggable="true" data-orig-idx="${item.index}"
+                                     ondragstart="handleCleaningDragStart(event)" ondragover="handleCleaningDragOver(event)" ondrop="handleCleaningDrop(event)">
+                                    <i class="bi bi-grip-vertical"></i> ${item.text}
+                                </div>`).join('')}
+                        </div>
+                        <button onclick="checkCleaningSort()" style="margin-top:2rem; background:#059669; color:white; border:none; padding:0.8rem 2rem; border-radius:8px; cursor:pointer; font-weight:700;">Confirm Sequence</button>
+                    </div>`;
+            }
+            updateCleaningProgress();
+        }
+
+        let cleaningDraggedNode = null;
+        function handleCleaningDragStart(e) { cleaningDraggedNode = e.currentTarget; e.currentTarget.classList.add('dragging'); }
+        function handleCleaningDragOver(e) { e.preventDefault(); }
+        function handleCleaningDrop(e) {
+            e.preventDefault();
+            const container = document.getElementById('cleaning-sort-container');
+            const targetNode = e.currentTarget;
+            if (cleaningDraggedNode && targetNode && cleaningDraggedNode !== targetNode) {
+                const items = Array.from(container.children);
+                const draggedIdx = items.indexOf(cleaningDraggedNode);
+                const targetIdx = items.indexOf(targetNode);
+                if (draggedIdx < targetIdx) container.insertBefore(cleaningDraggedNode, targetNode.nextSibling);
+                else container.insertBefore(cleaningDraggedNode, targetNode);
+            }
+            if (cleaningDraggedNode) cleaningDraggedNode.classList.remove('dragging');
+        }
+
+        function checkCleaningMCQ(i) {
+            if (cleaningAnswered) return;
+            cleaningAnswered = true;
+            const q = cleaningBank[currentCleaningQ];
+            const btns = document.querySelectorAll('#cleaning-question-content .option-btn');
+            if (i === q.a) { cleaningScore++; showCleaningFeedback(true, q.exp); btns[i].classList.add('correct'); }
+            else { showCleaningFeedback(false, q.exp); btns[i].classList.add('wrong'); btns[q.a].classList.add('correct'); }
+            finalizeCleaningQuestion();
+        }
+
+        function checkCleaningDropdown() {
+            if (cleaningAnswered) return;
+            const q = cleaningBank[currentCleaningQ];
+            const sel = document.getElementById('cleaning-drop-ans').value;
+            if (sel === "") return;
+            cleaningAnswered = true;
+            if (sel === q.a) { cleaningScore++; showCleaningFeedback(true, q.exp); }
+            else { showCleaningFeedback(false, `Expected: ${q.a}. ${q.exp}`); }
+            finalizeCleaningQuestion();
+        }
+
+        function checkCleaningCode() {
+            if (cleaningAnswered) return;
+            const q = cleaningBank[currentCleaningQ];
+            const ansField = document.getElementById('cleaning-ans');
+            const ans = ansField.value.trim().toLowerCase();
+            if (ans === "") { alert("Please type your answer."); return; }
+            cleaningAnswered = true;
+            if (ans === q.a.toLowerCase()) { cleaningScore++; showCleaningFeedback(true, q.exp); }
+            else { showCleaningFeedback(false, `Expected: ${q.a}. ${q.exp}`); }
+            finalizeCleaningQuestion();
+        }
+
+        function checkCleaningSort() {
+            if (cleaningAnswered) return;
+            cleaningAnswered = true;
+            const q = cleaningBank[currentCleaningQ];
+            const container = document.getElementById('cleaning-sort-container');
+            const currentIndices = Array.from(container.children).map(node => parseInt(node.getAttribute('data-orig-idx')));
+            let isCorrect = currentIndices.every((idx, i) => idx === q.correctOrder[i]);
+            if (isCorrect) { cleaningScore++; showCleaningFeedback(true, q.exp); }
+            else { showCleaningFeedback(false, q.exp); }
+            Array.from(container.children).forEach(node => {
+                node.style.borderColor = isCorrect ? 'var(--success)' : 'var(--error)';
+                node.setAttribute('draggable', 'false');
+            });
+            finalizeCleaningQuestion();
+        }
+
+        function finalizeCleaningQuestion() {
+            const content = document.getElementById('cleaning-question-content');
+            const submitBtn = content.querySelector('button');
+            if (submitBtn) submitBtn.style.display = 'none';
+            const select = content.querySelector('select');
+            if (select) select.disabled = true;
+            document.getElementById('cleaning-next-btn').style.display = 'block';
+        }
+
+        function showCleaningFeedback(isCorrect, exp) {
+            const area = document.getElementById('cleaning-feedback-area');
+            const title = document.getElementById('cleaning-feedback-title');
+            const icon = document.getElementById('cleaning-feedback-icon');
+            const explanation = document.getElementById('cleaning-feedback-explanation');
+            area.style.display = 'block';
+            area.style.background = isCorrect ? '#f0fdf4' : '#fef2f2';
+            area.style.borderColor = isCorrect ? '#22c55e' : '#ef4444';
+            title.innerText = isCorrect ? "Cleaning Excellence!" : "Quality Alert!";
+            title.style.color = isCorrect ? "#166534" : "#991b1b";
+            icon.innerHTML = isCorrect ? '<i class="bi bi-shield-check" style="color:#22c55e;"></i>' : '<i class="bi bi-shield-exclamation" style="color:#ef4444;"></i>';
+            explanation.innerText = exp;
+        }
+
+        function updateCleaningProgress() {
+            const progress = ((currentCleaningQ + 1) / cleaningBank.length) * 100;
+            document.getElementById('cleaning-progress-bar').style.width = progress + '%';
+            document.getElementById('cleaning-progress-text').innerText = `Question ${currentCleaningQ + 1} of ${cleaningBank.length}`;
+            document.getElementById('cleaning-score-text').innerText = `Current Accuracy: ${Math.round((cleaningScore / (currentCleaningQ + 1)) * 100)}%`;
+        }
+
+        function nextCleaningQuestion() {
+            currentCleaningQ++;
+            if (currentCleaningQ < cleaningBank.length) renderCleaningQuestion();
+            else showCleaningScoreScreen();
+        }
+
+        function showCleaningScoreScreen() {
+            document.getElementById('cleaning-engine-ui').style.display = 'none';
+            document.getElementById('cleaning-score-screen').style.display = 'block';
+            const finalScore = Math.round((cleaningScore / cleaningBank.length) * 100);
+            document.getElementById('cleaning-final-score-p').innerHTML = `You achieved a <b>${finalScore}%</b> Cleaning Accuracy. <br><span style="font-size:1.1rem; color:#64748b; margin-top:1rem; display:block;">${finalScore >= 80 ? "Strategic Cleaning Mastery Achieved." : "Recommended: Review Data Cleaning Case Studies."}</span>`;
+            document.getElementById('cleaning-final-medal').innerText = finalScore >= 85 ? "🏆" : (finalScore >= 70 ? "🔥" : "📚");
+        }
+    </script>
 </body>
 </html>
