@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Python for Business Analytics</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PyScript Assets -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Practice Assets -->
+    <link rel="stylesheet" href="practice_common.css">
+    <script src="practice_common.js"></script>
+
+    <style>
+        :root {
+            --sidebar-bg: #0f172a;
+            --sidebar-hover: #1e293b;
+            --primary: #0066cc; /* Strategist Blue Combo */
+            --primary-dark: #004d99;
+            --bg: #f8fafc;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        aside {
+            background-color: var(--sidebar-bg);
+            color: #ffffff;
+            padding: 2rem 1.5rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            margin-bottom: 3rem;
+            text-decoration: none;
+            display: block;
+            padding: 0;
+            background: transparent;
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.5rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.875rem 1rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--sidebar-hover);
+            color: #ffffff;
+        }
+
+        .nav-item a.active {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Main Content Styling */
+        main {
+            padding: 3rem 4rem;
+            overflow-y: auto;
+        }
+
+        .header-section {
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 1rem;
+            color: var(--sidebar-bg);
+        }
+
+        .content-area {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid #e2e8f0;
+            max-width: 1000px;
+        }
+
+        .content-area img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        .preview-container {
+            margin: 2rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        /* Content elements readability & spacing */
+        .content-area h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: var(--sidebar-bg);
+            border-left: 5px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        .content-area h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .content-area p {
+            font-size: 1.1rem;
+            color: #334155;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-area ul {
+            list-style: none;
+            margin-bottom: 1.75rem;
+            padding-left: 0;
+        }
+
+        .content-area li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.875rem;
+            color: #334155;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .content-area li:not(.why-item)::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        /* Why Python Grid Styling */
+        .why-python-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0 2.5rem;
+        }
+
+        .why-python-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--primary);
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .why-python-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .why-python-card i {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .why-python-card div h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--sidebar-bg);
+            margin-bottom: 0.25rem;
+        }
+
+        .why-python-card div p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Platform Cards Grid */
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.25rem;
+            margin: 1.5rem 0 2.5rem;
+        }
+
+        .platform-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            text-align: center;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .platform-card img {
+            width: 100%;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .platform-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--sidebar-bg);
+            margin: 0;
+        }
+
+        .platform-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+
+        /* Why Jupyter List */
+        .why-list {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .why-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .why-item i {
+            color: #10b981;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Features Table */
+        .features-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 2rem;
+            font-size: 0.95rem;
+        }
+
+        .features-table th, .features-table td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .features-table th {
+            background-color: #f1f5f9;
+            color: var(--sidebar-bg);
+            font-weight: 600;
+        }
+
+        .features-table tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* Mockup Browser Frame */
+        .mockup-container {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .mockup-header {
+            background: #f1f5f9;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mockup-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .mockup-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #ffffff;
+        }
+
+        .structure-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .breakdown-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .breakdown-num {
+            background: var(--primary);
+            color: #ffffff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .breakdown-info h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--sidebar-bg);
+            margin-bottom: 0.25rem;
+        }
+
+        .breakdown-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0 !important;
+            line-height: 1.4 !important;
+        }
+
+        /* --- INFOGRAPHIC STYLES --- */
+        .edu-section {
+            margin-top: 5rem;
+            border-top: 2px dashed #e2e8f0;
+            padding-top: 4rem;
+        }
+
+        .edu-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .badge-python { background: #fee2e2; color: #ef4444; }
+        .badge-numbers { background: #dcfce7; color: #16a34a; }
+        .badge-structures { background: #dbeafe; color: #2563eb; }
+
+        .info-panel {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .topic-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: #ffffff;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* Jupyter Code Mockup */
+        .jupyter-cell {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #3b82f6;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            font-family: 'Fira Code', monospace;
+            overflow: hidden;
+        }
+
+        .cell-input {
+            padding: 1rem;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .cell-label {
+            color: #3b82f6;
+            font-size: 0.85rem;
+            font-weight: 700;
+            min-width: 50px;
+        }
+
+        .cell-code {
+            font-size: 1.2rem;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        .cell-output {
+            padding: 0.75rem 1rem 0.75rem 4rem;
+            font-size: 1.05rem;
+            color: #64748b;
+        }
+
+        /* Colorful Table */
+        .edu-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .edu-table th {
+            background: #f1f5f9;
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.85rem;
+            color: var(--sidebar-bg);
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .edu-table td {
+            padding: 1rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .type-tag {
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 700;
+        }
+
+        /* Data Structure Grid */
+        .ds-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .ds-card {
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .ds-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+
+        .ds-list { background: #eff6ff; border-color: #bfdbfe; }
+        .ds-tuple { background: #fff7ed; border-color: #ffedd5; }
+        .ds-set { background: #f0fdf4; border-color: #dcfce7; }
+        .ds-dict { background: #faf5ff; border-color: #f3e8ff; }
+
+        .note-bubble {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-size: 0.85rem;
+            color: #92400e;
+            margin: 1.5rem 0;
+        }
+
+        /* Results Display */
+        #output {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #1e293b;
+            color: #f1f5f9;
+            border-radius: 0.75rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            min-height: 150px;
+            font-size: 1.15rem;
+            white-space: pre-wrap;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .output-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        footer {
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body {
+                grid-template-columns: 220px 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <a href="intro.html" class="logo">
+            <img src="strategist_logo.png" alt="Strategist Logo">
+        </a>
+        <nav>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="intro.html" id="link-intro" class="active">Intro</a></li>
+                <li class="nav-item"><a href="cleaning.html" id="link-cleaning">Data Understanding & Cleaning</a></li>
+                <li class="nav-item"><a href="analysis.html" id="link-analysis">Aggregation & Visualization</a></li>
+                <li class="nav-item"><a href="predictive.html" id="link-predictive">Predictive</a></li>
+                <li class="nav-item"><a href="industry_project.html" id="link-project">Industry Project</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <div class="header-section">
+            <h1>Introduction to Python for Business Analytics</h1>
+        </div>
+
+        <section class="content-area">
+            <h2>Introduction</h2>
+            <p>Python is a powerful and easy-to-learn programming language widely used in Business Analytics. It helps organizations analyze data, automate tasks, create reports, visualize trends, and make better business decisions.</p>
+            
+            <p>Python is popular in business because it can handle:</p>
+            <ul>
+                <li>Large datasets</li>
+                <li>Financial calculations</li>
+                <li>Predictive analytics</li>
+                <li>Data visualization</li>
+                <li>Machine learning applications</li>
+            </ul>
+
+            <h2>Why Python for Business Analytics?</h2>
+            <div class="why-python-grid">
+                <div class="why-python-card">
+                    <i class="bi bi-lightning-charge"></i>
+                    <div>
+                        <h4>Simple Syntax</h4>
+                        <p>Easy to read and write, making it accessible for business professionals without a CS degree.</p>
+                    </div>
+                </div>
+                <div class="why-python-card">
+                    <i class="bi bi-stack"></i>
+                    <div>
+                        <h4>Analytical Libraries</h4>
+                        <p>Powerful tools like Pandas and NumPy handle complex data operations with minimal code.</p>
+                    </div>
+                </div>
+                <div class="why-python-card">
+                    <i class="bi bi-gear-wide-connected"></i>
+                    <div>
+                        <h4>Automation</h4>
+                        <p>Streamlines repetitive reporting tasks, saving hours of manual Excel work every week.</p>
+                    </div>
+                </div>
+                <div class="why-python-card">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <div>
+                        <h4>Data-Driven</h4>
+                        <p>Enables advanced predictive modeling and trend analysis for smarter strategic decisions.</p>
+                    </div>
+                </div>
+                <div class="why-python-card">
+                    <i class="bi bi-globe"></i>
+                    <div>
+                        <h4>Industry Standard</h4>
+                        <p>Widely adopted across Finance, Marketing, and Operations in top global organizations.</p>
+                    </div>
+                </div>
+                <div class="why-python-card">
+                    <i class="bi bi-chat-square-dots"></i>
+                    <div>
+                        <h4>Communication</h4>
+                        <p>Excellent visualization tools help translate complex data into clear business insights.</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <h2>Python Development Environments</h2>
+            <p>Choosing the right platform is critical for efficiency. Below are the primary environments used by analysts to write and run Python code.</p>
+
+            <div class="platforms-grid">
+                <div class="platform-card">
+                    <img src="jupyter.png" alt="Jupyter Notebook">
+                    <h3>Jupyter Notebook</h3>
+                    <p>Interactive cell-based coding. Best for data analysis.</p>
+                </div>
+                <div class="platform-card">
+                    <img src="colab.png" alt="Google Colab">
+                    <h3>Google Colab</h3>
+                    <p>Cloud-based by Google. Excellent for AI & Collaboration.</p>
+                </div>
+                <div class="platform-card">
+                    <img src="vs_code.png" alt="VS Code">
+                    <h3>VS Code</h3>
+                    <p>High-performance editor. Industry standard for dev.</p>
+                </div>
+                <div class="platform-card">
+                    <img src="pycharm.png" alt="PyCharm">
+                    <h3>PyCharm</h3>
+                    <p>Professional IDE for large production codebases.</p>
+                </div>
+                <div class="platform-card">
+                    <img src="idle.png" alt="IDLE">
+                    <h3>IDLE</h3>
+                    <p>Beginner-friendly environment included with Python.</p>
+                </div>
+            </div>
+
+            <h2>Why Jupyter Notebook?</h2>
+            <p>Jupyter Notebook is widely used in Business Analytics and Data Science because it offers:</p>
+            <ul class="why-list">
+                <li class="why-item"><i class="bi bi-check2-circle"></i> Easy to use for beginners</li>
+                <li class="why-item"><i class="bi bi-check2-circle"></i> Runs code step by step</li>
+                <li class="why-item"><i class="bi bi-check2-circle"></i> Supports both code and notes together</li>
+                <li class="why-item"><i class="bi bi-check2-circle"></i> Displays charts and outputs clearly</li>
+                <li class="why-item"><i class="bi bi-check2-circle"></i> Useful for data analysis and visualization</li>
+                <li class="why-item"><i class="bi bi-check2-circle"></i> Helps organize analytical work properly</li>
+                <li class="why-item"><i class="bi bi-check2-circle"></i> Ideal for Machine Learning and Financial Analytics</li>
+            </ul>
+
+            <h2>Main Features of Jupyter Notebook</h2>
+            <table class="features-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Details &amp; Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Code Cells</strong></td>
+                        <td>Used to write, edit, and execute Python programs interactively.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Markdown Cells</strong></td>
+                        <td>Used for rich text notes, headers, explanations, and documentation.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Output Display</strong></td>
+                        <td>Shows standard output, execution logs, and returns immediately below the code.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Visualization Support</strong></td>
+                        <td>Displays inline charts, plots, and graphs easily from analytical packages.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Jupyter Notebook Interface</h2>
+            <div class="preview-container">
+                <img src="jupyter_preview.png" alt="Jupyter Notebook Preview">
+            </div>
+
+            <h2 style="margin-top: 3rem;">Jupyter Notebook Architectural Layout</h2>
+            <p>The Jupyter interface is designed to support a seamless flow between documentation, code execution, and results visualization.</p>
+            
+            <div class="mockup-container">
+                <div class="mockup-header">
+                    <div class="mockup-dot" style="background: #ff5f56;"></div>
+                    <div class="mockup-dot" style="background: #ffbd2e;"></div>
+                    <div class="mockup-dot" style="background: #27c93f;"></div>
+                    <span style="font-size: 0.75rem; color: #94a3b8; margin-left: 1rem; font-family: monospace;">jupyter_notebook_structure.pynb</span>
+                </div>
+                <img src="Jupyter_Struc.png" alt="Jupyter Notebook Structure Diagram" class="mockup-img">
+            </div>
+
+            <div class="structure-breakdown">
+                <div class="breakdown-item">
+                    <div class="breakdown-num">1</div>
+                    <div class="breakdown-info">
+                        <h4>Header & Toolbar</h4>
+                        <p>Access file operations, kernel management, and common cell actions at a glance.</p>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-num">2</div>
+                    <div class="breakdown-info">
+                        <h4>Code Cells</h4>
+                        <p>Write and execute live Python code with immediate output display directly below the cell.</p>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-num">3</div>
+                    <div class="breakdown-info">
+                        <h4>Markdown Cells</h4>
+                        <p>Document your analysis with rich text, headers, and formatted notes using standard Markdown.</p>
+                    </div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-num">4</div>
+                    <div class="breakdown-info">
+                        <h4>Kernel Status</h4>
+                        <p>Monitor the execution state (Idle/Busy) and manage computational resources in real-time.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edu-section">
+                <h1 style="color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem;">Python Fundamentals</h1>
+                <p class="text-muted" style="font-size: 1.1rem; margin-bottom: 3rem;">Master the core building blocks of Python programming through this interactive visual guide.</p>
+                
+                <style>
+                    .practice-box {
+                        background: rgba(15, 23, 42, 0.3);
+                        border: 2px dashed rgba(56, 189, 248, 0.2);
+                        border-radius: 24px;
+                        padding: 3rem 2rem;
+                        margin: 4rem 0;
+                        text-align: center;
+                        transition: all 0.4s ease;
+                    }
+                    .quiz-content {
+                        display: none;
+                        text-align: left;
+                        animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+                    }
+                    @keyframes slideUp {
+                        from { opacity: 0; transform: translateY(30px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                    .start-quiz-btn {
+                        background: linear-gradient(135deg, #0ea5e9, #6366f1);
+                        color: white !important;
+                        padding: 1.2rem 3rem;
+                        font-size: 1.25rem;
+                        font-weight: 800;
+                        border-radius: 100px;
+                        border: none;
+                        cursor: pointer;
+                        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+                        transition: all 0.3s ease;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.8rem;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        margin: 1rem 0;
+                    }
+                    .start-quiz-btn:hover {
+                        transform: translateY(-3px) scale(1.05);
+                        box-shadow: 0 15px 35px rgba(99, 102, 241, 0.5);
+                    }
+                    .quiz-progress-container {
+                        position: relative;
+                        margin-bottom: 3.5rem;
+                        border-bottom: 1px solid rgba(255,255,255,0.1);
+                        padding-bottom: 1rem;
+                    }
+                    .quiz-stats {
+                        position: absolute;
+                        top: -0.8rem;
+                        right: 0;
+                        font-size: 1.1rem;
+                        color: #ffffff !important;
+                        background: #0ea5e9;
+                        padding: 6px 20px;
+                        border-radius: 50px;
+                        font-weight: 800;
+                        font-family: 'JetBrains Mono', monospace;
+                        box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+                    }
+                    .quiz-progress-bar {
+                        height: 10px;
+                        background: rgba(30, 41, 59, 1);
+                        border-radius: 20px;
+                        overflow: hidden;
+                        margin-top: 1.5rem;
+                        border: 1px solid rgba(255,255,255,0.05);
+                    }
+                    .fill {
+                        height: 100%;
+                        background: linear-gradient(90deg, #38bdf8, #818cf8);
+                        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+                    .question-slide {
+                        display: none !important;
+                    }
+                    .question-slide.active {
+                        display: block !important;
+                        animation: fadeIn 0.5s ease;
+                    }
+                    @keyframes fadeIn {
+                        from { opacity: 0; transform: scale(0.98); }
+                        to { opacity: 1; transform: scale(1); }
+                    }
+                    .question-card {
+                        background: rgba(30, 41, 59, 0.95);
+                        backdrop-filter: blur(20px);
+                        padding: 3.5rem 2.5rem;
+                        border-radius: 28px;
+                        border: 1px solid rgba(255, 255, 255, 0.15);
+                        box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+                        margin-top: 1rem;
+                    }
+                    .question-text {
+                        color: #ffffff !important;
+                        font-size: 1.6rem !important;
+                        font-weight: 800 !important;
+                        margin-bottom: 2.5rem !important;
+                        line-height: 1.4 !important;
+                        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+                    }
+                    .options-grid {
+                        display: grid;
+                        gap: 1.25rem;
+                    }
+                    .option-btn {
+                        background: rgba(15, 23, 42, 0.7);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        color: #f8fafc !important;
+                        padding: 1.3rem 2rem;
+                        border-radius: 18px;
+                        text-align: left;
+                        cursor: pointer;
+                        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                        font-size: 1.15rem;
+                        font-weight: 600;
+                    }
+                    .option-btn:hover {
+                        background: rgba(56, 189, 248, 0.15);
+                        border-color: #38bdf8;
+                        transform: translateX(12px);
+                        box-shadow: 0 5px 20px rgba(56, 189, 248, 0.1);
+                    }
+                    .option-btn.correct { 
+                        background: linear-gradient(135deg, #059669, #10b981) !important; 
+                        border: none !important; 
+                        color: white !important;
+                        box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+                    }
+                    .option-btn.wrong { 
+                        background: linear-gradient(135deg, #dc2626, #ef4444) !important; 
+                        border: none !important; 
+                        color: white !important;
+                        box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+                    }
+                    
+                    .feedback-msg {
+                        margin-top: 2rem;
+                        padding: 1.25rem;
+                        border-radius: 14px;
+                        font-size: 1.2rem;
+                        font-weight: 800;
+                        display: none;
+                        animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    }
+                    @keyframes popIn {
+                        from { opacity: 0; transform: scale(0.9); }
+                        to { opacity: 1; transform: scale(1); }
+                    }
+                    
+                    .code-input-area {
+                        background: #020617;
+                        padding: 2.5rem;
+                        border-radius: 20px;
+                        border: 2px solid rgba(56, 189, 248, 0.2);
+                        margin: 2rem 0;
+                        box-shadow: inset 0 4px 15px rgba(0,0,0,0.8);
+                        font-size: 1.35rem; /* Slightly larger base font */
+                        color: #94a3b8;
+                        line-height: 1.8;
+                    }
+                    .code-input {
+                        background: transparent;
+                        border: none;
+                        border-bottom: 4px solid #38bdf8;
+                        color: #22d3ee !important;
+                        padding: 8px 18px !important; /* Huge breathing room */
+                        margin: 0 12px !important;    /* Spacing between text and input */
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 1.5rem;
+                        font-weight: 900;
+                        outline: none;
+                        text-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
+                        display: inline-block;
+                        text-align: center;
+                        vertical-align: middle;
+                        min-width: 100px; /* Ensure text is NEVER squashed */
+                    }
+                    .drop-select {
+                        background: rgba(15, 23, 42, 0.9);
+                        color: #22d3ee !important;
+                        border: none;
+                        border-bottom: 4px solid #38bdf8;
+                        padding: 10px 25px;
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 1.3rem;
+                        font-weight: 800;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        outline: none;
+                        appearance: auto; /* keep default arrow but style the box */
+                        margin: 0 10px;
+                        vertical-align: middle;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    }
+                    .drop-select option {
+                        background: #0f172a;
+                        color: #ffffff;
+                        padding: 10px;
+                    }
+                </style>
+                
+                <script></script>                <!-- 1. WRITING FIRST PYTHON PROGRAM -->
+                <div class="info-panel">
+                    <span class="edu-badge badge-python">1. Python Basics</span>
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-play-fill"></i></div>
+                        <h3>Writing First Python Program</h3>
+                    </div>
+                    
+                    <div class="explanation-section">
+                        <h4>What is it?</h4>
+                        <p>The <code>print()</code> function is the most basic tool in Python. It tells the computer to display information on the screen.</p>
+
+                        <h4>How it Works (Step-by-Step)</h4>
+                        <div class="step-card">
+                            <strong>Step 1:</strong> Type the command <code>print</code> (always lowercase!).<br>
+                            <strong>Step 2:</strong> Add <code>( )</code> parentheses to hold your message.<br>
+                            <strong>Step 3:</strong> Use <code>" "</code> quotes if you are printing text.
+                        </div>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example 1:</span>
+                                <div class="cell-code">print("Hello Students")</div>
+                            </div>
+                            <div class="cell-output-meta">Line 1: <code>print</code> tells Python to display something.</div>
+                            <div class="cell-output-meta">Line 2: <code>"Hello Students"</code> is the actual text to show.</div>
+                            <div class="cell-output">Hello Students</div>
+                        </div>
+
+                        <h4>Business Use Case</h4>
+                        <p>In a bank app, when you check your balance, the app uses a print-like function to show: <strong>"Your Balance is $5,000"</strong>.</p>
+
+                        <div class="mistake-grid">
+                            <div class="mistake-card">
+                                <span class="mistake-label"><i class="bi bi-x-circle"></i> Wrong</span>
+                                <code style="color:#ef4444;">Print("Hello")</code>
+                                <p>Beginners often think...
+                            </div>
+                            <div class="mistake-card correct">
+                                <span class="mistake-label"><i class="bi bi-check-circle"></i> Correct</span>
+                                <code style="color:#10b981;">print("Hello")</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Small 'p' is the right way!</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-box">
+                            <h5>Quick Revision</h5>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Always use lowercase <code>print</code>.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Put your text inside <code>" "</code> double quotes.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Parentheses <code>( )</code> are mandatory.</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 1 -->
+                    <div class="practice-box" id="quiz-1">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-1')">Start Practice <i class="bi bi-lightning-charge"></i></button>
+                        
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 2</div>
+                                <div class="quiz-progress-bar"><div class="fill"></div></div>
+                            </div>
+
+                            <div class="quiz-questions">
+                                <!-- Question 1: Code Completion -->
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. Complete the code to display your first message:</p>
+                                        <div class="code-input-area">
+                                            <select class="code-select" onchange="checkSelection(this, 'print', 'fb-1-1', 'quiz-1', 'The <b>print()</b> function is the built-in command in Python used to send information to the console.')">
+                                                <option value="">-- select --</option>
+                                                <option value="show">show</option>
+                                                <option value="print">print</option>
+                                                <option value="output">output</option>
+                                            </select>("Hello Analysts")
+                                        </div>
+                                        <div id="fb-1-1" class="feedback-msg"></div>
+                                        <div class="explanation-box">
+                                            <h5>💡 Logic Explanation</h5>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Question 2: Drag & Drop -->
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. Drag the missing syntax to complete the command:</p>
+                                        <div class="code-input-area">
+                                            print<div class="drop-zone" data-correct="(" data-feedback="fb-1-2" data-quiz="quiz-1" data-explanation="Parentheses <b>( )</b> must always follow the function name in Python to tell it to execute."></div>"Welcome to Strategist"<div class="drop-zone" data-correct=")" data-feedback="fb-1-2" data-quiz="quiz-1" data-explanation="Every opening bracket must have a matching closing bracket."></div>
+                                        </div>
+                                        <div class="drag-container">
+                                            <div class="drag-item" draggable="true">(</div>
+                                            <div class="drag-item" draggable="true">[</div>
+                                            <div class="drag-item" draggable="true">)</div>
+                                            <div class="drag-item" draggable="true">{</div>
+                                        </div>
+                                        <div id="fb-1-2" class="feedback-msg"></div>
+                                        <div class="explanation-box">
+                                            <h5>💡 Logic Explanation</h5>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-1-next" disabled onclick="nextQuestion('quiz-1')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-1', 2);</script>
+                    </div>
+                </div>
+                           <!-- 2. VARIABLES -->
+                <div class="info-panel">
+                    <span class="edu-badge badge-python">2. Memory Basics</span>
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-box-seam"></i></div>
+                        <h3>Variables</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>What are Variables?</h4>
+                        <p>Variables are containers used to save data. Once you store a value in a variable, you can use that name later in your code instead of typing the value again.</p>
+
+                        <h4>How to Create a Variable</h4>
+                        <div class="step-card">
+                            <code>name = "John"</code><br><br>
+                            <strong>1. The Name:</strong> <code>name</code> (The label on the box).<br>
+                            <strong>2. The Equal Sign:</strong> <code>=</code> (Used to put the item inside).<br>
+                            <strong>3. The Value:</strong> <code>"John"</code> (The actual data inside).
+                        </div>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example:</span>
+                                <div class="cell-code">
+                                    age = 25<br>
+                                    print(age)
+                                </div>
+                            </div>
+                            <div class="cell-output-meta">Line 1: We stored the number 25 in a box named <code>age</code>.</div>
+                            <div class="cell-output-meta">Line 2: We asked Python to find the box <code>age</code> and show what's inside.</div>
+                            <div class="cell-output">25</div>
+                        </div>
+
+                        <h4>Practical Use Case (Business)</h4>
+                        <p>Imagine you manage a store. You can store the price of a product in a variable:</p>
+                        <code style="display:block; padding:10px; background:#020617; border-radius:8px;">iphone_price = 999</code>
+
+                        <div class="mistake-grid">
+                            <div class="mistake-card">
+                                <span class="mistake-label"><i class="bi bi-x-circle"></i> Wrong</span>
+                                <code style="color:#ef4444;">"age" = 25</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Variable names should NOT have quotes.</p>
+                            </div>
+                            <div class="mistake-card correct">
+                                <span class="mistake-label"><i class="bi bi-check-circle"></i> Correct</span>
+                                <code style="color:#10b981;">age = 25</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Just write the name directly!</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-box">
+                            <h5>Quick Revision</h5>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Variable = Box for data.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Use <code>=</code> to assign a value.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Call the variable name to use the data.</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 2 -->
+                    <div class="practice-box" id="quiz-2">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-2')">Start Practice <i class="bi bi-lightning-charge"></i></button>
+                        
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 2</div>
+                                <div class="quiz-progress-bar"><div class="fill"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <!-- Question 1: Selection inside code -->
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. Select the correct way to display the stored name:</p>
+                                        <div class="code-input-area">
+                                            user_name = "Rahul"<br>
+                                            print( <select class="code-select" onchange="checkSelection(this, 'user_name', 'fb-2-1', 'quiz-2', 'To use a value stored in a variable, you simply call the <b>variable name</b> without any quotes.')">
+                                                <option value="">-- select --</option>
+                                                <option value="user_name">user_name</option>
+                                                <option value="Rahul">Rahul</option>
+                                                <option value="'user_name'">'user_name'</option>
+                                            </select> )
+                                        </div>
+                                        <div id="fb-2-1" class="feedback-msg"></div>
+                                        <div class="explanation-box">
+                                            <h5>💡 Logic Explanation</h5>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Question 2: Predict the Output -->
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. Predict the output of this code:</p>
+                                        <div class="code-input-area">
+                                            total_sales = 5000<br>
+                                            print(total_sales)
+                                        </div>
+                                        <div class="predict-options">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-2-2', 'quiz-2', '')">total_sales</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-2-2', 'quiz-2', 'Correct! Python looks up the value associated with the name <b>total_sales</b> and prints its contents (5000).')">5000</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-2-2', 'quiz-2', '')">"total_sales"</button>
+                                        </div>
+                                        <div id="fb-2-2" class="feedback-msg"></div>
+                                        <div class="explanation-box">
+                                            <h5>💡 Logic Explanation</h5>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-2-next" disabled onclick="nextQuestion('quiz-2')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-2', 2);</script>
+                    </div>
+                </div>
+
+                <!-- 3. RULES OF VARIABLES -->
+                <div class="info-panel">
+                    <span class="edu-badge badge-python">3. Naming Rules</span>
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-shield-check"></i></div>
+                        <h3>Rules of Variables</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>Why do we need rules?</h4>
+                        <p>Python is strict about how you name your variables. Following these rules prevents "Syntax Errors" which stop your program from running.</p>
+                        
+                        <h4>The 3 Golden Rules</h4>
+                        <div class="step-card">
+                            <strong>1. Letters/Numbers/Underscore:</strong> Names can have <code>a-z</code>, <code>0-9</code>, and <code>_</code>.<br>
+                            <strong>2. NO starting with Digits:</strong> <code>1name</code> is illegal. <code>name1</code> is legal.<br>
+                            <strong>3. Case Sensitive:</strong> <code>Age</code> and <code>age</code> are different boxes!
+                        </div>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example:</span>
+                                <div class="cell-code">
+                                    user_id = 101 # Valid<br>
+                                    price_2 = 500 # Valid
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mistake-grid">
+                            <div class="mistake-card">
+                                <span class="mistake-label" style="color:#ef4444;"><i class="bi bi-x-circle"></i> Invalid Names</span>
+                                <code style="color:#ef4444;">2nd_user = "B"</code><br>
+                                <code style="color:#ef4444;">user name = "B"</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Can't start with numbers or have spaces.</p>
+                            </div>
+                            <div class="mistake-card correct">
+                                <span class="mistake-label" style="color:#10b981;"><i class="bi bi-check-circle"></i> Valid Names</span>
+                                <code style="color:#10b981;">user2 = "B"</code><br>
+                                <code style="color:#10b981;">user_name = "B"</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Numbers at end and underscores are perfect!</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-box">
+                            <h5>Quick Revision</h5>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Use <code>_</code> instead of spaces.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Never start with a number.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> <code>Name</code> is NOT the same as <code>name</code>.</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 3 -->
+                    <div class="practice-box" id="quiz-3">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-3')">Start Practice <i class="bi bi-lightning-charge"></i></button>
+                        
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 2</div>
+                                <div class="quiz-progress-bar"><div class="fill"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. Which of these variable names is VALID?</p>
+                                        <div class="predict-options">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-3-1', 'quiz-3', '')">10_marks</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-3-1', 'quiz-3', 'Correct! Variable names can contain numbers but <b>cannot start with them</b>. Underscores are also allowed.')">marks_10</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-3-1', 'quiz-3', '')">marks 10</button>
+                                        </div>
+                                        <div id="fb-3-1" class="feedback-msg"></div>
+                                        <div class="explanation-box">
+                                            <h5>💡 Logic Explanation</h5>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. Drag the correct character to connect the variable name:</p>
+                                        <div class="code-input-area">
+                                            customer<div class="drop-zone" data-correct="_" data-feedback="fb-3-2" data-quiz="quiz-3" data-explanation="Python does not allow spaces in variable names. The <b>underscore (_)</b> is the standard way to join words."></div>id = 1001
+                                        </div>
+                                        <div class="drag-container">
+                                            <div class="drag-item" draggable="true">-</div>
+                                            <div class="drag-item" draggable="true">_</div>
+                                            <div class="drag-item" draggable="true">&</div>
+                                            <div class="drag-item" draggable="true">#</div>
+                                        </div>
+                                        <div id="fb-3-2" class="feedback-msg"></div>
+                                        <div class="explanation-box">
+                                            <h5>💡 Logic Explanation</h5>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-3-next" disabled onclick="nextQuestion('quiz-3')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-3', 2);</script>
+                    </div>
+                </div>
+                           <!-- 4. DATA TYPES -->
+                <div class="info-panel">
+                    <span class="edu-badge badge-python">4. Data Categories</span>
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-tags-fill"></i></div>
+                        <h3>Built-in Data Types</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>What are Data Types?</h4>
+                        <p>Data types define the kind of data you are working with. Python needs to know if a value is a number, text, or a decimal to perform the correct operations.</p>
+
+                        <h4>The 3 Common Types</h4>
+                        <div class="step-card">
+                            <strong>1. int (Integer):</strong> Whole numbers like <code>100</code>, <code>-5</code>.<br>
+                            <strong>2. float:</strong> Decimal numbers like <code>99.50</code>, <code>3.14</code>.<br>
+                            <strong>3. str (String):</strong> Text inside quotes like <code>"Hello"</code>.<br>
+                            <strong>4. bool (Boolean):</strong> True or False values.
+                        </div>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example (Business):</span>
+                                <div class="cell-code">
+                                    items = 50 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # int<br>
+                                    price = 19.99 &nbsp;&nbsp; # float<br>
+                                    in_stock = True &nbsp; # bool
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mistake-grid">
+                            <div class="mistake-card">
+                                <span class="mistake-label" style="color:#ef4444;"><i class="bi bi-x-circle"></i> Decimal Error</span>
+                                <code style="color:#ef4444;">price = 99,50</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Using a comma creates a "Tuple", not a decimal number.</p>
+                            </div>
+                            <div class="mistake-card correct">
+                                <span class="mistake-label" style="color:#10b981;"><i class="bi bi-check-circle"></i> Correct Way</span>
+                                <code style="color:#10b981;">price = 99.50</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Always use a <b>DOT (.)</b> for decimals in Python.</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-box">
+                            <h5>Quick Revision</h5>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> <code>int</code> = No decimals.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> <code>float</code> = Decimals.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> <code>str</code> = Always needs quotes.</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 4 -->
+                    <div class="practice-box" id="quiz-4">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-4')">Start Practice <i class="bi bi-lightning-charge"></i></button>
+                        
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 2</div>
+                                <div class="quiz-progress-bar"><div class="fill"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <!-- Question 1: Drag & Drop Datatype -->
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. Drag the correct type to convert the string and add to another string:</p>
+                                        <div class="code-input-area">
+                                            print( <div class="drop-zone" data-correct="str" data-feedback="fb-4-1" data-quiz="quiz-4" data-explanation="When you use <b>str()</b> on a number and add it to another string, Python performs <b>Concatenation</b> (joining) instead of addition."></div>(10) + "2" )
+                                        </div>
+                                        <div class="drag-container">
+                                            <div class="drag-item" draggable="true">int</div>
+                                            <div class="drag-item" draggable="true">str</div>
+                                            <div class="drag-item" draggable="true">bool</div>
+                                        </div>
+                                        <div id="fb-4-1" class="feedback-msg"></div>
+                                        <div class="explanation-box">
+                                            <h5>💡 Logic Explanation</h5>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Question 2: Predict the Output -->
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. Predict the output of this code:</p>
+                                        <div class="code-input-area">
+                                            a = "5"<br>
+                                            b = "2"<br>
+                                            print(a + b)
+                                        </div>
+                                        <div class="predict-options">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-4-2', 'quiz-4', '')">7</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-4-2', 'quiz-4', 'Correct! Since both <b>a</b> and <b>b</b> are strings (inside quotes), the <b>+</b> operator joins them together as 52.')">52</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-4-2', 'quiz-4', '')">Error</button>
+                                        </div>
+                                        <div id="fb-4-2" class="feedback-msg"></div>
+                                        <div class="explanation-box">
+                                            <h5>💡 Logic Explanation</h5>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-4-next" disabled onclick="nextQuestion('quiz-4')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-4', 2);</script>
+                    </div>
+                </div>
+                           <!-- 5. PYTHON STRINGS -->
+                <div class="info-panel">
+                    <span class="edu-badge badge-python">5. Text Data</span>
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-quote"></i></div>
+                        <h3>Python Strings</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>What is a String?</h4>
+                        <p>A string is any piece of text. In Python, anything wrapped in quotes (<code>""</code> or <code>''</code>) is treated as a string.</p>
+
+                        <h4>Core Rules</h4>
+                        <p>Python doesn't care if you use <code>'Double'</code> or <code>"Single"</code> quotes, as long as you match them!</p>
+
+                        <div class="step-card">
+                            <strong>1. Single:</strong> <code>'Hello'</code><br>
+                            <strong>2. Double:</strong> <code>"Hello"</code><br>
+                            <strong>3. Multi-line:</strong> Use triple quotes <code>""" """</code> for long paragraphs.
+                        </div>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example:</span>
+                                <div class="cell-code">
+                                    shop = "Python Mart"<br>
+                                    print(shop)
+                                </div>
+                            </div>
+                            <div class="cell-output-meta">Quotes tell Python: "Don't treat this as code, just treat it as text."</div>
+                            <div class="cell-output">Python Mart</div>
+                        </div>
+
+                        <div class="mistake-grid">
+                            <div class="mistake-card">
+                                <span class="mistake-label" style="color:#ef4444;"><i class="bi bi-x-circle"></i> Unmatched</span>
+                                <code style="color:#ef4444;">name = "John'</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Starting with " and ending with ' causes an error.</p>
+                            </div>
+                            <div class="mistake-card correct">
+                                <span class="mistake-label" style="color:#10b981;"><i class="bi bi-check-circle"></i> Perfect Match</span>
+                                <code style="color:#10b981;">name = "John"</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">The start and end quotes must be the same!</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-box">
+                            <h5>Quick Revision</h5>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Strings represent text.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Always wrap text in <code>" "</code> or <code>' '</code>.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Spaces inside quotes are also part of the string.</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 5 -->
+                    <div class="practice-box" id="quiz-5">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-5')">Take Questions <i class="bi bi-lightning-charge"></i></button>
+                        
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 3</div>
+                                <div class="quiz-progress-bar"><div class="fill" style="width: 33%"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. How do we start and end a String in Python?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-9', 'quiz-5')">Parentheses ()</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-9', 'quiz-5')">Quotes " " or ' '</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-9', 'quiz-5')">Brackets [ ]</button>
+                                        </div>
+                                        <div id="fb-9" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. Which code creates a string named <code>city</code> with value "Paris"?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-10', 'quiz-5')">city = "Paris"</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-10', 'quiz-5')">"city" = Paris</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-10', 'quiz-5')">Paris = city</button>
+                                        </div>
+                                        <div id="fb-10" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q3. What will this show? <code>print("Python")</code></p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-11', 'quiz-5')">Python</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-11', 'quiz-5')">"Python"</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-11', 'quiz-5')">Error</button>
+                                        </div>
+                                        <div id="fb-11" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-5-next" disabled onclick="nextQuestion('quiz-5')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-5', 3);</script>
+                    </div>
+                </div>
+                </div>
+
+                <!-- 6. STRING SLICING -->
+                <div class="info-panel">
+                    <span class="edu-badge badge-python">6. Part of Text</span>
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-scissors"></i></div>
+                        <h3>String Slicing</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>What is String Slicing?</h4>
+                        <p>Sometimes you don't need the whole text—just a piece of it. Slicing lets you cut a string at specific points.</p>
+                        
+                        <h4>Important: The Index Rule</h4>
+                        <p>In Python, we count from **0**, not 1. <br> <code>"P Y T H O N"</code> <br> <code> 0 1 2 3 4 5 </code></p>
+
+                        <div class="step-card">
+                            <strong>Formula:</strong> <code>string[start : end]</code><br>
+                            - <strong>Start:</strong> The first character you want (inclusive).<br>
+                            - <strong>End:</strong> The character where you STOP (exclusive - it's not included!).
+                        </div>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example:</span>
+                                <div class="cell-code">
+                                    word = "PYTHON"<br>
+                                    print(word[0:2])
+                                </div>
+                            </div>
+                            <div class="cell-output-meta">It starts at P (0) and stops BEFORE T (2). So it gives P and Y.</div>
+                            <div class="cell-output">PY</div>
+                        </div>
+
+                        <div class="mistake-grid">
+                            <div class="mistake-card">
+                                <span class="mistake-label" style="color:#ef4444;"><i class="bi bi-x-circle"></i> Off by One</span>
+                                <code style="color:#ef4444;">word[1:3]</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Beginners often think [1] is the first letter. In Python [0] is the first!</p>
+                            </div>
+                            <div class="mistake-card correct">
+                                <span class="mistake-label"><i class="bi bi-check-circle"></i> Correct</span>
+                                <code style="color:#10b981;">word[0:3]</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Starts at 0 to get the very first letter.</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-box">
+                            <h5>Quick Revision</h5>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Always start counting from 0.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> The 'end' index is NOT included in result.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> <code>[:4]</code> means from start to 4.</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 6 -->
+                    <div class="practice-box" id="quiz-6">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-6')">Take Questions <i class="bi bi-lightning-charge"></i></button>
+                        
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 3</div>
+                                <div class="quiz-progress-bar"><div class="fill" style="width: 33%"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. What is the index of the FIRST character in a string?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-12', 'quiz-6')">1</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-12', 'quiz-6')">0</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-12', 'quiz-6')">-1</button>
+                                        </div>
+                                        <div id="fb-12" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. If <code>color = "Red"</code>, what does <code>print(color[1])</code> show?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-13', 'quiz-6')">R</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-13', 'quiz-6')">e</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-13', 'quiz-6')">d</button>
+                                        </div>
+                                        <div id="fb-13" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q3. To get the first two letters "Hi" from "High", use:</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-14', 'quiz-6')">word[0:1]</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-14', 'quiz-6')">word[0:2]</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-14', 'quiz-6')">word[2:4]</button>
+                                        </div>
+                                        <div id="fb-14" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-6-next" disabled onclick="nextQuestion('quiz-6')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-6', 3);</script>
+                    </div>
+                </div>
+                </div>
+
+                <!-- 7. STRING CONCATENATION -->
+                <div class="info-panel">
+                    <span class="edu-badge badge-python">7. Joining Text</span>
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-plus-circle"></i></div>
+                        <h3>String Concatenation</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>What is Concatenation?</h4>
+                        <p>Concatenation is just a technical word for **Joining** or **Gluing** strings together using the <code>+</code> sign.</p>
+                        
+                        <div class="analogy-box">
+                            <div class="analogy-icon"><i class="bi bi-link-45deg"></i></div>
+                            <div>
+                                <strong>Real-Life Analogy:</strong> Think of <strong>Train Cars</strong>. On their own, they are separate, but you can hook them together to make one long train.
+                            </div>
+                        </div>
+
+                        <h4>How to Glue Strings</h4>
+                        <div class="step-card">
+                            <code>full = "Hello" + "World"</code><br>
+                            <strong>Result:</strong> <code>HelloWorld</code> (Wait! No space?)
+                        </div>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Correct Example:</span>
+                                <div class="cell-code">
+                                    first = "John"<br>
+                                    last = "Doe"<br>
+                                    print(first + " " + last)
+                                </div>
+                            </div>
+                            <div class="cell-output-meta">We added a manual space <code>" "</code> in the middle.</div>
+                            <div class="cell-output">John Doe</div>
+                        </div>
+
+                        <h4>Practical Use Case (E-commerce)</h4>
+                        <p>When an online store prints your delivery label, they join <strong>First Name + Space + Last Name</strong>.</p>
+
+                        <div class="mistake-grid">
+                            <div class="mistake-card">
+                                <span class="mistake-label" style="color:#ef4444;"><i class="bi bi-x-circle"></i> Missing Space</span>
+                                <code style="color:#ef4444;">"Hi"+"User"</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Python won't add a space automatically. Result: "HiUser".</p>
+                            </div>
+                            <div class="mistake-card correct">
+                                <span class="mistake-label" style="color:#10b981;"><i class="bi bi-check-circle"></i> Double Glue</span>
+                                <code style="color:#10b981;">"Hi" + " " + "User"</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Explicitly adding the space makes it readable.</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-box">
+                            <h5>Quick Revision</h5>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Use <code>+</code> to join strings.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Python never adds spaces for you.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> You can join variables and literal text.</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 7 -->
+                    <div class="practice-box" id="quiz-7">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-7')">Take Questions <i class="bi bi-lightning-charge"></i></button>
+                        
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 3</div>
+                                <div class="quiz-progress-bar"><div class="fill" style="width: 33%"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. Which operator joins two strings together?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-15', 'quiz-7')">+</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-15', 'quiz-7')">*</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-15', 'quiz-7')">/</button>
+                                        </div>
+                                        <div id="fb-15" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. What happens when you do <code>"A" * 3</code>?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-16', 'quiz-7')">It gives an error</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-16', 'quiz-7')">It repeats "A" three times</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-16', 'quiz-7')">It adds 3 to A</button>
+                                        </div>
+                                        <div id="fb-16" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q3. Which code correctly joins strings <code>a</code> and <code>b</code>?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-17', 'quiz-7')">print(a + b)</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-17', 'quiz-7')">print(a - b)</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-17', 'quiz-7')">print(a % b)</button>
+                                        </div>
+                                        <div id="fb-17" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-7-next" disabled onclick="nextQuestion('quiz-7')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-7', 3);</script>
+                    </div>
+                </div>
+                </div>
+
+                <!-- 8. TYPE CASTING -->
+                <div class="info-panel">
+                    <span class="edu-badge badge-python">8. Type Conversion</span>
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-arrow-left-right"></i></div>
+                        <h3>Type Casting</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>What is Type Casting?</h4>
+                        <p>Sometimes Python sees data as text, but you need it to be a number. Casting is the process of manually forcing a value into a new type.</p>
+
+                        <h4>Common Conversion Tools</h4>
+                        <div class="step-card">
+                            <strong>1. int():</strong> Turns data into a whole number.<br>
+                            <strong>2. float():</strong> Turns data into a decimal.<br>
+                            <strong>3. str():</strong> Turns data into text.
+                        </div>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example (Business):</span>
+                                <div class="cell-code">
+                                    price = "99" &nbsp;&nbsp;&nbsp; # Python sees this as TEXT<br>
+                                    total = int(price) + 1 # Convert to NUMBER 99
+                                </div>
+                            </div>
+                            <div class="cell-output-meta">Without <code>int()</code>, Python would try to add text to a number (Error!).</div>
+                            <div class="cell-output">100</div>
+                        </div>
+
+                        <div class="mistake-grid">
+                            <div class="mistake-card">
+                                <span class="mistake-label" style="color:#ef4444;"><i class="bi bi-x-circle"></i> Invalid Cast</span>
+                                <code style="color:#ef4444;">int("Hello")</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">You can only cast text that looks like a number. "Hello" cannot be a number.</p>
+                            </div>
+                            <div class="mistake-card correct">
+                                <span class="mistake-label" style="color:#10b981;"><i class="bi bi-check-circle"></i> Valid Cast</span>
+                                <code style="color:#10b981;">int("100")</code>
+                                <p style="font-size:0.9rem; margin-top:0.5rem; color:#94a3b8;">Since "100" looks like a number, Python converts it perfectly.</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-box">
+                            <h5>Quick Revision</h5>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> <code>int()</code> for whole numbers.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> <code>float()</code> for decimals.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Input from users is ALWAYS a string by default.</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 8 -->
+                    <div class="practice-box" id="quiz-8">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-8')">Take Questions <i class="bi bi-lightning-charge"></i></button>
+                        
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 3</div>
+                                <div class="quiz-progress-bar"><div class="fill" style="width: 33%"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. Converting one data type to another is called:</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-18', 'quiz-8')">Type Casting</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-18', 'quiz-8')">Type Printing</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-18', 'quiz-8')">Type Naming</button>
+                                        </div>
+                                        <div id="fb-18" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. To convert a string "5" into a whole number, use:</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-19', 'quiz-8')">int("5")</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-19', 'quiz-8')">str(5)</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-19', 'quiz-8')">float("5")</button>
+                                        </div>
+                                        <div id="fb-19" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                 <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q3. What is the output of <code>int(10.5)</code>?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-20', 'quiz-8')">10</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-20', 'quiz-8')">11</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-20', 'quiz-8')">10.5</button>
+                                        </div>
+                                        <div id="fb-20" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-8-next" disabled onclick="nextQuestion('quiz-8')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-8', 3);</script>
+                    </div>
+                </div>
+
+                <!-- 9.1 LISTS -->
+                <div class="info-panel">
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-list-task"></i></div>
+                        <h3>Python Lists [ ]</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>What is a List?</h4>
+                        <p>A List is an ordered collection of items. It allows you to store multiple values in a single variable and modify them as needed.</p>
+
+                        <div class="step-card">
+                            <strong>1. Brackets:</strong> Always use <code>[ ]</code> square brackets.<br>
+                            <strong>2. Changeable:</strong> You can use <code>.append()</code> to add new items.
+                        </div>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example:</span>
+                                <div class="cell-code">
+                                    fruits = ["Apple", "Banana"]<br>
+                                    fruits.append("Cherry")<br>
+                                    print(fruits)
+                                </div>
+                            </div>
+                            <div class="cell-output-meta">Line 2: <code>.append()</code> adds "Cherry" to the end of the list.</div>
+                            <div class="cell-output">['Apple', 'Banana', 'Cherry']</div>
+                        </div>
+
+                        <div class="summary-box">
+                            <h5 style="color:#38bdf8; margin-bottom:1rem;">List Summary</h5>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> Uses <code>[ ]</code> square brackets.</div>
+                            <div class="summary-item"><i class="bi bi-patch-check"></i> <code>.append()</code> adds items.</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 9.1 -->
+                    <div class="practice-box" id="quiz-9-1">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-9-1')">Practice Lists <i class="bi bi-lightning-charge"></i></button>
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 4</div>
+                                <div class="quiz-progress-bar"><div class="fill" style="width: 25%"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. Which brackets are used for a List?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-21', 'quiz-9-1')">Square Brackets [ ]</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-21', 'quiz-9-1')">Parentheses ( )</button>
+                                        </div>
+                                        <div id="fb-21" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. How do you add "Apple" to a list named <code>fruits</code>?</p>
+                                        <div class="code-input-area">
+                                            fruits.<select class="code-select" onchange="checkSelection(this, 'append', 'fb-22', 'quiz-9-1', 'Correct! The <b>.append()</b> method is used to add a single item to the end of a List.')">
+                                                <option value="">--Select--</option>
+                                                <option value="add">add()</option>
+                                                <option value="append">append()</option>
+                                            </select>("Apple")
+                                        </div>
+                                        <div id="fb-22" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q3. To get the FIRST item from a list <code>X</code>, use:</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-23', 'quiz-9-1')">X[0]</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-23', 'quiz-9-1')">X[1]</button>
+                                        </div>
+                                        <div id="fb-23" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q4. What is <code>len([1, 2, 3])</code>?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-24', 'quiz-9-1')">3</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-24', 'quiz-9-1')">4</button>
+                                        </div>
+                                        <div id="fb-24" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-9-1-next" disabled onclick="nextQuestion('quiz-9-1')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-9-1', 4);</script>
+                    </div>
+                </div>
+
+                <!-- 9.2 TUPLES -->
+                <div class="info-panel">
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-lock-fill"></i></div>
+                        <h3>Python Tuples ( )</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>What is a Tuple?</h4>
+                        <p>A Tuple is a collection of items that is immutable, meaning it cannot be changed once it is created.</p>
+
+                        <div class="step-card">
+                            <strong>1. Brackets:</strong> Always use <code>( )</code> parentheses.<br>
+                            <strong>2. Safety:</strong> Because it can't change, it's safer for sensitive data.
+                        </div>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example:</span>
+                                <div class="cell-code">
+                                    location = (12.97, 77.59) # GPS points<br>
+                                    print(location[0])
+                                </div>
+                            </div>
+                            <div class="cell-output">12.97</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 9.2 -->
+                    <div class="practice-box" id="quiz-9-2">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-9-2')">Practice Tuples <i class="bi bi-lightning-charge"></i></button>
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 2</div>
+                                <div class="quiz-progress-bar"><div class="fill" style="width: 50%"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. Which brackets are used for a Tuple?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-25', 'quiz-9-2')">Square Brackets [ ]</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-25', 'quiz-9-2')">Parentheses ( )</button>
+                                        </div>
+                                        <div id="fb-25" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. Can you add or remove items from a Tuple?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-26', 'quiz-9-2')">Yes</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-26', 'quiz-9-2')">No (It is unchangeable)</button>
+                                        </div>
+                                        <div id="fb-26" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-9-2-next" disabled onclick="nextQuestion('quiz-9-2')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-9-2', 2);</script>
+                    </div>
+                </div>
+
+                <!-- 9.3 SETS -->
+                <div class="info-panel">
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-intersect"></i></div>
+                        <h3>Python Sets { }</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>What is a Set?</h4>
+                        <p>A Set is an unordered collection of items where every element is unique. It automatically handles duplicate removal.</p>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example:</span>
+                                <div class="cell-code">
+                                    numbers = {1, 2, 2, 3}<br>
+                                    print(numbers)
+                                </div>
+                            </div>
+                            <div class="cell-output-meta">Note: The second '2' was automatically removed!</div>
+                            <div class="cell-output">{1, 2, 3}</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 9.3 -->
+                    <div class="practice-box" id="quiz-9-3">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-9-3')">Practice Sets <i class="bi bi-lightning-charge"></i></button>
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 2</div>
+                                <div class="quiz-progress-bar"><div class="fill" style="width: 50%"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. A Set is unordered and removes duplicates. True or False?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-27', 'quiz-9-3')">True</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-27', 'quiz-9-3')">False</button>
+                                        </div>
+                                        <div id="fb-27" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. Which brackets are used for a Set?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-28', 'quiz-9-3')">( )</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-28', 'quiz-9-3')">{ } Curly Braces</button>
+                                        </div>
+                                        <div id="fb-28" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-9-3-next" disabled onclick="nextQuestion('quiz-9-3')">Next Challenge <i class="bi bi-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-9-3', 2);</script>
+                    </div>
+                </div>
+
+                <!-- 9.4 DICTIONARIES -->
+                <div class="info-panel">
+                    <div class="topic-header">
+                        <div class="topic-icon"><i class="bi bi-journal-bookmark-fill"></i></div>
+                        <h3>Python Dictionaries { : }</h3>
+                    </div>
+
+                    <div class="explanation-section">
+                        <h4>What is a Dictionary?</h4>
+                        <p>A Dictionary is a collection that stores data in Key-Value pairs, allowing for efficient retrieval based on unique keys.</p>
+
+                        <div class="jupyter-cell">
+                            <div class="cell-input">
+                                <span class="cell-label">Example:</span>
+                                <div class="cell-code">
+                                    user = {"name": "Alice", "age": 25}<br>
+                                    print(user["name"])
+                                </div>
+                            </div>
+                            <div class="cell-output">Alice</div>
+                        </div>
+                    </div>
+
+                    <!-- PRACTICE 9.4 -->
+                    <div class="practice-box" id="quiz-9-4">
+                        <button class="start-quiz-btn" onclick="startQuiz('quiz-9-4')">Practice Dictionaries <i class="bi bi-lightning-charge"></i></button>
+                        <div class="quiz-content">
+                            <div class="practice-header"><i class="bi bi-pencil-square"></i> Section Practice</div>
+                            <div class="quiz-progress-container">
+                                <div class="quiz-stats">1 / 2</div>
+                                <div class="quiz-progress-bar"><div class="fill" style="width: 50%"></div></div>
+                            </div>
+                            <div class="quiz-questions">
+                                <div class="question-slide active">
+                                    <div class="question-card">
+                                        <p class="question-text">Q1. Which structure stores data as Key:Value pairs?</p>
+                                        <div class="options-grid">
+                                            <button class="option-btn" onclick="checkMCQ(this, false, 'fb-29', 'quiz-9-4')">List</button>
+                                            <button class="option-btn" onclick="checkMCQ(this, true, 'fb-29', 'quiz-9-4')">Dictionary</button>
+                                        </div>
+                                        <div id="fb-29" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                                <div class="question-slide">
+                                    <div class="question-card">
+                                        <p class="question-text">Q2. To get "Alice" from <code>user = {"name": "Alice"}</code>, use:</p>
+                                        <div class="code-input-area">
+                                            print(user[<select class="code-select" onchange="checkSelection(this, 'name', 'fb-30', 'quiz-9-4', 'Perfect! To access a value in a dictionary, you use the <b>key</b> (in this case, &quot;name&quot;) inside square brackets.')">
+                                                <option value="">--Select--</option>
+                                                <option value="name">"name"</option>
+                                                <option value="Alice">"Alice"</option>
+                                            </select>])
+                                        </div>
+                                        <div id="fb-30" class="feedback-msg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-footer">
+                                <button class="next-quiz-btn" id="quiz-9-4-next" disabled onclick="nextQuestion('quiz-9-4')">Finish Section <i class="bi bi-stars"></i></button>
+                            </div>
+                        </div>
+                        <script>initQuiz('quiz-9-4', 2);</script>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; 2026 Python for Commerce Professional Series | Classroom Edition
+        </footer>
+    </main>
+
+</body>
+</html>
