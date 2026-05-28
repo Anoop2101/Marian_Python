@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualization - Data Visualization and Analytical Reporting</title>
+    <title>Python for HR Analytics - Data Aggregation with Python</title>
     
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,20 +21,17 @@
         :root {
             --sidebar-bg: #0f172a;
             --sidebar-hover: #1e293b;
-            --primary: #0066cc; /* Strategist Blue Combo */
+            --primary: #0066cc;
             --primary-dark: #004d99;
             --bg: #f8fafc;
             --text: #0f172a;
             --text-muted: #64748b;
             --card-bg: #ffffff;
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --border: #e2e8f0;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -43,9 +40,9 @@
             display: grid;
             grid-template-columns: 280px 1fr;
             min-height: 100vh;
+            line-height: 1.7;
         }
 
-        /* Sidebar Styling */
         aside {
             background-color: var(--sidebar-bg);
             color: #ffffff;
@@ -86,6 +83,7 @@
             color: #94a3b8;
             text-decoration: none;
             font-weight: 500;
+            font-size: 1.05rem;
             border-radius: 0.5rem;
             transition: all 0.2s ease;
         }
@@ -100,21 +98,16 @@
             color: #ffffff;
         }
 
-        /* Main Content Styling */
-        main {
-            padding: 3rem 4rem;
-            overflow-y: auto;
-        }
+        main { padding: 3rem 4rem; overflow-y: auto; }
 
-        .header-section {
-            margin-bottom: 2rem;
-        }
+        .header-section { margin-bottom: 2rem; }
 
         h1 {
             font-size: 2.25rem;
             font-weight: 800;
             letter-spacing: -0.025em;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--sidebar-bg);
         }
 
         .content-area {
@@ -122,8 +115,33 @@
             padding: 2.5rem;
             border-radius: 1rem;
             box-shadow: var(--shadow);
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border);
             max-width: 1000px;
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: var(--sidebar-bg);
+            border-left: 5px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--sidebar-bg);
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #334155;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
         }
 
         .content-area ul {
@@ -134,44 +152,206 @@
 
         .content-area li {
             position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.75rem;
+            padding-left: 1.75rem;
+            margin-bottom: 0.875rem;
             color: #334155;
-            font-size: 0.975rem;
-            line-height: 1.6;
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
 
         .content-area li::before {
-            content: "✦";
+            content: "\2726";
             position: absolute;
             left: 0;
             color: var(--primary);
             font-weight: bold;
-            font-size: 1rem;
         }
 
-        /* Results Display */
-        #output {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: #ffffff;
-            color: #1e293b;
-            border-radius: 0.75rem;
-            min-height: 400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px dashed #e2e8f0;
-        }
-
-        .output-label {
-            font-size: 0.75rem;
-            font-weight: 700;
+        .edu-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            background: #dbeafe;
+            color: #1e40af;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .viz-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .viz-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary);
+        }
+
+        .viz-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .viz-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
             display: block;
+        }
+
+        .viz-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--sidebar-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        .viz-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .strategy-note {
+            background: #eff6ff;
+            border-left: 5px solid var(--primary);
+            padding: 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+        }
+
+        .table-container {
+            margin: 2rem 0;
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            background: #f1f5f9;
+            padding: 14px 18px;
+            text-align: left;
+            font-weight: 700;
+            color: #475569;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .data-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .concept-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border-top: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .concept-card i {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .jupyter-cell {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .cell-input {
+            padding: 1rem 1.5rem;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .cell-code { font-size: 1.1rem; color: #1e293b; font-weight: 500; }
+        .cell-label { color: #2563eb; font-weight: 700; min-width: 50px; font-size: 0.85rem; }
+
+        .cell-output {
+            padding: 1.5rem 2rem;
+            background: #fdfdfd;
+            border-top: 1px solid #f1f5f9;
+            color: #0f172a;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+
+        .output-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            color: #0f172a;
+            font-family: 'Inter', sans-serif;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .output-table th {
+            text-align: left;
+            padding: 14px 20px;
+            font-weight: 700;
+            background: #f1f5f9;
+            color: #475569;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .output-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .output-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .output-table .text-right {
+            text-align: right;
         }
 
         footer {
@@ -180,14 +360,18 @@
             font-size: 0.875rem;
         }
 
-        #output canvas {
-            max-width: 100% !important;
-            height: auto !important;
+        @media (max-width: 1024px) {
+            body { grid-template-columns: 220px 1fr; }
+        }
+
+        /* Hide PyScript internal warnings/errors for a cleaner look */
+        py-warning, .py-warning, py-error, .py-error {
+            display: none !important;
         }
     </style>
-    
+
     <py-config>
-        packages = ["matplotlib", "pandas"]
+        packages = ["numpy", "pandas"]
     </py-config>
 </head>
 <body>
@@ -198,61 +382,940 @@
         </a>
         <nav>
             <ul class="nav-list">
-                <li class="nav-item"><a href="intro.html" id="link-intro">Intro</a></li>
-                <li class="nav-item"><a href="cleaning.html" id="link-cleaning">Data Understanding & Cleaning</a></li>
-                <li class="nav-item"><a href="aggregation.html" id="link-aggregation">Aggregation & Analysis</a></li>
-                <li class="nav-item"><a href="visualization.html" id="link-visualization" class="active">Visualization</a></li>
-                <li class="nav-item"><a href="predictive.html" id="link-predictive">Predictive</a></li>
-                <li class="nav-item"><a href="industry_project.html" id="link-project">Industry Project</a></li>
+                <li class="nav-item"><a href="intro.html" id="link-intro">Introduction</a></li>
+                <li class="nav-item"><a href="cleaning.html" id="link-cleaning">Data Cleaning</a></li>
+                <li class="nav-item"><a href="visualization.html" id="link-visualization" class="active">Data Visualization</a></li>
+                <li class="nav-item"><a href="predictive.html" id="link-predictive">Predictive Analytics</a></li>
+                <li class="nav-item"><a href="industry_project.html" id="link-project">Industry Projects</a></li>
             </ul>
         </nav>
     </aside>
 
     <main>
         <div class="header-section">
-            <h1>Data Visualization and Analytical Reporting</h1>
+            <h1>Data Aggregation</h1>
+            <h2>Aditya Birla Group: Workforce Compensation Analytics</h2>
         </div>
 
-        <section class="content-area">
-            <p>Static numbers tell only half the story. In this module, we use <strong>Matplotlib</strong> to create a monthly sales report that helps stakeholders visualize trends at a glance.</p>
-            
-            <div style="margin-top: 2rem;">
-                <span class="output-label">Generated Chart</span>
+        <div class="content-area">
+            <span class="edu-badge" style="display: inline-block;">CASE STUDY 1 — HR ANALYTICS & WORKFORCE PLANNING</span>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🏢 Organization Overview</h3>
+            <p><b>Aditya Birla Group</b> is one of India's largest multinational conglomerates with operations in 36 countries and a workforce of over 140,000 employees spanning metals, textiles, cement, financial services, and telecommunications. The <b>Group HR & People Analytics Division</b> is responsible for driving data-informed workforce strategies across all business units.</p>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📁 Business Context</h3>
+            <p>The <b>Compensation Planning & Analytics Team</b> manages employee data across departments including Engineering, Sales, HR, and Finance. Their mandate is to identify salary disparities, track attrition trends, and provide actionable insights to the Chief Human Resources Officer (CHRO) before the annual compensation review cycle.</p>
+            <p>The dataset contains critical workforce attributes: <b>Employee ID, Name, Department, Monthly Salary, Years of Experience, and Attrition Status.</b></p>
+
+            <div class="strategy-note" style="margin-top: 2rem;">
+                <h4>📖 The Story Behind the Analysis</h4>
+                <p>The CHRO noticed that certain business units were experiencing disproportionately high turnover while others retained talent consistently. Without a systematic aggregation of employee data, it was impossible to determine whether salary, experience, or department culture was driving the attrition problem.</p>
+                <p>The People Analytics team was tasked with building a <b>Compensation & Retention Dashboard</b> using Python and Pandas — moving from intuition-based HR decisions to a data-driven workforce strategy.</p>
+            </div>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">⚠️ Key Business Challenges</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="margin-bottom: 1rem;"><b>🔍 Pay Disparity:</b> Significant salary gaps exist across departments, making it difficult to assess compensation fairness.</li>
+                <li style="margin-bottom: 1rem;"><b>📉 Attrition Risk:</b> Departments with lower average salaries show consistently higher turnover, increasing recruitment and training costs.</li>
+                <li style="margin-bottom: 1rem;"><b>🧩 Data Fragmentation:</b> Employee metrics (salary, experience, attrition) are analysed in isolation — no unified view exists for leadership decision-making.</li>
+            </ul>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🎯 Project Objective</h3>
+            <p>The objective of this project is to perform a <b>Workforce Compensation Audit</b> using Pandas — applying univariable, bivariable, and multivariable aggregation techniques to uncover salary trends, department-level disparities, and attrition patterns across the organization.</p>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🛠️ Project Requirements</h3>
+
+            <h4 style="color: var(--primary); margin-top: 2rem; border-left: 4px solid var(--primary); padding-left: 1rem;">Univariable analysis — Single column summaries</h4>
+
+            <div class="strategy-note" style="border-left-color: #3b82f6; background: #eff6ff; margin-bottom: 2rem;">
+                <p><b>R1 — Summarise the overall salary distribution</b><br>
+                Calculate the average, minimum, maximum, and spread of salaries across all 8 employees combined to establish a company-wide pay baseline.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #3b82f6; background: #eff6ff; margin-bottom: 2rem;">
+                <p><b>R2 — Count total attrition across the company</b><br>
+                Count how many employees left versus how many stayed, and calculate the overall attrition rate as a percentage using only the Attrition column.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #3b82f6; background: #eff6ff; margin-bottom: 2rem;">
+                <p><b>R3 — Analyse experience distribution of the workforce</b><br>
+                Find the average, median, minimum, and maximum years of experience across all employees to understand overall workforce seniority.</p>
+            </div>
+
+            <h4 style="color: var(--primary); margin-top: 2rem; border-left: 4px solid var(--primary); padding-left: 1rem;">Bivariable analysis — Department-level comparisons</h4>
+
+            <div class="strategy-note" style="border-left-color: #f59e0b; background: #fffbeb; margin-bottom: 2rem;">
+                <p><b>R4 — Compare average salary across departments</b><br>
+                Group employees by department and calculate the average salary for each group to identify which teams are paid the most and least.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #f59e0b; background: #fffbeb; margin-bottom: 2rem;">
+                <p><b>R5 — Compare average experience across departments</b><br>
+                Group employees by department and calculate the average years of experience per group to check whether lower-paid departments also have less experienced staff.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #f59e0b; background: #fffbeb; margin-bottom: 2rem;">
+                <p><b>R6 — Measure attrition rate per department</b><br>
+                Group employees by department and calculate the proportion of staff who left within each group to identify which departments are most affected by turnover.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #f59e0b; background: #fffbeb; margin-bottom: 2rem;">
+                <p><b>R7 — Count headcount per department</b><br>
+                Group employees by department and count the number of staff in each group to provide context for all other metrics — a 50% attrition rate in a 2-person team is far more severe than in a larger one.</p>
+            </div>
+
+            <h4 style="color: var(--primary); margin-top: 2rem; border-left: 4px solid var(--primary); padding-left: 1rem;">Multivariable analysis — Cross-column insights</h4>
+
+            <div class="strategy-note" style="border-left-color: #10b981; background: #f0fdf4; margin-bottom: 2rem;">
+                <p><b>R8 — Build a department-level HR dashboard summary</b><br>
+                Group by department and calculate four metrics at once — average salary, average experience, total headcount, and total payroll — in a single aggregation table for the core HR reporting view.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #10b981; background: #f0fdf4; margin-bottom: 2rem;">
+                <p><b>R9 — Profile employees who left versus those who stayed</b><br>
+                Group by both department and attrition status together, then compare average salary and experience of leavers against retainers within each department to understand who is leaving and why.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #10b981; background: #f0fdf4; margin-bottom: 2rem;">
+                <p><b>R10 — Apply different summary measures to different columns</b><br>
+                Group by department and apply a tailored summary to each column — mean and standard deviation for Salary, mean and maximum for Experience, and a count for Attrition — all in one operation to expose intra-department inequality.</p>
+            </div>
+
+            <!-- PREMIUM DATA SOURCE BAR -->
+            <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-left: 6px solid var(--primary); padding: 1.25rem 1.5rem; border-radius: 8px; margin: 3rem 0; display: flex; align-items: center; gap: 1rem;">
+                <p style="color: #1e40af; font-weight: 700; margin: 0; font-size: 0.95rem;">Dataset Source: <span style="color: #475569; font-weight: 500;">You can download the dataset (<b>ABG_HR_Employees.csv</b>) from the Data Source section in Google Classroom.</span></p>
+            </div>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Sample Employee Data</h3>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>EmpID</th><th>Name</th><th>Department</th><th>Salary (₹)</th><th>Experience (yrs)</th><th>Attrition</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>E01</td><td>Arun</td><td>Engineering</td><td>72000</td><td>5</td><td>No</td></tr>
+                        <tr><td>E02</td><td>Priya</td><td>HR</td><td>45000</td><td>3</td><td>No</td></tr>
+                        <tr><td>E03</td><td>Rohan</td><td>Sales</td><td>38000</td><td>2</td><td>Yes</td></tr>
+                        <tr><td>E04</td><td>Sneha</td><td>Engineering</td><td>85000</td><td>7</td><td>No</td></tr>
+                        <tr><td>E05</td><td>Kiran</td><td>HR</td><td>42000</td><td>2</td><td>Yes</td></tr>
+                        <tr><td>E06</td><td>Meera</td><td>Sales</td><td>39000</td><td>4</td><td>No</td></tr>
+                        <tr><td>E07</td><td>Vikram</td><td>Finance</td><td>61000</td><td>6</td><td>No</td></tr>
+                        <tr><td>E08</td><td>Divya</td><td>Finance</td><td>59000</td><td>5</td><td>Yes</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem; color: var(--primary);">📊 Univariable Analysis in Python</h3>
+
+            <h4 style="color: var(--primary);">📌 What is Univariable Analysis?</h4>
+            <p>Univariable Analysis means analysing only <b>one variable (one column)</b> at a time.</p>
+            <p>It helps us understand:</p>
+            <ul>
+                <li>distribution of data,</li>
+                <li>central tendency,</li>
+                <li>minimum and maximum values,</li>
+                <li>and overall behaviour of a single column.</li>
+            </ul>
+            <p>In HR Analytics, univariable analysis helps understand:</p>
+            <ul>
+                <li>salary distribution,</li>
+                <li>employee experience levels,</li>
+                <li>attrition count,</li>
+                <li>department-wise employee counts, etc.</li>
+            </ul>
+
+            <h4 style="color: var(--primary);">📂 Example from Employee Dataset</h4>
+            <p>In this dataset:</p>
+            <div class="table-container" style="max-width: 500px;">
+                <table class="data-table">
+                    <thead><tr><th>Column</th><th>Meaning</th></tr></thead>
+                    <tbody>
+                        <tr><td>Salary</td><td>Employee salary</td></tr>
+                        <tr><td>Experience</td><td>Employee experience</td></tr>
+                        <tr><td>Attrition</td><td>Whether employee left or stayed</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>If we analyse only:</p>
+            <ul>
+                <li><b>Salary column</b> → Univariable Analysis</li>
+                <li><b>Experience column</b> → Univariable Analysis</li>
+                <li><b>Attrition column</b> → Univariable Analysis</li>
+            </ul>
+            <p>Because we are analysing only <b>one variable at a time</b>.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Requirement 1 — Summarise the Overall Salary Distribution</h3>
+
+            <h4 style="color: var(--primary);">📌 Business Requirement</h4>
+            <p>The HR department wants to understand the company-wide salary structure. They need to calculate:</p>
+            <ul>
+                <li>Average Salary</li>
+                <li>Minimum Salary</li>
+                <li>Maximum Salary</li>
+                <li>Salary Spread</li>
+            </ul>
+            <p>This helps management understand the overall employee compensation pattern.</p>
+
+            <h4 style="color: var(--primary);">🐍 Python Code</h4>
+            <div class="jupyter-cell">
+                <div class="cell-input"><span class="cell-label">In [1]:</span><div class="cell-code"># Average Salary<br>average_salary = df["Salary"].mean()<br><br># Minimum Salary<br>minimum_salary = df["Salary"].min()<br><br># Maximum Salary<br>maximum_salary = df["Salary"].max()<br><br># Salary Spread<br>salary_spread = maximum_salary - minimum_salary<br><br>print("Average Salary :", average_salary)<br>print("Minimum Salary :", minimum_salary)<br>print("Maximum Salary :", maximum_salary)<br>print("Salary Spread :", salary_spread)</div></div>
+            </div>
+
+            <h4 style="color: var(--primary);">📖 Explanation of the Code</h4>
+            <p><b>1️⃣ mean()</b><br>
+            <code>df["Salary"].mean()</code> — Calculates the average salary of all employees. It adds all salaries and divides by total employees.</p>
+            <p><b>2️⃣ min()</b><br>
+            <code>df["Salary"].min()</code> — Finds the lowest salary in the company.</p>
+            <p><b>3️⃣ max()</b><br>
+            <code>df["Salary"].max()</code> — Finds the highest salary in the company.</p>
+            <p><b>4️⃣ Salary Spread</b><br>
+            <code>maximum_salary - minimum_salary</code> — Calculates the difference between highest and lowest salary. This shows salary variation inside the organization.</p>
+
+            <h4 style="color: var(--primary);">📊 Explanation of the Outcome</h4>
+            <p>Suppose the output is:</p>
+            <div class="jupyter-cell">
+                <div class="cell-output">
+                    Average Salary : 55125<br>
+                    Minimum Salary : 38000<br>
+                    Maximum Salary : 85000<br>
+                    Salary Spread : 47000
+                </div>
+            </div>
+
+            <h4 style="color: var(--primary);">✅ Business Understanding</h4>
+            <ul>
+                <li>The average employee salary is ₹55,125.</li>
+                <li>The minimum salary is ₹38,000.</li>
+                <li>The maximum salary is ₹85,000.</li>
+                <li>The salary gap inside the company is ₹47,000.</li>
+            </ul>
+            <p>This helps HR understand compensation distribution, identify salary variation, and maintain fair pay structures.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Requirement 2 — Count Total Attrition Across the Company</h3>
+
+            <h4 style="color: var(--primary);">📌 Business Requirement</h4>
+            <p>The HR department wants to analyse employee attrition. They need to find:</p>
+            <ul>
+                <li>Number of employees who left</li>
+                <li>Number of employees who stayed</li>
+                <li>Attrition percentage</li>
+            </ul>
+            <p>This helps management understand employee turnover.</p>
+
+            <h4 style="color: var(--primary);">🐍 Python Code</h4>
+            <div class="jupyter-cell">
+                <div class="cell-input"><span class="cell-label">In [2]:</span><div class="cell-code"># Employees Left<br>employees_left = (df["Attrition"] == "Yes").sum()<br><br># Employees Stayed<br>employees_stayed = (df["Attrition"] == "No").sum()<br><br># Total Employees<br>total_employees = len(df)<br><br># Attrition Rate<br>attrition_rate = (employees_left / total_employees) * 100<br><br>print("Employees Left :", employees_left)<br>print("Employees Stayed :", employees_stayed)<br>print("Attrition Rate :", attrition_rate)</div></div>
+            </div>
+
+            <h4 style="color: var(--primary);">📖 Explanation of the Code</h4>
+            <p><b>1️⃣ Employees Left</b><br>
+            <code>(df["Attrition"] == "Yes").sum()</code> — Checks how many employees have "Yes" in the Attrition column. sum() counts total True values.</p>
+            <p><b>2️⃣ Employees Stayed</b><br>
+            <code>(df["Attrition"] == "No").sum()</code> — Counts employees who stayed in the company.</p>
+            <p><b>3️⃣ Total Employees</b><br>
+            <code>len(df)</code> — Calculates total employees in the dataset.</p>
+            <p><b>4️⃣ Attrition Rate</b><br>
+            <code>(employees_left / total_employees) * 100</code> — Calculates percentage of employees who left the company.</p>
+
+            <h4 style="color: var(--primary);">📊 Explanation of the Outcome</h4>
+            <p>Suppose the output is:</p>
+            <div class="jupyter-cell">
+                <div class="cell-output">
+                    Employees Left : 3<br>
+                    Employees Stayed : 5<br>
+                    Attrition Rate : 37.5
+                </div>
+            </div>
+
+            <h4 style="color: var(--primary);">✅ Business Understanding</h4>
+            <ul>
+                <li>3 employees left the company.</li>
+                <li>5 employees stayed in the company.</li>
+                <li>Company attrition rate is 37.5%.</li>
+            </ul>
+            <p>This helps HR understand employee turnover, identify retention problems, and improve employee satisfaction strategies.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Requirement 3 — Analyse Experience Distribution of the Workforce</h3>
+
+            <h4 style="color: var(--primary);">📌 Business Requirement</h4>
+            <p>The HR department wants to understand employee experience levels. They need to calculate:</p>
+            <ul>
+                <li>Average Experience</li>
+                <li>Median Experience</li>
+                <li>Minimum Experience</li>
+                <li>Maximum Experience</li>
+            </ul>
+            <p>This helps understand workforce seniority.</p>
+
+            <h4 style="color: var(--primary);">🐍 Python Code</h4>
+            <div class="jupyter-cell">
+                <div class="cell-input"><span class="cell-label">In [3]:</span><div class="cell-code"># Average Experience<br>average_experience = df["Experience"].mean()<br><br># Median Experience<br>median_experience = df["Experience"].median()<br><br># Minimum Experience<br>minimum_experience = df["Experience"].min()<br><br># Maximum Experience<br>maximum_experience = df["Experience"].max()<br><br>print("Average Experience :", average_experience)<br>print("Median Experience :", median_experience)<br>print("Minimum Experience :", minimum_experience)<br>print("Maximum Experience :", maximum_experience)</div></div>
+            </div>
+
+            <h4 style="color: var(--primary);">📖 Explanation of the Code</h4>
+            <p><b>1️⃣ mean()</b><br>
+            <code>df["Experience"].mean()</code> — Calculates average years of experience of employees.</p>
+            <p><b>2️⃣ median()</b><br>
+            <code>df["Experience"].median()</code> — Finds the middle experience value after sorting the data. Median helps reduce the impact of extreme values.</p>
+            <p><b>3️⃣ min()</b><br>
+            <code>df["Experience"].min()</code> — Finds the least experienced employee.</p>
+            <p><b>4️⃣ max()</b><br>
+            <code>df["Experience"].max()</code> — Finds the most experienced employee.</p>
+
+            <h4 style="color: var(--primary);">📊 Explanation of the Outcome</h4>
+            <p>Suppose the output is:</p>
+            <div class="jupyter-cell">
+                <div class="cell-output">
+                    Average Experience : 4.25<br>
+                    Median Experience : 4.5<br>
+                    Minimum Experience : 2<br>
+                    Maximum Experience : 7
+                </div>
+            </div>
+
+            <h4 style="color: var(--primary);">✅ Business Understanding</h4>
+            <ul>
+                <li>Employees have an average experience of 4.25 years.</li>
+                <li>The middle workforce experience level is 4.5 years.</li>
+                <li>Least experienced employees have 2 years of experience.</li>
+                <li>Most experienced employee has 7 years of experience.</li>
+            </ul>
+            <p>This helps HR understand workforce maturity, identify senior employees, and plan hiring and training strategies.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem; color: var(--primary);">📊 Bivariable Analysis in Python</h3>
+
+            <h4 style="color: var(--primary);">📌 What is Bivariable Analysis?</h4>
+            <p>Bivariable Analysis means analysing <b>two variables (two columns)</b> together to find relationships between them.</p>
+            <p>It helps us understand:</p>
+            <ul>
+                <li>how one variable changes with another,</li>
+                <li>comparisons between groups,</li>
+                <li>and patterns across categories.</li>
+            </ul>
+            <p>In HR Analytics, bivariable analysis helps understand:</p>
+            <ul>
+                <li>average salary per department,</li>
+                <li>experience level per department,</li>
+                <li>attrition rate per department, etc.</li>
+            </ul>
+
+            <h4 style="color: var(--primary);">📂 Example from Employee Dataset</h4>
+            <p>In this dataset:</p>
+            <div class="table-container" style="max-width: 500px;">
+                <table class="data-table">
+                    <thead><tr><th>Analysis</th><th>Column 1</th><th>Column 2</th></tr></thead>
+                    <tbody>
+                        <tr><td>Salary by Dept</td><td>Department</td><td>Salary</td></tr>
+                        <tr><td>Experience by Dept</td><td>Department</td><td>Experience</td></tr>
+                        <tr><td>Attrition by Dept</td><td>Department</td><td>Attrition</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>If we analyse:</p>
+            <ul>
+                <li><b>Department + Salary</b> → Bivariable Analysis</li>
+                <li><b>Department + Experience</b> → Bivariable Analysis</li>
+                <li><b>Department + Attrition</b> → Bivariable Analysis</li>
+            </ul>
+            <p>Because we are analysing <b>two variables together</b> to find group-level insights.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Requirement 4 — Compare Average Salary Across Departments</h3>
+
+            <h4 style="color: var(--primary);">📌 Business Requirement</h4>
+            <p>The HR department wants to compare salary levels across different departments. They need to calculate the average salary for each department to identify which teams are paid the most and least.</p>
+
+            <h4 style="color: var(--primary);">🐍 Python Code</h4>
+            <div class="jupyter-cell">
+                <div class="cell-input"><span class="cell-label">In [4]:</span><div class="cell-code"># Average salary by department<br>avg_salary_dept = df.groupby("Department")["Salary"].mean()<br><br>print(avg_salary_dept)</div></div>
+            </div>
+
+            <h4 style="color: var(--primary);">📖 Explanation of the Code</h4>
+            <p><b>1️⃣ groupby()</b><br>
+            <code>df.groupby("Department")</code> — Splits the dataset into groups based on the Department column.</p>
+            <p><b>2️⃣ Mean of Salary</b><br>
+            <code>["Salary"].mean()</code> — Calculates the average salary for each department group.</p>
+            <p><b>3️⃣ Output</b><br>
+            The result shows average salary per department.</p>
+
+            <h4 style="color: var(--primary);">📊 Explanation of the Outcome</h4>
+            <p>Suppose the output is:</p>
+            <div class="jupyter-cell">
+                <div class="cell-output" style="padding: 0;">
+                <table class="output-table">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th class="text-right">Average Salary (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Engineering</td><td class="text-right">78,500.00</td></tr>
+                        <tr><td>Finance</td><td class="text-right">60,000.00</td></tr>
+                        <tr><td>HR</td><td class="text-right">43,500.00</td></tr>
+                        <tr><td>Sales</td><td class="text-right">38,500.00</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+            <h4 style="color: var(--primary);">✅ Business Understanding</h4>
+            <ul>
+                <li>Engineering has the highest average salary at ₹78,500.</li>
+                <li>Sales has the lowest average salary at ₹38,500.</li>
+                <li>The gap between highest and lowest paid departments is ₹40,000.</li>
+            </ul>
+            <p>This helps HR identify which departments may be underpaid and need compensation review.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Requirement 5 — Compare Average Experience Across Departments</h3>
+
+            <h4 style="color: var(--primary);">📌 Business Requirement</h4>
+            <p>The HR department wants to check whether lower-paid departments also have less experienced staff. They calculate the average years of experience per department.</p>
+
+            <h4 style="color: var(--primary);">🐍 Python Code</h4>
+            <div class="jupyter-cell">
+                <div class="cell-input"><span class="cell-label">In [5]:</span><div class="cell-code"># Average experience by department<br>avg_exp_dept = df.groupby("Department")["Experience"].mean()<br><br>print(avg_exp_dept)</div></div>
+            </div>
+
+            <h4 style="color: var(--primary);">📖 Explanation of the Code</h4>
+            <p><b>1️⃣ groupby()</b><br>
+            <code>df.groupby("Department")</code> — Groups the data by department.</p>
+            <p><b>2️⃣ Mean of Experience</b><br>
+            <code>["Experience"].mean()</code> — Calculates the average experience for each department.</p>
+
+            <h4 style="color: var(--primary);">📊 Explanation of the Outcome</h4>
+            <p>Suppose the output is:</p>
+            <div class="jupyter-cell">
+                <div class="cell-output" style="padding: 0;">
+                <table class="output-table">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th class="text-right">Average Experience (Years)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Engineering</td><td class="text-right">6.0</td></tr>
+                        <tr><td>Finance</td><td class="text-right">5.5</td></tr>
+                        <tr><td>HR</td><td class="text-right">2.5</td></tr>
+                        <tr><td>Sales</td><td class="text-right">3.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+            <h4 style="color: var(--primary);">✅ Business Understanding</h4>
+            <ul>
+                <li>Engineering has the most experienced staff (6.0 years).</li>
+                <li>HR has the least experienced staff (2.5 years).</li>
+                <li>Lower experience correlates with lower pay in HR and Sales.</li>
+            </ul>
+            <p>This helps HR plan training and mentorship programs for junior-heavy departments.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Requirement 6 — Measure Attrition Rate Per Department</h3>
+
+            <h4 style="color: var(--primary);">📌 Business Requirement</h4>
+            <p>The HR department wants to measure turnover rates for each department to identify which teams are most affected by attrition.</p>
+
+            <h4 style="color: var(--primary);">🐍 Python Code</h4>
+            <div class="jupyter-cell">
+                <div class="cell-input"><span class="cell-label">In [6]:</span><div class="cell-code"># Attrition count per department<br>attrition_counts = df.groupby("Department")["Attrition"].value_counts()<br><br>print(attrition_counts)</div></div>
+            </div>
+
+            <h4 style="color: var(--primary);">📖 Explanation of the Code</h4>
+            <p><b>1️⃣ groupby() with value_counts()</b><br>
+            <code>df.groupby("Department")["Attrition"].value_counts()</code> — Groups by department and counts how many employees left (Yes) and stayed (No) in each group.</p>
+
+            <h4 style="color: var(--primary);">📊 Explanation of the Outcome</h4>
+            <p>Suppose the output is:</p>
+            <div class="jupyter-cell">
+                <div class="cell-output" style="padding: 0;">
+                <table class="output-table">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Attrition</th>
+                            <th class="text-right">Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Engineering</td><td>No</td><td class="text-right">2</td></tr>
+                        <tr><td>Finance</td><td>No</td><td class="text-right">1</td></tr>
+                        <tr><td></td><td>Yes</td><td class="text-right">1</td></tr>
+                        <tr><td>HR</td><td>No</td><td class="text-right">1</td></tr>
+                        <tr><td></td><td>Yes</td><td class="text-right">1</td></tr>
+                        <tr><td>Sales</td><td>No</td><td class="text-right">1</td></tr>
+                        <tr><td></td><td>Yes</td><td class="text-right">1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+            <h4 style="color: var(--primary);">✅ Business Understanding</h4>
+            <ul>
+                <li>Engineering has 0% attrition — all employees stayed.</li>
+                <li>Finance, HR, and Sales each have 50% attrition rate.</li>
+                <li>Immediate intervention is needed in Finance, HR, and Sales departments.</li>
+            </ul>
+            <p>This helps HR identify high-risk departments and target retention efforts effectively.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Requirement 7 — Count Headcount Per Department</h3>
+
+            <h4 style="color: var(--primary);">📌 Business Requirement</h4>
+            <p>The HR department needs to know the number of employees in each department to provide context for all other metrics.</p>
+
+            <h4 style="color: var(--primary);">🐍 Python Code</h4>
+            <div class="jupyter-cell">
+                <div class="cell-input"><span class="cell-label">In [7]:</span><div class="cell-code"># Employee count per department<br>headcount = df.groupby("Department")["EmpID"].count()<br><br>print(headcount)</div></div>
+            </div>
+
+            <h4 style="color: var(--primary);">📖 Explanation of the Code</h4>
+            <p><b>1️⃣ groupby() with count()</b><br>
+            <code>df.groupby("Department")["EmpID"].count()</code> — Groups by department and counts the number of unique employee IDs in each group.</p>
+
+            <h4 style="color: var(--primary);">📊 Explanation of the Outcome</h4>
+            <p>Suppose the output is:</p>
+            <div class="jupyter-cell">
+                <div class="cell-output" style="padding: 0;">
+                <table class="output-table">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th class="text-right">Total Employees</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Engineering</td><td class="text-right">2</td></tr>
+                        <tr><td>Finance</td><td class="text-right">2</td></tr>
+                        <tr><td>HR</td><td class="text-right">2</td></tr>
+                        <tr><td>Sales</td><td class="text-right">2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+            <h4 style="color: var(--primary);">✅ Business Understanding</h4>
+            <ul>
+                <li>Each department has exactly 2 employees.</li>
+                <li>A 50% attrition rate in a 2-person team means losing half the team.</li>
+                <li>The operational risk of attrition is extremely high at this scale.</li>
+            </ul>
+            <p>This helps HR understand the severity of turnover in context of team size.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem; color: var(--primary);">📊 Multivariable Analysis in Python</h3>
+
+            <h4 style="color: var(--primary);">📌 What is Multivariable Analysis?</h4>
+            <p>Multivariable Analysis means analysing <b>three or more variables (multiple columns)</b> at the same time to uncover deeper patterns and relationships.</p>
+            <p>It helps us understand:</p>
+            <ul>
+                <li>how multiple variables interact with each other,</li>
+                <li>complex group-level patterns,</li>
+                <li>and combined insights across several dimensions.</li>
+            </ul>
+            <p>In HR Analytics, multivariable analysis helps understand:</p>
+            <ul>
+                <li>salary, experience, and headcount together per department,</li>
+                <li>leaver profiles combining department, salary, and attrition,</li>
+                <li>and applying different summary measures to different columns.</li>
+            </ul>
+
+            <h4 style="color: var(--primary);">📂 Example from Employee Dataset</h4>
+            <p>In this dataset:</p>
+            <div class="table-container" style="max-width: 600px;">
+                <table class="data-table">
+                    <thead><tr><th>Analysis</th><th>Columns Used</th></tr></thead>
+                    <tbody>
+                        <tr><td>Department Dashboard</td><td>Department + Salary + Experience + Headcount</td></tr>
+                        <tr><td>Leaver Profile</td><td>Department + Salary + Experience + Attrition</td></tr>
+                        <tr><td>Tailored Summary</td><td>Salary (mean,std) + Experience (mean,max) + Attrition (count)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Because we are analysing <b>multiple columns simultaneously</b> to build a complete HR intelligence view.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Requirement 8 — Build a Department-Level HR Dashboard Summary</h3>
+
+            <h4 style="color: var(--primary);">📌 Business Requirement</h4>
+            <p>The HR leadership needs a single dashboard view showing multiple metrics per department — average salary, total experience, headcount, and total payroll.</p>
+
+            <h4 style="color: var(--primary);">🐍 Python Code</h4>
+            <div class="jupyter-cell">
+                <div class="cell-input"><span class="cell-label">In [8]:</span><div class="cell-code"># Department dashboard<br>dashboard = df.groupby("Department").agg({<br>&nbsp;&nbsp;&nbsp;&nbsp;"Salary": "mean",<br>&nbsp;&nbsp;&nbsp;&nbsp;"Experience": "sum",<br>&nbsp;&nbsp;&nbsp;&nbsp;"EmpID": "count"<br>})<br><br>print(dashboard)</div></div>
+            </div>
+
+            <h4 style="color: var(--primary);">📖 Explanation of the Code</h4>
+            <p><b>1️⃣ agg() with Dictionary</b><br>
+            <code>df.groupby("Department").agg({...})</code> — Applies different aggregation functions to different columns in one operation.</p>
+            <p><b>2️⃣ Metrics Calculated</b><br>
+            — <code>"Salary": "mean"</code> → Average salary per department<br>
+            — <code>"Experience": "sum"</code> → Total years of experience in each department<br>
+            — <code>"EmpID": "count"</code> → Number of employees per department</p>
+
+            <h4 style="color: var(--primary);">📊 Explanation of the Outcome</h4>
+            <p>Suppose the output is:</p>
+            <div class="jupyter-cell">
+                <div class="cell-output" style="padding: 0;">
+                <table class="output-table">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th class="text-right">Average Salary (₹)</th>
+                            <th class="text-right">Total Experience (Years)</th>
+                            <th class="text-right">Total Employees</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Engineering</td><td class="text-right">78,500</td><td class="text-right">12</td><td class="text-right">2</td></tr>
+                        <tr><td>Finance</td><td class="text-right">60,000</td><td class="text-right">11</td><td class="text-right">2</td></tr>
+                        <tr><td>HR</td><td class="text-right">43,500</td><td class="text-right">5</td><td class="text-right">2</td></tr>
+                        <tr><td>Sales</td><td class="text-right">38,500</td><td class="text-right">6</td><td class="text-right">2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+            <h4 style="color: var(--primary);">✅ Business Understanding</h4>
+            <ul>
+                <li>Engineering's total payroll (₹1,57,000) is double Sales (₹77,000).</li>
+                <li>HR has the lowest total experience (5 years) and second-lowest pay.</li>
+                <li>Management gets a clear picture of where the compensation budget is concentrated.</li>
+            </ul>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Requirement 9 — Profile Employees Who Left vs Those Who Stayed</h3>
+
+            <h4 style="color: var(--primary);">📌 Business Requirement</h4>
+            <p>The HR department wants to compare the average salary and experience of employees who left versus those who stayed, grouped by department.</p>
+
+            <h4 style="color: var(--primary);">🐍 Python Code</h4>
+            <div class="jupyter-cell">
+                <div class="cell-input"><span class="cell-label">In [9]:</span><div class="cell-code"># Compare leavers vs retainers<br>attrition_profile = df.groupby(["Department", "Attrition"])["Salary"].mean()<br><br>print(attrition_profile)</div></div>
+            </div>
+
+            <h4 style="color: var(--primary);">📖 Explanation of the Code</h4>
+            <p><b>1️⃣ Multiple Grouping Keys</b><br>
+            <code>df.groupby(["Department", "Attrition"])</code> — Groups by both Department and Attrition status together for a more detailed breakdown.</p>
+            <p><b>2️⃣ Mean Salary</b><br>
+            <code>["Salary"].mean()</code> — Calculates average salary for each combination of department and attrition status.</p>
+
+            <h4 style="color: var(--primary);">📊 Explanation of the Outcome</h4>
+            <p>Suppose the output is:</p>
+            <div class="jupyter-cell">
+                <div class="cell-output" style="padding: 0;">
+                <table class="output-table">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Attrition Status</th>
+                            <th class="text-right">Average Salary (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Engineering</td><td>No</td><td class="text-right">78,500.0</td></tr>
+                        <tr><td>Finance</td><td>No</td><td class="text-right">61,000.0</td></tr>
+                        <tr><td></td><td>Yes</td><td class="text-right">59,000.0</td></tr>
+                        <tr><td>HR</td><td>No</td><td class="text-right">45,000.0</td></tr>
+                        <tr><td></td><td>Yes</td><td class="text-right">42,000.0</td></tr>
+                        <tr><td>Sales</td><td>No</td><td class="text-right">39,000.0</td></tr>
+                        <tr><td></td><td>Yes</td><td class="text-right">38,000.0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+            <h4 style="color: var(--primary);">✅ Business Understanding</h4>
+            <ul>
+                <li>Leavers averaged ₹46,333 salary and 3 years experience.</li>
+                <li>Retainers averaged ₹60,800 salary and 5 years experience.</li>
+                <li>Low pay and low experience together is the dominant leaver profile.</li>
+            </ul>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 2px dashed #e2e8f0;">
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Requirement 10 — Apply Different Summary Measures to Different Columns</h3>
+
+            <h4 style="color: var(--primary);">📌 Business Requirement</h4>
+            <p>The HR department needs a detailed summary where each column gets a tailored aggregation — mean and standard deviation for Salary, mean and maximum for Experience, and count for Attrition.</p>
+
+            <h4 style="color: var(--primary);">🐍 Python Code</h4>
+            <div class="jupyter-cell">
+                <div class="cell-input"><span class="cell-label">In [10]:</span><div class="cell-code"># Tailored aggregation per column<br>detailed_summary = df.groupby("Department").agg({<br>&nbsp;&nbsp;&nbsp;&nbsp;"Salary": ["mean", "std"],<br>&nbsp;&nbsp;&nbsp;&nbsp;"Experience": ["mean", "max"],<br>&nbsp;&nbsp;&nbsp;&nbsp;"Attrition": "count"<br>})<br><br>print(detailed_summary)</div></div>
+            </div>
+
+            <h4 style="color: var(--primary);">📖 Explanation of the Code</h4>
+            <p><b>1️⃣ Dictionary with Multiple Functions</b><br>
+            <code>agg({"Salary": ["mean", "std"], ...})</code> — Each column can have its own list of aggregation functions.</p>
+            <p><b>2️⃣ Metrics Breakdown</b><br>
+            — <code>Salary: mean, std</code> → Average and spread of salaries<br>
+            — <code>Experience: mean, max</code> → Average and maximum experience<br>
+            — <code>Attrition: count</code> → Total records per department</p>
+
+            <h4 style="color: var(--primary);">📊 Explanation of the Outcome</h4>
+            <p>Suppose the output is:</p>
+            <div class="jupyter-cell">
+                <div class="cell-output" style="padding: 0;">
+                <table class="output-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Department</th>
+                            <th colspan="2" class="text-right">Salary</th>
+                            <th colspan="2" class="text-right">Experience</th>
+                            <th class="text-right">Attrition</th>
+                        </tr>
+                        <tr>
+                            <th class="text-right">mean</th>
+                            <th class="text-right">std</th>
+                            <th class="text-right">mean</th>
+                            <th class="text-right">max</th>
+                            <th class="text-right">count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Engineering</td><td class="text-right">78500</td><td class="text-right">9192</td><td class="text-right">6.0</td><td class="text-right">7</td><td class="text-right">2</td></tr>
+                        <tr><td>Finance</td><td class="text-right">60000</td><td class="text-right">1414</td><td class="text-right">5.5</td><td class="text-right">6</td><td class="text-right">2</td></tr>
+                        <tr><td>HR</td><td class="text-right">43500</td><td class="text-right">2121</td><td class="text-right">2.5</td><td class="text-right">3</td><td class="text-right">2</td></tr>
+                        <tr><td>Sales</td><td class="text-right">38500</td><td class="text-right">707</td><td class="text-right">3.0</td><td class="text-right">4</td><td class="text-right">2</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+            <h4 style="color: var(--primary);">✅ Business Understanding</h4>
+            <ul>
+                <li>The salary gap within Engineering (₹72,000 vs ₹85,000) reveals internal pay inequality.</li>
+                <li>Even the best-retaining department has compensation fairness issues.</li>
+                <li>This level of detail helps HR conduct a thorough pay equity audit.</li>
+            </ul>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🧠 Case Study Perspective — Strategist</h3>
+            <p>From a <b>Strategist</b> analytics consulting perspective, this case study demonstrates how data aggregation can be elevated from operational HR reporting to strategic intelligence. Instead of treating salary as a simple payroll metric, the organization reframes it as a predictor of retention risk and departmental health.</p>
+            <p>This approach enables HR leadership to align analytics with business goals such as talent retention, cost optimization, and workforce productivity.</p>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🚀 Strategic Outcomes &amp; Decision Impact</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="margin-bottom: 0.8rem;"><b>Proactive strategic planning</b> instead of reactive firefighting on attrition</li>
+                <li style="margin-bottom: 0.8rem;"><b>Optimized HR budget</b> by identifying departments with compensation gaps</li>
+                <li style="margin-bottom: 0.8rem;"><b>Improved retention strategy</b> through data-backed salary restructuring</li>
+                <li style="margin-bottom: 0.8rem;"><b>Better leadership decisions</b> backed by predictive workforce insights</li>
+                <li style="margin-bottom: 0.8rem;"><b>Competitive advantage</b> through data-led talent management</li>
+                <li style="margin-bottom: 0.8rem;"><b>Targeted retention campaigns</b> for high-risk departments</li>
+                <li style="margin-bottom: 0.8rem;"><b>Data-driven strategic decision-making</b> across HR, Finance, and Operations</li>
+            </ul>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">✅ Tools &amp; Technologies</h3>
+            <p><b>Programming:</b> Python<br>
+            <b>Library:</b> Pandas<br>
+            <b>Concepts:</b> Univariable, Bivariable &amp; Multivariable Aggregation<br>
+            <b>Domain:</b> HR Analytics &amp; Workforce Retention</p>
+
+            <div id="output-container">
+                <span class="output-label">Python Aggregation Output</span>
                 <div id="output"></div>
             </div>
-        </section>
+
+            <script type="py" target="#output">
+import pandas as pd
+import io
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
+raw_csv = """
+EmpID,Name,Department,Salary,Experience,Attrition
+E01,Arun,Engineering,72000,5,No
+E02,Priya,HR,45000,3,No
+E03,Rohan,Sales,38000,2,Yes
+E04,Sneha,Engineering,85000,7,No
+E05,Kiran,HR,42000,2,Yes
+E06,Meera,Sales,39000,4,No
+E07,Vikram,Finance,61000,6,No
+E08,Divya,Finance,59000,5,Yes
+"""
+
+df = pd.read_csv(io.StringIO(raw_csv.strip()))
+
+print("=" * 50)
+print("HR ANALYTICS — DATA AGGREGATION")
+print("=" * 50)
+print()
+
+print("[1/3] UNIVARIABLE — Salary Summary")
+print(f"  Count:     {df['Salary'].count()}")
+print(f"  Mean:     \u20b9{df['Salary'].mean():.0f}")
+print(f"  Sum:      \u20b9{df['Salary'].sum():.0f}")
+print(f"  Min:      \u20b9{df['Salary'].min():.0f}")
+print(f"  Max:      \u20b9{df['Salary'].max():.0f}")
+print(f"  Std Dev:  \u20b9{df['Salary'].std():.0f}")
+print()
+
+print("[2/3] BIVARIABLE — Avg Salary by Department")
+for dept, sal in df.groupby('Department')['Salary'].mean().items():
+    print(f"  {dept:15s} \u20b9{sal:.0f}")
+print()
+
+print("[3/3] MULTIVARIABLE — Metrics by Department")
+agg = df.groupby('Department').agg({
+    'Salary': 'mean',
+    'Experience': 'sum',
+    'EmpID': 'count'
+}).rename(columns={'EmpID': 'Headcount'})
+print(agg.to_string())
+print()
+print("=" * 50)
+print("INSIGHT: Engineering has the highest avg salary (\u20b978,500).")
+print("Sales has the lowest (\u20b938,500) and highest attrition risk.")
+            </script>
+        </div>
+
+        <hr style="margin: 5rem 0; border: none; border-top: 3px double #e2e8f0;">
+
+        <!-- ==================== CASE STUDY 2 ==================== -->
+
+        <div class="content-area">
+            <span class="edu-badge" style="display: inline-block; background: #0369a1; color: white;">CASE STUDY 2 — RETAIL SALES ANALYTICS</span>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🏢 Organization Overview</h3>
+            <p><b>Trent Limited (Tata Group)</b> is a leading Indian retail company and a subsidiary of the Tata Group, operating popular retail chains such as Westside, Zudio, and Star Bazaar. The <b>Sales Analytics & Strategy Division</b> manages millions of transactions across 200+ stores nationwide, tracking product performance, regional sales trends, and inventory efficiency.</p>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📁 Business Context</h3>
+            <p>The <b>Retail Intelligence Team</b> is responsible for analysing point-of-sale data to identify top-performing product categories, regional demand patterns, and profitability trends. The dataset contains: <b>Order ID, Product Name, Category, Sales Amount, Quantity Sold, Profit, and Region.</b></p>
+
+            <div class="strategy-note" style="margin-top: 2rem;">
+                <h4>📖 The Story Behind the Analysis</h4>
+                <p>The Chief Revenue Officer noticed that while overall sales were growing, some product categories and regions were underperforming. Without a systematic aggregation of transaction data, it was impossible to determine which products drove profitability and which regions needed strategic intervention.</p>
+                <p>The Retail Intelligence Team was tasked with building a <b>Sales Performance Dashboard</b> using Python and Pandas — transforming raw transaction logs into actionable category and regional insights.</p>
+            </div>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">⚠️ Key Business Challenges</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="margin-bottom: 1rem;"><b>🔍 Category Performance:</b> Some categories generate high revenue but low profit — identifying which products drive true profitability is difficult.</li>
+                <li style="margin-bottom: 1rem;"><b>📉 Regional Disparity:</b> Sales vary significantly across regions, making inventory allocation and marketing spend inefficient without data-backed insights.</li>
+                <li style="margin-bottom: 1rem;"><b>🧩 Data Fragmentation:</b> Transaction data contains sales, quantity, and profit in separate columns — no unified view exists for leadership decision-making.</li>
+            </ul>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🎯 Project Objective</h3>
+            <p>The objective of this project is to perform a <b>Retail Sales Performance Audit</b> using Pandas — applying univariable, bivariable, and multivariable aggregation techniques to uncover revenue trends, category-level profitability, and regional sales patterns.</p>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">📊 Sample Transaction Data</h3>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Order_ID</th><th>Product</th><th>Category</th><th>Sales (₹)</th><th>Qty</th><th>Profit (₹)</th><th>Region</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>T001</td><td>Laptop</td><td>Electronics</td><td>55000</td><td>1</td><td>12000</td><td>North</td></tr>
+                        <tr><td>T002</td><td>T-Shirt</td><td>Clothing</td><td>1200</td><td>3</td><td>400</td><td>West</td></tr>
+                        <tr><td>T003</td><td>Mixer</td><td>Home</td><td>4500</td><td>2</td><td>900</td><td>South</td></tr>
+                        <tr><td>T004</td><td>Smartphone</td><td>Electronics</td><td>25000</td><td>1</td><td>5000</td><td>North</td></tr>
+                        <tr><td>T005</td><td>Sofa</td><td>Furniture</td><td>32000</td><td>1</td><td>6400</td><td>West</td></tr>
+                        <tr><td>T006</td><td>Jeans</td><td>Clothing</td><td>2000</td><td>2</td><td>600</td><td>South</td></tr>
+                        <tr><td>T007</td><td>Cooker</td><td>Home</td><td>3500</td><td>1</td><td>700</td><td>East</td></tr>
+                        <tr><td>T008</td><td>Tablet</td><td>Electronics</td><td>18000</td><td>2</td><td>3600</td><td>East</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🛠️ Project Requirements</h3>
+
+            <div class="strategy-note" style="border-left-color: #3b82f6; background: #eff6ff; margin-bottom: 2rem;">
+                <p><b>R1 — Summarise overall sales distribution</b><br>
+                Calculate the average, minimum, maximum, and total sales across all 8 transactions to establish a revenue baseline.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #3b82f6; background: #eff6ff; margin-bottom: 2rem;">
+                <p><b>R2 — Analyse total profit across all transactions</b><br>
+                Compute total profit, average profit per transaction, and profit spread to understand overall profitability.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #3b82f6; background: #eff6ff; margin-bottom: 2rem;">
+                <p><b>R3 — Count total quantity sold</b><br>
+                Find total quantity of products sold and average quantity per transaction for inventory planning.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #f59e0b; background: #fffbeb; margin-bottom: 2rem;">
+                <p><b>R4 — Compare average sales across categories</b><br>
+                Group transactions by category and calculate average sales for each group to identify premium vs mass-market categories.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #f59e0b; background: #fffbeb; margin-bottom: 2rem;">
+                <p><b>R5 — Compare total profit by region</b><br>
+                Group transactions by region and sum total profit to identify which regions generate the highest returns.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #f59e0b; background: #fffbeb; margin-bottom: 2rem;">
+                <p><b>R6 — Count orders by category</b><br>
+                Group transactions by category and count the number of orders in each group to measure transaction volume.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #f59e0b; background: #fffbeb; margin-bottom: 2rem;">
+                <p><b>R7 — Average quantity per category</b><br>
+                Group transactions by category and calculate average quantity per order to optimise inventory planning.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #10b981; background: #f0fdf4; margin-bottom: 2rem;">
+                <p><b>R8 — Build a category-level sales dashboard</b><br>
+                Group by category and calculate total sales, total profit, and total quantity in a single aggregation table for a complete category performance view.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #10b981; background: #f0fdf4; margin-bottom: 2rem;">
+                <p><b>R9 — Regional profitability with sales context</b><br>
+                Group by region and compute total sales, average profit, and order count together to provide a regional performance snapshot.</p>
+            </div>
+
+            <div class="strategy-note" style="border-left-color: #10b981; background: #f0fdf4; margin-bottom: 2rem;">
+                <p><b>R10 — Apply different summary measures to different columns</b><br>
+                Group by category and apply a tailored summary to each column — mean and maximum for Sales, mean and sum for Profit, sum for Quantity — all in one operation for a complete category dashboard.</p>
+            </div>
+
+            <!-- PREMIUM DATA SOURCE BAR -->
+            <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-left: 6px solid var(--primary); padding: 1.25rem 1.5rem; border-radius: 8px; margin: 3rem 0; display: flex; align-items: center; gap: 1rem;">
+                <p style="color: #1e40af; font-weight: 700; margin: 0; font-size: 0.95rem;">Dataset Source: <span style="color: #475569; font-weight: 500;">You can download the dataset (<b>TRENT_Retail_Sales.csv</b>) from the Data Source section in Google Classroom.</span></p>
+            </div>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🧠 Case Study Perspective — Strategist</h3>
+            <p>From a <b>Strategist</b> analytics consulting perspective, this retail case study demonstrates how transaction-level data aggregation drives strategic decisions in merchandising, regional expansion, and inventory optimization. The same pandas techniques applied to HR data are equally powerful in retail — proving that data aggregation is a transferable analytical skill.</p>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">🚀 Strategic Outcomes &amp; Decision Impact</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="margin-bottom: 0.8rem;"><b>Category strategy</b> — Focus on Electronics as the highest revenue driver</li>
+                <li style="margin-bottom: 0.8rem;"><b>Regional targeting</b> — Allocate more marketing budget to North and West</li>
+                <li style="margin-bottom: 0.8rem;"><b>Inventory planning</b> — Stock more high-quantity categories like Home</li>
+                <li style="margin-bottom: 0.8rem;"><b>Pricing insights</b> — Understand which categories need price optimization</li>
+                <li style="margin-bottom: 0.8rem;"><b>Profitability focus</b> — Identify high-profit vs high-revenue-low-profit categories</li>
+            </ul>
+
+            <h3 style="border-left: 5px solid var(--primary); padding-left: 1rem;">✅ Tools &amp; Technologies</h3>
+            <p><b>Programming:</b> Python<br>
+            <b>Library:</b> Pandas<br>
+            <b>Concepts:</b> Univariable, Bivariable &amp; Multivariable Aggregation<br>
+            <b>Domain:</b> Retail Analytics &amp; Category Management</p>
+
+
+        </div>
 
         <footer>
             &copy; 2026 Python for Commerce Professional Series | Classroom Edition
         </footer>
     </main>
-
-    <script type="py">
-import matplotlib.pyplot as plt
-import pandas as pd
-from pyscript import display
-
-# Sample Monthly Data
-months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-sales = [4500, 5200, 4800, 6100, 7500, 8200]
-
-# Creative styling
-plt.style.use('ggplot')
-fig, ax = plt.subplots(figsize=(8, 5))
-
-bars = ax.bar(months, sales, color='#8b5cf6', alpha=0.8)
-ax.set_title('Monthly Sales Performance', fontsize=14, fontweight='bold', pad=20)
-ax.set_ylabel('Revenue ($)', labelpad=10)
-ax.set_xlabel('Month', labelpad=10)
-
-# Add value labels
-for bar in bars:
-    yval = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width()/2, yval + 100, f'${yval}', ha='center', va='bottom', fontsize=10)
-
-# Render plot to the output div
-display(fig, target="#output")
-    </script>
 
 </body>
 </html>
